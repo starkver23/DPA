@@ -1,0 +1,28 @@
+Week 1: (Group meeting)
+
+1. Group meeting with the professor and other students. 
+2. Introduction by the professor and the students. 
+3. Talked mainly about our project idea and how we intend to achieve it?
+4. Had a presentation by professor on how to write the final dissertation paper. 
+5. Adviced to use IEEE format research paper type dissertation paper.
+6. Adviced to create the plan and idea proposal for the next individual meeting.
+
+Week 2: (individual meeting)
+
+1. Created the proposal
+2. Showed the professor and got a feedback 
+3. According to professor, needed to change the topic
+4. Choose one of the professor's idea on extension of working of JHipster and JDL studio
+
+Week 3: (Group meeting)
+
+1. Everyone had to show what they are making and what evaluation techniques we are using to evaluate our project
+2. Adviced to do functional and non-functional test with the rest test.
+3. Showed the demo app to the professor
+
+Week 4: (individual meeting)
+
+1. Showed the improved demo site 
+2. Got feedback from the professor
+3. Got a list of work to be done by 27th July 2026. 
+
