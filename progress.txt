@@ -25,6 +25,7 @@ Week 4: (individual meeting)
 1. Showed the improved demo site 
 2. Got feedback from the professor
 3. Got a list of work to be done by 27th July 2026. 
+4. Changed the design to UML
 
 Week 5: 
 1. 
