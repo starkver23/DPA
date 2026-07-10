@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Workflow, BookOpen, FileCode, GraduationCap, ArrowRight, Binary } from 'lucide-react';
+import { Workflow, BookOpen, FileCode, GraduationCap, ArrowRight } from 'lucide-react';
 
-const LandingPage: React.FC = () => {
+export default function LandingPage() {
   return (
     <div className="landing-container">
       {/* Soft Blue Ambient Pulse Orb Overlay */}
@@ -83,6 +82,4 @@ const LandingPage: React.FC = () => {
       </footer>
     </div>
   );
-};
-
-export default LandingPage;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -21,6 +21,16 @@ import { DESIGN_PATTERN_TEMPLATES } from '../constants/patterns';
 import { EntityNodeComponent } from './EntityNodeComponent';
 
 const nodeTypes = { entityNode: EntityNodeComponent };
+
+// ponytail: pure helper to avoid duplicate edge styling rules across 4 locations
+const getEdgeStyle = (typeLabel: string) => {
+  const isInheritance = typeLabel === 'Inheritance' || typeLabel === 'extends';
+  return {
+    label: isInheritance ? 'extends' : typeLabel,
+    style: isInheritance ? { strokeDasharray: '5,5', strokeWidth: 2, stroke: '#ef4444' } : { strokeWidth: 2, stroke: '#6366f1' },
+    markerEnd: { type: MarkerType.ArrowClosed, color: isInheritance ? '#ef4444' : '#6366f1' }
+  };
+};
 
 export default function ModellingEditor() {
   const [nodes, setNodes, onNodesChange] = useNodesState<EntityNode>([]);
@@ -55,63 +65,16 @@ export default function ModellingEditor() {
     }
   }, []);
 
-  const updateNodeLabel = useCallback((id: string, label: string) => {
-    setNodes((nds) => nds.map((n) => (n.id === id ? { ...n, data: { ...n.data, label } } : n)));
-  }, [setNodes]);
-
-  const addFieldToNode = useCallback((id: string) => {
-    setNodes((nds) => nds.map((n) => {
-      if (n.id !== id) return n;
-      const currentFields = n.data.fields || [];
-      return {
-        ...n,
-        data: {
-          ...n.data,
-          fields: [...currentFields, { id: crypto.randomUUID(), name: `field${currentFields.length + 1}`, type: 'String' }]
-        }
-      };
-    }));
-  }, [setNodes]);
-
-  const updateNodeField = useCallback((nodeId: string, fieldId: string, updated: Partial<Field>) => {
-    setNodes((nds) => nds.map((n) => (n.id === nodeId ? { ...n, data: { ...n.data, fields: n.data.fields.map((f) => (f.id === fieldId ? { ...f, ...updated } : f)) } } : n)));
-  }, [setNodes]);
-
-  const deleteNodeField = useCallback((nodeId: string, fieldId: string) => {
-    setNodes((nds) => nds.map((n) => (n.id === nodeId ? { ...n, data: { ...n.data, fields: n.data.fields.filter((f) => f.id !== fieldId) } } : n)));
-  }, [setNodes]);
-
-  const addMethodToNode = useCallback((id: string) => {
-    setNodes((nds) => nds.map((n) => {
-      if (n.id !== id) return n;
-      const currentMethods = n.data.methods || [];
-      return {
-        ...n,
-        data: {
-          ...n.data,
-          methods: [...currentMethods, { id: crypto.randomUUID(), definition: `operation${currentMethods.length + 1}()` }]
-        }
-      };
-    }));
-  }, [setNodes]);
-
-  const updateNodeMethod = useCallback((nodeId: string, methodId: string, definition: string) => {
-    setNodes((nds) => nds.map((n) => (n.id === nodeId ? { ...n, data: { ...n.data, methods: (n.data.methods || []).map((m) => (m.id === methodId ? { ...m, definition } : m)) } } : n)));
-  }, [setNodes]);
-
-  const deleteNodeMethod = useCallback((nodeId: string, methodId: string) => {
-    setNodes((nds) => nds.map((n) => (n.id === nodeId ? { ...n, data: { ...n.data, methods: (n.data.methods || []).filter((m) => m.id !== methodId) } } : n)));
+  const updateNodeData = useCallback((id: string, updater: (data: EntityNode['data']) => Partial<EntityNode['data']>) => {
+    setNodes((nds) => nds.map((n) => (n.id === id ? { ...n, data: { ...n.data, ...updater(n.data) } } : n)));
   }, [setNodes]);
 
   const updateEdgeType = useCallback((edgeId: string, typeLabel: string) => {
-    const isInheritance = typeLabel === 'Inheritance' || typeLabel === 'extends';
     setEdges((eds) => eds.map((e) => {
       if (e.id !== edgeId) return e;
       return {
         ...e,
-        label: isInheritance ? 'extends' : typeLabel,
-        style: isInheritance ? { strokeDasharray: '5,5', strokeWidth: 2, stroke: '#ef4444' } : { strokeWidth: 2, stroke: '#6366f1' },
-        markerEnd: { type: MarkerType.ArrowClosed, color: isInheritance ? '#ef4444' : '#6366f1' }
+        ...getEdgeStyle(typeLabel)
       };
     }));
   }, [setEdges]);
@@ -171,25 +134,17 @@ export default function ModellingEditor() {
       jdlString += `}\n\n`;
     });
 
-    const relationsMap: Record<string, Edge[]> = { OneToOne: [], OneToMany: [], ManyToMany: [] };
-    edges.forEach((e) => {
-      if (e.label !== 'extends' && String(e.label) in relationsMap) {
-        relationsMap[String(e.label)].push(e);
-      }
-    });
-
-    Object.entries(relationsMap).forEach(([type, edgeList]) => {
+    ['OneToOne', 'OneToMany', 'ManyToMany'].forEach((type) => {
+      const edgeList = edges.filter((e) => e.label === type);
       if (edgeList.length === 0) return;
       jdlString += `relationship ${type} {\n`;
       edgeList.forEach((e) => {
         const s = nodes.find((n) => n.id === e.source);
         const t = nodes.find((n) => n.id === e.target);
         if (s && t) {
-          if (type === 'ManyToMany') {
-            jdlString += `  ${s.data.label}{${t.data.label.toLowerCase()}s} to ${t.data.label}{${s.data.label.toLowerCase()}s}\n`;
-          } else {
-            jdlString += `  ${s.data.label} to ${t.data.label}\n`;
-          }
+          jdlString += type === 'ManyToMany'
+            ? `  ${s.data.label}{${t.data.label.toLowerCase()}s} to ${t.data.label}{${s.data.label.toLowerCase()}s}\n`
+            : `  ${s.data.label} to ${t.data.label}\n`;
         }
       });
       jdlString += `}\n\n`;
@@ -236,10 +191,8 @@ export default function ModellingEditor() {
               id: `edge-inherit-${crypto.randomUUID()}`,
               source: entityId,
               target: parentName.toLowerCase() + '-id',
-              label: 'extends',
               type: 'default',
-              style: { strokeDasharray: '5,5', strokeWidth: 2, stroke: '#ef4444' },
-              markerEnd: { type: MarkerType.ArrowClosed, color: '#ef4444' }
+              ...getEdgeStyle('extends')
             });
           }
         });
@@ -260,10 +213,8 @@ export default function ModellingEditor() {
                 id: `edge-rel-${crypto.randomUUID()}`,
                 source: sourceEnt.toLowerCase() + '-id',
                 target: targetEnt.toLowerCase() + '-id',
-                label: relType,
                 type: 'default',
-                style: { strokeWidth: 2, stroke: '#6366f1' },
-                markerEnd: { type: MarkerType.ArrowClosed, color: '#6366f1' }
+                ...getEdgeStyle(relType)
               });
             }
           });
@@ -278,27 +229,21 @@ export default function ModellingEditor() {
       setNodes(parsedNodes);
       setEdges(parsedEdges);
       setActiveSelection(null);
-    } catch (err) {
+    } catch {
       alert("Parsing Error: Verify your JDL configuration layout syntax.");
     }
   }, [inputJDL, setNodes, setEdges]);
 
   const onConnect = useCallback((params: Connection) => {
-    const isInheritance = relationshipType === 'Inheritance';
-    const edgeId = `edge-${crypto.randomUUID()}`;
-
     const stylizedEdge: Edge = {
-      id: edgeId,
+      id: `edge-${crypto.randomUUID()}`,
       source: params.source,
       target: params.target,
       sourceHandle: params.sourceHandle,
       targetHandle: params.targetHandle,
-      label: isInheritance ? 'extends' : relationshipType,
       type: 'default',
-      style: isInheritance ? { strokeDasharray: '5,5', strokeWidth: 2, stroke: '#ef4444' } : { strokeWidth: 2, stroke: '#6366f1' },
-      markerEnd: { type: MarkerType.ArrowClosed, color: isInheritance ? '#ef4444' : '#6366f1' }
+      ...getEdgeStyle(relationshipType)
     };
-
     setEdges((eds) => addEdge(stylizedEdge, eds));
   }, [relationshipType, setEdges]);
 
@@ -327,15 +272,12 @@ export default function ModellingEditor() {
     setEdges(eds => eds.filter(e => !(e.source === nodeId && e.label === 'extends')));
     if (targetParentId === 'none') return;
 
-    const edgeId = `edge-inherit-${crypto.randomUUID()}`;
     const parentEdgeSpec: Edge = {
-      id: edgeId,
+      id: `edge-inherit-${crypto.randomUUID()}`,
       source: nodeId,
       target: targetParentId,
-      label: 'extends',
       type: 'default',
-      style: { strokeDasharray: '5,5', strokeWidth: 2, stroke: '#ef4444' },
-      markerEnd: { type: MarkerType.ArrowClosed, color: '#ef4444' }
+      ...getEdgeStyle('extends')
     };
     setEdges(eds => eds.concat(parentEdgeSpec));
   }, [setEdges]);
@@ -428,7 +370,7 @@ export default function ModellingEditor() {
                   <input
                     type="text"
                     value={selectedNode.data.label}
-                    onChange={(e) => updateNodeLabel(selectedNode.id, e.target.value)}
+                    onChange={(e) => updateNodeData(selectedNode.id, () => ({ label: e.target.value }))}
                     className="inspector-text-input"
                     placeholder="ClassName"
                   />
@@ -454,7 +396,17 @@ export default function ModellingEditor() {
               <div className="inspector-group border-top-divider" style={{ marginTop: '1.25rem', paddingTop: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                   <label className="inspector-field-label">Fields / Attributes</label>
-                  <button onClick={() => addFieldToNode(selectedNode.id)} className="btn-inspector-add">+ Field</button>
+                  <button
+                    onClick={() => updateNodeData(selectedNode.id, (data) => {
+                      const currentFields = data.fields || [];
+                      return {
+                        fields: [...currentFields, { id: crypto.randomUUID(), name: `field${currentFields.length + 1}`, type: 'String' }]
+                      };
+                    })}
+                    className="btn-inspector-add"
+                  >
+                    + Field
+                  </button>
                 </div>
                 {selectedNode.data.fields.length === 0 && <p className="uml-empty-text">No fields mapped on this target block.</p>}
                 {selectedNode.data.fields.map((f) => (
@@ -463,12 +415,16 @@ export default function ModellingEditor() {
                       type="text"
                       value={f.name}
                       placeholder="attribute"
-                      onChange={(e) => updateNodeField(selectedNode.id, f.id, { name: e.target.value })}
+                      onChange={(e) => updateNodeData(selectedNode.id, (data) => ({
+                        fields: data.fields.map((field) => (field.id === f.id ? { ...field, name: e.target.value } : field))
+                      }))}
                       className="inspector-row-input"
                     />
                     <select
                       value={f.type}
-                      onChange={(e) => updateNodeField(selectedNode.id, f.id, { type: e.target.value })}
+                      onChange={(e) => updateNodeData(selectedNode.id, (data) => ({
+                        fields: data.fields.map((field) => (field.id === f.id ? { ...field, type: e.target.value } : field))
+                      }))}
                       className="inspector-row-select"
                     >
                       <option value="String">String</option>
@@ -478,7 +434,12 @@ export default function ModellingEditor() {
                       <option value="LocalDate">LocalDate</option>
                       <option value="Boolean">Boolean</option>
                     </select>
-                    <button onClick={() => deleteNodeField(selectedNode.id, f.id)} className="btn-row-delete">
+                    <button
+                      onClick={() => updateNodeData(selectedNode.id, (data) => ({
+                        fields: data.fields.filter((field) => field.id !== f.id)
+                      }))}
+                      className="btn-row-delete"
+                    >
                       <Trash2 size={11} />
                     </button>
                   </div>
@@ -488,7 +449,17 @@ export default function ModellingEditor() {
               <div className="inspector-group border-top-divider" style={{ marginTop: '1.25rem', paddingTop: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                   <label className="inspector-field-label">Operations / Methods</label>
-                  <button onClick={() => addMethodToNode(selectedNode.id)} className="btn-inspector-add">+ Method</button>
+                  <button
+                    onClick={() => updateNodeData(selectedNode.id, (data) => {
+                      const currentMethods = data.methods || [];
+                      return {
+                        methods: [...currentMethods, { id: crypto.randomUUID(), definition: `operation${currentMethods.length + 1}()` }]
+                      };
+                    })}
+                    className="btn-inspector-add"
+                  >
+                    + Method
+                  </button>
                 </div>
                 {(!selectedNode.data.methods || selectedNode.data.methods.length === 0) && <p className="uml-empty-text">No operational logic defined.</p>}
                 {selectedNode.data.methods?.map((m) => (
@@ -497,11 +468,18 @@ export default function ModellingEditor() {
                       type="text"
                       value={m.definition}
                       placeholder="operation()"
-                      onChange={(e) => updateNodeMethod(selectedNode.id, m.id, e.target.value)}
+                      onChange={(e) => updateNodeData(selectedNode.id, (data) => ({
+                        methods: (data.methods || []).map((method) => (method.id === m.id ? { ...method, definition: e.target.value } : method))
+                      }))}
                       className="inspector-row-input"
                       style={{ width: '85%' }}
                     />
-                    <button onClick={() => deleteNodeMethod(selectedNode.id, m.id)} className="btn-row-delete">
+                    <button
+                      onClick={() => updateNodeData(selectedNode.id, (data) => ({
+                        methods: (data.methods || []).filter((method) => method.id !== m.id)
+                      }))}
+                      className="btn-row-delete"
+                    >
                       <Trash2 size={11} />
                     </button>
                   </div>

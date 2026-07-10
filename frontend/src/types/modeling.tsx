@@ -1,4 +1,4 @@
-import { type Node, type Edge } from '@xyflow/react';
+import { type Node } from '@xyflow/react';
 
 export interface Field {
   id: string;
