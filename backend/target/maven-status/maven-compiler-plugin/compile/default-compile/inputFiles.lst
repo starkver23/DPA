@@ -13,6 +13,10 @@
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/ast/RelationshipNode.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/ast/RelationshipType.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/ast/TypeReference.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/engine/CodeGenerationEngine.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/engine/GeneratedFile.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/engine/GeneratedProject.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/engine/TemplateRenderer.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/exception/LexerException.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/exception/ParserException.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/inheritance/InheritanceResolutionException.java

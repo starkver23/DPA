@@ -19,7 +19,7 @@ public class InheritanceResolver {
      */
     public ResolvedInheritanceModel resolve(CompilationUnit compilationUnit) {
         if (compilationUnit == null) {
-            return new ResolvedInheritanceModel(List.of(), Map.of(), List.of());
+            return new ResolvedInheritanceModel(List.of(), Map.of(), List.of(), Map.of());
         }
 
         List<EntityNode> entities = compilationUnit.entities();
@@ -125,7 +125,8 @@ public class InheritanceResolver {
         return new ResolvedInheritanceModel(
             List.copyOf(orderedEntities),
             Map.copyOf(lookupByName),
-            List.copyOf(rootEntities)
+            List.copyOf(rootEntities),
+            Map.copyOf(entityMap)
         );
     }
 

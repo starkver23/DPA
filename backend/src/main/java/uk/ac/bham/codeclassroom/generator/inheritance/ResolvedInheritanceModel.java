@@ -1,5 +1,7 @@
 package uk.ac.bham.codeclassroom.generator.inheritance;
 
+import uk.ac.bham.codeclassroom.generator.ast.EntityNode;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,7 +17,8 @@ import java.util.Optional;
 public record ResolvedInheritanceModel(
     List<ResolvedEntity> orderedEntities,
     Map<String, ResolvedEntity> lookupByName,
-    List<ResolvedEntity> rootEntities
+    List<ResolvedEntity> rootEntities,
+    Map<String, EntityNode> entityNodes
 ) {
     /**
      * Finds resolved entity metadata by its name.
