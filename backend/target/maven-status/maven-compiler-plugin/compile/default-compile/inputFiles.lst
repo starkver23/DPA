@@ -17,5 +17,7 @@
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/exception/ParserException.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/lexer/Lexer.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/parser/Parser.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/semantic/SemanticException.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/semantic/SemanticValidator.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/token/Token.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/main/java/uk/ac/bham/codeclassroom/generator/token/TokenType.java
