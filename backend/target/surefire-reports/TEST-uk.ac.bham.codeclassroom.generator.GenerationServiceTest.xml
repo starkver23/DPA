@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="uk.ac.bham.codeclassroom.generator.SpringBootProjectBuilderTest" time="0.029" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="uk.ac.bham.codeclassroom.generator.GenerationServiceTest" time="0.141" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="26"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -8,7 +8,6 @@
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
     <property name="user.timezone" value="Europe/London"/>
-    <property name="org.jboss.logging.provider" value="slf4j"/>
     <property name="os.name" value="Mac OS X"/>
     <property name="java.vm.specification.version" value="26"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
@@ -30,8 +29,6 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
-    <property name="java.awt.headless" value="true"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
     <property name="surefire.real.class.path" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/surefire/surefirebooter-20260716111513383_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -52,8 +49,6 @@
     <property name="user.dir" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend"/>
     <property name="os.arch" value="aarch64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="74817"/>
-    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/theverma/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
@@ -65,7 +60,9 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="70.0"/>
   </properties>
-  <testcase name="testNullInputsThrowProjectBuilderException(Path)" classname="uk.ac.bham.codeclassroom.generator.SpringBootProjectBuilderTest" time="0.002"/>
-  <testcase name="testProjectBuilderBuildPipeline(Path)" classname="uk.ac.bham.codeclassroom.generator.SpringBootProjectBuilderTest" time="0.022"/>
-  <testcase name="testInvalidOutputPathThrowsProjectBuilderException" classname="uk.ac.bham.codeclassroom.generator.SpringBootProjectBuilderTest" time="0.002"/>
+  <testcase name="testLexerErrorThrowsException" classname="uk.ac.bham.codeclassroom.generator.GenerationServiceTest" time="0.031"/>
+  <testcase name="testSemanticErrorThrowsException" classname="uk.ac.bham.codeclassroom.generator.GenerationServiceTest" time="0.004"/>
+  <testcase name="testInheritanceErrorThrowsException" classname="uk.ac.bham.codeclassroom.generator.GenerationServiceTest" time="0.003"/>
+  <testcase name="testParserErrorThrowsException" classname="uk.ac.bham.codeclassroom.generator.GenerationServiceTest" time="0.003"/>
+  <testcase name="testValidCDLGeneratesZip" classname="uk.ac.bham.codeclassroom.generator.GenerationServiceTest" time="0.089"/>
 </testsuite>
