@@ -1,0 +1,6 @@
+uk/ac/bham/codeclassroom/generator/LexerTest.class
+uk/ac/bham/codeclassroom/generator/ParserTest.class
+uk/ac/bham/codeclassroom/generator/SpringBootProjectBuilderTest.class
+uk/ac/bham/codeclassroom/generator/CodeGenerationEngineTest.class
+uk/ac/bham/codeclassroom/generator/InheritanceResolverTest.class
+uk/ac/bham/codeclassroom/generator/SemanticValidatorTest.class
