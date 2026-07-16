@@ -1,0 +1,8 @@
+uk/ac/bham/codeclassroom/repository/StudentRepository.class
+uk/ac/bham/codeclassroom/service/StudentService.class
+uk/ac/bham/codeclassroom/model/Student.class
+uk/ac/bham/codeclassroom/controller/StudentController.class
+uk/ac/bham/codeclassroom/service/impl/StudentServiceImpl.class
+uk/ac/bham/codeclassroom/GeneratedApplication.class
+uk/ac/bham/codeclassroom/dto/StudentDTO.class
+uk/ac/bham/codeclassroom/mapper/StudentMapper.class

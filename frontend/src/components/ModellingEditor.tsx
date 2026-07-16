@@ -19,6 +19,7 @@ import '@xyflow/react/dist/style.css';
 import { type Field, type EntityNode, type RelationshipType } from '../types/modeling';
 import { DESIGN_PATTERN_TEMPLATES } from '../constants/patterns';
 import { EntityNodeComponent } from './EntityNodeComponent';
+import { generateProject } from '../api/generatorApi';
 
 const nodeTypes = { entityNode: EntityNodeComponent };
 
@@ -41,6 +42,9 @@ export default function ModellingEditor() {
   const [inputJDL, setInputJDL] = useState<string>(
     `entity Student {\n  email String\n}\n\nentity Course {\n  title String\n}\n\nrelationship ManyToMany {\n  Student to Course\n}`
   );
+
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   const handleLoadPatternTemplate = (patternName: string) => {
     if (!patternName) return;
@@ -115,7 +119,7 @@ export default function ModellingEditor() {
     setInputJDL(`entity Professor {\n  name String\n  department String\n}\n\nentity Department {\n  title String\n  budget BigDecimal\n}\n\nentity GraduateProject {\n  topic String\n  deadline LocalDate\n}\n\nrelationship OneToMany {\n  Department to Professor\n}\n\nrelationship OneToOne {\n  Professor to GraduateProject\n}`);
   }, []);
 
-  const generateJDLFromCanvas = useCallback(() => {
+  const generateJDLFromCanvas = useCallback(async () => {
     let jdlString = '';
     const inheritanceMap: Record<string, string> = {};
 
@@ -150,8 +154,46 @@ export default function ModellingEditor() {
       jdlString += `}\n\n`;
     });
 
-    setInputJDL(jdlString.trim() || '// No visual structure configured.');
+    const finalCDL = jdlString.trim();
+    setInputJDL(finalCDL || '// No visual structure configured.');
     setActiveSelection(null); // Forces the sidebar view to toggle directly back into the code text editor view
+
+    if (!finalCDL) {
+      setNotification({
+        type: 'error',
+        message: 'Project generation failed. Please check your model and try again.'
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    setNotification(null);
+
+    try {
+      const blob = await generateProject(finalCDL);
+      
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = downloadUrl;
+      downloadLink.download = 'generated-project.zip';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      window.URL.revokeObjectURL(downloadUrl);
+
+      setNotification({
+        type: 'success',
+        message: 'Project generated successfully.'
+      });
+    } catch (error) {
+      console.error(error);
+      setNotification({
+        type: 'error',
+        message: 'Project generation failed. Please check your model and try again.'
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   }, [nodes, edges]);
 
   const parseJDLToCanvas = useCallback(() => {
@@ -361,6 +403,39 @@ export default function ModellingEditor() {
         </div>
 
         <div className="sidebar-main-scroller">
+          {notification && (
+            <div 
+              className={`notification-banner ${notification.type}`} 
+              style={{ 
+                padding: '0.75rem', 
+                margin: '1rem', 
+                borderRadius: '4px', 
+                fontSize: '0.85rem', 
+                fontWeight: 500, 
+                backgroundColor: notification.type === 'success' ? '#065f46' : '#991b1b', 
+                color: '#fff', 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center' 
+              }}
+            >
+              <span>{notification.message}</span>
+              <button 
+                onClick={() => setNotification(null)} 
+                style={{ 
+                  background: 'none', 
+                  border: 'none', 
+                  color: '#fff', 
+                  cursor: 'pointer', 
+                  fontSize: '1rem', 
+                  fontWeight: 'bold',
+                  marginLeft: '0.5rem'
+                }}
+              >
+                ×
+              </button>
+            </div>
+          )}
           {selectedNode && (
             <div className="inspector-container">
               <div className="inspector-group">
@@ -545,8 +620,23 @@ export default function ModellingEditor() {
           <button onClick={parseJDLToCanvas} className="btn-sidebar-action btn-amber">
             Parse CDL
           </button>
-          <button onClick={generateJDLFromCanvas} className="btn-sidebar-action btn-green">
-            Generate
+          <button 
+            onClick={generateJDLFromCanvas} 
+            className="btn-sidebar-action btn-green"
+            disabled={isGenerating}
+            style={{ display: 'flex', gap: '0.25rem', justifyContent: 'center', alignItems: 'center' }}
+          >
+            {isGenerating ? (
+              <>
+                <svg className="animate-spin" style={{ width: '12px', height: '12px' }} viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                Generating...
+              </>
+            ) : (
+              'Generate'
+            )}
           </button>
           <button onClick={downloadJDLHandler} className="btn-sidebar-action btn-blue">
             Export
