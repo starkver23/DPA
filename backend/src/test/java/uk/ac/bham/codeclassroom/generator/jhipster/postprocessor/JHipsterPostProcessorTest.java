@@ -20,17 +20,32 @@ class JHipsterPostProcessorTest {
 
     private void createMockProjectFiles(Path root, String basePackage) throws IOException {
         Path packagePath = root.resolve("src/main/java").resolve(basePackage.replace('.', '/'));
+        Path testPackagePath = root.resolve("src/test/java").resolve(basePackage.replace('.', '/'));
         
         // Create folders
         Files.createDirectories(packagePath.resolve("domain"));
         Files.createDirectories(packagePath.resolve("service/dto"));
         Files.createDirectories(packagePath.resolve("service/mapper"));
         Files.createDirectories(packagePath.resolve("web/rest"));
+        Files.createDirectories(testPackagePath.resolve("domain"));
+
+        // Create mock test sample file for Student
+        Files.writeString(testPackagePath.resolve("domain/StudentTestSamples.java"), """
+            package com.test.domain;
+            public class StudentTestSamples {
+                public static Student getStudentSample1() {
+                    return new Student().id(1L).gpa(3.8);
+                }
+            }
+        """);
 
         // Create standard entity file for Person (parent)
         Files.writeString(packagePath.resolve("domain/Person.java"), """
             package com.test.domain;
             import jakarta.persistence.*;
+            import org.hibernate.annotations.Cache;
+            import org.hibernate.annotations.CacheConcurrencyStrategy;
+            @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
             public class Person {
                 private Long id;
                 private String name;
@@ -41,6 +56,9 @@ class JHipsterPostProcessorTest {
         Files.writeString(packagePath.resolve("domain/Student.java"), """
             package com.test.domain;
             import jakarta.persistence.*;
+            import org.hibernate.annotations.Cache;
+            import org.hibernate.annotations.CacheConcurrencyStrategy;
+            @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
             public class Student {
                 private Long id;
                 private Double gpa;
@@ -51,6 +69,9 @@ class JHipsterPostProcessorTest {
         Files.writeString(packagePath.resolve("domain/Undergrad.java"), """
             package com.test.domain;
             import jakarta.persistence.*;
+            import org.hibernate.annotations.Cache;
+            import org.hibernate.annotations.CacheConcurrencyStrategy;
+            @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
             public class Undergrad {
                 private Long id;
                 private String major;
@@ -113,18 +134,25 @@ class JHipsterPostProcessorTest {
         assertTrue(personContent.contains("import jakarta.persistence.InheritanceType;"));
         assertTrue(personContent.contains("public class Person"));
         assertTrue(personContent.contains("private Long id;"));
+        assertTrue(personContent.contains("@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)"));
+        assertTrue(personContent.contains("import org.hibernate.annotations.Cache;"));
+        assertTrue(personContent.contains("import org.hibernate.annotations.CacheConcurrencyStrategy;"));
 
-        // --- 2. Verify Child (Student) extends Person and has its ID field stripped ---
+        // --- 2. Verify Child (Student) extends Person and has its ID field and @Cache annotations stripped ---
         String studentContent = Files.readString(packagePath.resolve("domain/Student.java"));
         assertTrue(studentContent.contains("public class Student extends Person"));
         assertFalse(studentContent.contains("@Inheritance")); // Student has children but is not root, so no JPA inheritance annotation
         assertFalse(studentContent.contains("private Long id;"));
+        assertFalse(studentContent.contains("@Cache"));
+        assertFalse(studentContent.contains("org.hibernate.annotations.Cache"));
 
-        // --- 3. Verify Grandchild (Undergrad) extends Student and has its ID field stripped ---
+        // --- 3. Verify Grandchild (Undergrad) extends Student and has its ID field and @Cache annotations stripped ---
         String undergradContent = Files.readString(packagePath.resolve("domain/Undergrad.java"));
         assertTrue(undergradContent.contains("public class Undergrad extends Student"));
         assertFalse(undergradContent.contains("@Inheritance"));
         assertFalse(undergradContent.contains("private Long id;"));
+        assertFalse(undergradContent.contains("@Cache"));
+        assertFalse(undergradContent.contains("org.hibernate.annotations.Cache"));
 
         // --- 4. Verify DTO extends ---
         String studentDtoContent = Files.readString(packagePath.resolve("service/dto/StudentDTO.java"));
@@ -138,6 +166,15 @@ class JHipsterPostProcessorTest {
         String unrelatedContent = Files.readString(packagePath.resolve("web/rest/UnrelatedResource.java"));
         assertTrue(unrelatedContent.contains("public class UnrelatedResource"));
         assertFalse(unrelatedContent.contains("extends"));
+
+        // --- 7. Verify Test Samples are rewritten from builders to setters ---
+        Path testPackagePath = tempDir.resolve("src/test/java/com/test");
+        String studentTestSampleContent = Files.readString(testPackagePath.resolve("domain/StudentTestSamples.java"));
+        assertTrue(studentTestSampleContent.contains("Student student = new Student();"));
+        assertTrue(studentTestSampleContent.contains("student.setId(1L);"));
+        assertTrue(studentTestSampleContent.contains("student.setGpa(3.8);"));
+        assertTrue(studentTestSampleContent.contains("return student;"));
+        assertFalse(studentTestSampleContent.contains("return new Student().id(1L).gpa(3.8);"));
     }
 
     @Test

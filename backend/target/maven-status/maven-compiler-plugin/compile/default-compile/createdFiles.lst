@@ -40,6 +40,7 @@ uk/ac/bham/codeclassroom/generator/project/PomGenerator.class
 uk/ac/bham/codeclassroom/generator/jhipster/postprocessor/EntityTransformer.class
 uk/ac/bham/codeclassroom/generator/api/GenerationController$DeleteOnCloseFileSystemResource$DeleteOnCloseInputStream.class
 uk/ac/bham/codeclassroom/generator/ast/EntityNode.class
+uk/ac/bham/codeclassroom/generator/jhipster/postprocessor/TestSampleTransformer.class
 uk/ac/bham/codeclassroom/generator/lexer/Lexer.class
 uk/ac/bham/codeclassroom/generator/exception/LexerException.class
 uk/ac/bham/codeclassroom/generator/project/MainApplicationGenerator.class

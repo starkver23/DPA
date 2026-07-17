@@ -14,6 +14,7 @@ import java.util.List;
 public class JHipsterPostProcessor {
 
     private final InheritanceInjector injector;
+    private final TestSampleTransformer testSampleTransformer;
     private final RepositoryTransformer repositoryTransformer;
     private final ServiceTransformer serviceTransformer;
     private final ControllerTransformer controllerTransformer;
@@ -23,6 +24,7 @@ public class JHipsterPostProcessor {
      */
     public JHipsterPostProcessor() {
         this.injector = new InheritanceInjector();
+        this.testSampleTransformer = new TestSampleTransformer();
         this.repositoryTransformer = new RepositoryTransformer();
         this.serviceTransformer = new ServiceTransformer();
         this.controllerTransformer = new ControllerTransformer();
@@ -89,6 +91,7 @@ public class JHipsterPostProcessor {
         }
 
         injector.inject(context, transformedFiles);
+        testSampleTransformer.transform(context, transformedFiles);
         repositoryTransformer.transform(context, transformedFiles);
         serviceTransformer.transform(context, transformedFiles);
         controllerTransformer.transform(context, transformedFiles);

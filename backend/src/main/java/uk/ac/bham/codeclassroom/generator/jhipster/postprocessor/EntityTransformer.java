@@ -44,6 +44,9 @@ public class EntityTransformer {
                     // Cleanly remove child id field and annotations/getters/setters to support proper JPA inheritance semantics
                     content = stripIdField(content);
 
+                    // Cleanly remove Hibernate second-level cache annotations from child entities in inheritance hierarchies
+                    content = stripCacheAnnotation(content);
+
                     Files.writeString(childFile, content);
                     changedFiles.add(childFile);
                 } catch (IOException e) {
@@ -108,6 +111,28 @@ public class EntityTransformer {
         content = content.replaceAll("(?s)public\\s+Long\\s+getId\\(\\)\\s*\\{[^}]*\\}", "");
         content = content.replaceAll("(?s)public\\s+void\\s+setId\\(Long\\s+id\\)\\s*\\{[^}]*\\}", "");
         content = content.replaceAll("(?s)public\\s+\\w+\\s+id\\(Long\\s+id\\)\\s*\\{[^}]*\\}", "");
+
+        return content;
+    }
+
+    /**
+     * Programmatically removes @Cache annotations and unused Hibernate cache imports
+     * from child entity source files.
+     *
+     * @param content the original class source code
+     * @return the modified class source code without child @Cache annotations
+     */
+    private String stripCacheAnnotation(String content) {
+        if (content == null) {
+            return null;
+        }
+
+        // Remove the @Cache annotation completely (including its parenthesis arguments)
+        content = content.replaceAll("@Cache\\s*\\([^)]+\\)", "");
+
+        // Remove Cache imports unconditionally since subclasses do not participate in second-level caching
+        content = content.replace("import org.hibernate.annotations.Cache;", "");
+        content = content.replace("import org.hibernate.annotations.CacheConcurrencyStrategy;", "");
 
         return content;
     }
