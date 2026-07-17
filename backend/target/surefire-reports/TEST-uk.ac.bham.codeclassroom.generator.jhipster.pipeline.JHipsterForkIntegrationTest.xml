@@ -1,0 +1,1340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="40.51" tests="7" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="26"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/test-classes:/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/classes:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.5.0/spring-boot-starter-data-jpa-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter/3.5.0/spring-boot-starter-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot/3.5.0/spring-boot-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.5.0/spring-boot-autoconfigure-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.5.0/spring-boot-starter-logging-3.5.0.jar:/Users/theverma/.m2/repository/ch/qos/logback/logback-classic/1.5.18/logback-classic-1.5.18.jar:/Users/theverma/.m2/repository/ch/qos/logback/logback-core/1.5.18/logback-core-1.5.18.jar:/Users/theverma/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.24.3/log4j-to-slf4j-2.24.3.jar:/Users/theverma/.m2/repository/org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar:/Users/theverma/.m2/repository/org/slf4j/jul-to-slf4j/2.0.17/jul-to-slf4j-2.0.17.jar:/Users/theverma/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/theverma/.m2/repository/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.5.0/spring-boot-starter-jdbc-3.5.0.jar:/Users/theverma/.m2/repository/com/zaxxer/HikariCP/6.3.0/HikariCP-6.3.0.jar:/Users/theverma/.m2/repository/org/springframework/spring-jdbc/6.2.7/spring-jdbc-6.2.7.jar:/Users/theverma/.m2/repository/org/hibernate/orm/hibernate-core/6.6.15.Final/hibernate-core-6.6.15.Final.jar:/Users/theverma/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/theverma/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/theverma/.m2/repository/org/jboss/logging/jboss-logging/3.6.1.Final/jboss-logging-3.6.1.Final.jar:/Users/theverma/.m2/repository/org/hibernate/common/hibernate-commons-annotations/7.0.3.Final/hibernate-commons-annotations-7.0.3.Final.jar:/Users/theverma/.m2/repository/io/smallrye/jandex/3.2.0/jandex-3.2.0.jar:/Users/theverma/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/Users/theverma/.m2/repository/net/bytebuddy/byte-buddy/1.17.5/byte-buddy-1.17.5.jar:/Users/theverma/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/Users/theverma/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/Users/theverma/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/Users/theverma/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/Users/theverma/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/theverma/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/theverma/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/Users/theverma/.m2/repository/org/springframework/data/spring-data-jpa/3.5.0/spring-data-jpa-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/data/spring-data-commons/3.5.0/spring-data-commons-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/spring-orm/6.2.7/spring-orm-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-context/6.2.7/spring-context-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-aop/6.2.7/spring-aop-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-tx/6.2.7/spring-tx-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-beans/6.2.7/spring-beans-6.2.7.jar:/Users/theverma/.m2/repository/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar:/Users/theverma/.m2/repository/org/springframework/spring-aspects/6.2.7/spring-aspects-6.2.7.jar:/Users/theverma/.m2/repository/org/aspectj/aspectjweaver/1.9.24/aspectjweaver-1.9.24.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.5.0/spring-boot-starter-validation-3.5.0.jar:/Users/theverma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.41/tomcat-embed-el-10.1.41.jar:/Users/theverma/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.2.Final/hibernate-validator-8.0.2.Final.jar:/Users/theverma/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.5.0/spring-boot-starter-web-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.5.0/spring-boot-starter-json-3.5.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.0/jackson-databind-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.0/jackson-annotations-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.19.0/jackson-datatype-jdk8-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.19.0/jackson-datatype-jsr310-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.19.0/jackson-module-parameter-names-2.19.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.5.0/spring-boot-starter-tomcat-3.5.0.jar:/Users/theverma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.41/tomcat-embed-core-10.1.41.jar:/Users/theverma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.41/tomcat-embed-websocket-10.1.41.jar:/Users/theverma/.m2/repository/org/springframework/spring-web/6.2.7/spring-web-6.2.7.jar:/Users/theverma/.m2/repository/io/micrometer/micrometer-observation/1.15.0/micrometer-observation-1.15.0.jar:/Users/theverma/.m2/repository/io/micrometer/micrometer-commons/1.15.0/micrometer-commons-1.15.0.jar:/Users/theverma/.m2/repository/org/springframework/spring-webmvc/6.2.7/spring-webmvc-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-expression/6.2.7/spring-expression-6.2.7.jar:/Users/theverma/.m2/repository/com/h2database/h2/2.3.232/h2-2.3.232.jar:/Users/theverma/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar:/Users/theverma/.m2/repository/com/github/spullara/mustache/java/compiler/0.9.10/compiler-0.9.10.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.5.0/spring-boot-starter-test-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-test/3.5.0/spring-boot-test-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.5.0/spring-boot-test-autoconfigure-3.5.0.jar:/Users/theverma/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/Users/theverma/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/Users/theverma/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/Users/theverma/.m2/repository/net/minidev/json-smart/2.5.2/json-smart-2.5.2.jar:/Users/theverma/.m2/repository/net/minidev/accessors-smart/2.5.2/accessors-smart-2.5.2.jar:/Users/theverma/.m2/repository/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar:/Users/theverma/.m2/repository/org/assertj/assertj-core/3.27.3/assertj-core-3.27.3.jar:/Users/theverma/.m2/repository/org/awaitility/awaitility/4.3.0/awaitility-4.3.0.jar:/Users/theverma/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter/5.12.2/junit-jupiter-5.12.2.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.12.2/junit-jupiter-api-5.12.2.jar:/Users/theverma/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/theverma/.m2/repository/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.jar:/Users/theverma/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.12.2/junit-jupiter-params-5.12.2.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.12.2/junit-jupiter-engine-5.12.2.jar:/Users/theverma/.m2/repository/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.jar:/Users/theverma/.m2/repository/org/mockito/mockito-core/5.17.0/mockito-core-5.17.0.jar:/Users/theverma/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.5/byte-buddy-agent-1.17.5.jar:/Users/theverma/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/theverma/.m2/repository/org/mockito/mockito-junit-jupiter/5.17.0/mockito-junit-jupiter-5.17.0.jar:/Users/theverma/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/Users/theverma/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/theverma/.m2/repository/org/springframework/spring-core/6.2.7/spring-core-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-jcl/6.2.7/spring-jcl-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-test/6.2.7/spring-test-6.2.7.jar:/Users/theverma/.m2/repository/org/xmlunit/xmlunit-core/2.10.1/xmlunit-core-2.10.1.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="user.timezone" value="Europe/London"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="26"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/26.0.1/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/surefire/surefirebooter-20260717133822455_3.jar /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/surefire 2026-07-17T13-38-22_337-jvmRun1 surefire-20260717133822455_1tmp surefire_0-20260717133822455_2tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/test-classes:/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/classes:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.5.0/spring-boot-starter-data-jpa-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter/3.5.0/spring-boot-starter-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot/3.5.0/spring-boot-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.5.0/spring-boot-autoconfigure-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.5.0/spring-boot-starter-logging-3.5.0.jar:/Users/theverma/.m2/repository/ch/qos/logback/logback-classic/1.5.18/logback-classic-1.5.18.jar:/Users/theverma/.m2/repository/ch/qos/logback/logback-core/1.5.18/logback-core-1.5.18.jar:/Users/theverma/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.24.3/log4j-to-slf4j-2.24.3.jar:/Users/theverma/.m2/repository/org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar:/Users/theverma/.m2/repository/org/slf4j/jul-to-slf4j/2.0.17/jul-to-slf4j-2.0.17.jar:/Users/theverma/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/theverma/.m2/repository/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.5.0/spring-boot-starter-jdbc-3.5.0.jar:/Users/theverma/.m2/repository/com/zaxxer/HikariCP/6.3.0/HikariCP-6.3.0.jar:/Users/theverma/.m2/repository/org/springframework/spring-jdbc/6.2.7/spring-jdbc-6.2.7.jar:/Users/theverma/.m2/repository/org/hibernate/orm/hibernate-core/6.6.15.Final/hibernate-core-6.6.15.Final.jar:/Users/theverma/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/theverma/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/theverma/.m2/repository/org/jboss/logging/jboss-logging/3.6.1.Final/jboss-logging-3.6.1.Final.jar:/Users/theverma/.m2/repository/org/hibernate/common/hibernate-commons-annotations/7.0.3.Final/hibernate-commons-annotations-7.0.3.Final.jar:/Users/theverma/.m2/repository/io/smallrye/jandex/3.2.0/jandex-3.2.0.jar:/Users/theverma/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/Users/theverma/.m2/repository/net/bytebuddy/byte-buddy/1.17.5/byte-buddy-1.17.5.jar:/Users/theverma/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/Users/theverma/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/Users/theverma/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/Users/theverma/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/Users/theverma/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/theverma/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/theverma/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/Users/theverma/.m2/repository/org/springframework/data/spring-data-jpa/3.5.0/spring-data-jpa-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/data/spring-data-commons/3.5.0/spring-data-commons-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/spring-orm/6.2.7/spring-orm-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-context/6.2.7/spring-context-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-aop/6.2.7/spring-aop-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-tx/6.2.7/spring-tx-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-beans/6.2.7/spring-beans-6.2.7.jar:/Users/theverma/.m2/repository/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar:/Users/theverma/.m2/repository/org/springframework/spring-aspects/6.2.7/spring-aspects-6.2.7.jar:/Users/theverma/.m2/repository/org/aspectj/aspectjweaver/1.9.24/aspectjweaver-1.9.24.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.5.0/spring-boot-starter-validation-3.5.0.jar:/Users/theverma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.41/tomcat-embed-el-10.1.41.jar:/Users/theverma/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.2.Final/hibernate-validator-8.0.2.Final.jar:/Users/theverma/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.5.0/spring-boot-starter-web-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.5.0/spring-boot-starter-json-3.5.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.0/jackson-databind-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.0/jackson-annotations-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.19.0/jackson-datatype-jdk8-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.19.0/jackson-datatype-jsr310-2.19.0.jar:/Users/theverma/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.19.0/jackson-module-parameter-names-2.19.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.5.0/spring-boot-starter-tomcat-3.5.0.jar:/Users/theverma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.41/tomcat-embed-core-10.1.41.jar:/Users/theverma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.41/tomcat-embed-websocket-10.1.41.jar:/Users/theverma/.m2/repository/org/springframework/spring-web/6.2.7/spring-web-6.2.7.jar:/Users/theverma/.m2/repository/io/micrometer/micrometer-observation/1.15.0/micrometer-observation-1.15.0.jar:/Users/theverma/.m2/repository/io/micrometer/micrometer-commons/1.15.0/micrometer-commons-1.15.0.jar:/Users/theverma/.m2/repository/org/springframework/spring-webmvc/6.2.7/spring-webmvc-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-expression/6.2.7/spring-expression-6.2.7.jar:/Users/theverma/.m2/repository/com/h2database/h2/2.3.232/h2-2.3.232.jar:/Users/theverma/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar:/Users/theverma/.m2/repository/com/github/spullara/mustache/java/compiler/0.9.10/compiler-0.9.10.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.5.0/spring-boot-starter-test-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-test/3.5.0/spring-boot-test-3.5.0.jar:/Users/theverma/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.5.0/spring-boot-test-autoconfigure-3.5.0.jar:/Users/theverma/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/Users/theverma/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/Users/theverma/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/Users/theverma/.m2/repository/net/minidev/json-smart/2.5.2/json-smart-2.5.2.jar:/Users/theverma/.m2/repository/net/minidev/accessors-smart/2.5.2/accessors-smart-2.5.2.jar:/Users/theverma/.m2/repository/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar:/Users/theverma/.m2/repository/org/assertj/assertj-core/3.27.3/assertj-core-3.27.3.jar:/Users/theverma/.m2/repository/org/awaitility/awaitility/4.3.0/awaitility-4.3.0.jar:/Users/theverma/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter/5.12.2/junit-jupiter-5.12.2.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.12.2/junit-jupiter-api-5.12.2.jar:/Users/theverma/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/theverma/.m2/repository/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.jar:/Users/theverma/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.12.2/junit-jupiter-params-5.12.2.jar:/Users/theverma/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.12.2/junit-jupiter-engine-5.12.2.jar:/Users/theverma/.m2/repository/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.jar:/Users/theverma/.m2/repository/org/mockito/mockito-core/5.17.0/mockito-core-5.17.0.jar:/Users/theverma/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.5/byte-buddy-agent-1.17.5.jar:/Users/theverma/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/theverma/.m2/repository/org/mockito/mockito-junit-jupiter/5.17.0/mockito-junit-jupiter-5.17.0.jar:/Users/theverma/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/Users/theverma/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/theverma/.m2/repository/org/springframework/spring-core/6.2.7/spring-core-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-jcl/6.2.7/spring-jcl-6.2.7.jar:/Users/theverma/.m2/repository/org/springframework/spring-test/6.2.7/spring-test-6.2.7.jar:/Users/theverma/.m2/repository/org/xmlunit/xmlunit-core/2.10.1/xmlunit-core-2.10.1.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/theverma"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-04-21"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk/26.0.1/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend"/>
+    <property name="java.vm.compressedOopsMode" value="Non-zero disjoint base"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/target/surefire/surefirebooter-20260717133822455_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="26.0.1"/>
+    <property name="user.name" value="theverma"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="27.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/theverma/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/"/>
+    <property name="java.version" value="26.0.1"/>
+    <property name="user.dir" value="/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/theverma/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="26.0.1"/>
+    <property name="stdin.encoding" value="UTF-8"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="70.0"/>
+  </properties>
+  <testcase name="testGlobalJHipsterResolutionWhenPropertyIsEmpty" classname="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="0.055">
+    <system-out><![CDATA[13:38:23.022 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterCLIInvoker -- [JHipster] Using Global JHipster CLI
+[JHipster] Using Global JHipster CLI
+]]></system-out>
+  </testcase>
+  <testcase name="testLocalForkResolutionWithSubdirectoryAndCompiledExecutable" classname="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="0.005">
+    <system-out><![CDATA[13:38:23.032 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterCLIInvoker -- [JHipster] Using Local Fork (Compiled Node script) from path: /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/junit-14654649208452022957/fake-fork/generator-jhipster/dist/cli/jhipster.cjs
+[JHipster] Using Local Fork (Compiled Node script) from path: /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/junit-14654649208452022957/fake-fork/generator-jhipster/dist/cli/jhipster.cjs
+]]></system-out>
+  </testcase>
+  <testcase name="testGlobalJHipsterResolutionWhenPropertyIsAbsent" classname="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="0.002">
+    <system-out><![CDATA[13:38:23.036 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterCLIInvoker -- [JHipster] Using Global JHipster CLI
+[JHipster] Using Global JHipster CLI
+]]></system-out>
+  </testcase>
+  <testcase name="testLocalForkResolutionWithJitExecutable" classname="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="0.002">
+    <system-out><![CDATA[13:38:23.038 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterCLIInvoker -- [JHipster] Using Local Fork (JIT Node script) from path: /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/junit-10521835723176421564/fake-fork/bin/jhipster.cjs
+[JHipster] Using Local Fork (JIT Node script) from path: /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/junit-10521835723176421564/fake-fork/bin/jhipster.cjs
+]]></system-out>
+  </testcase>
+  <testcase name="testVersionCheckExecutesWithLocalForkIfPresent" classname="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="1.105">
+    <system-out><![CDATA[13:38:23.041 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterCLIInvoker -- [JHipster] Using Local Fork (JIT Node script) from path: /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs
+[JHipster] Using Local Fork (JIT Node script) from path: /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs
+Debugging [CLIInvoker]: Executing command: node /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs --version
+Debugging [CLIInvoker]: Working directory: null
+Debugging [CLIInvoker]: Process exited with code: 0
+Debugging [CLIInvoker]: Process Output (stdout + stderr):
+jhipster --version
+9.2.0
+
+Debugging [CLIInvoker]: End of Process Output
+]]></system-out>
+  </testcase>
+  <testcase name="testVersionCheckExecutesWithGlobalJHipster" classname="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="0.678">
+    <system-out><![CDATA[Debugging [CLIInvoker]: Executing command: sh -c jhipster --version
+Debugging [CLIInvoker]: Working directory: null
+Debugging [CLIInvoker]: Process exited with code: 0
+Debugging [CLIInvoker]: Process Output (stdout + stderr):
+9.2.0
+
+Debugging [CLIInvoker]: End of Process Output
+]]></system-out>
+  </testcase>
+  <testcase name="testRealGenerationOfProfessorAndGraduateProject" classname="uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterForkIntegrationTest" time="38.659">
+    <system-out><![CDATA[====== STARTING REAL GENERATION TEST ======
+13:38:24.831 [main] INFO uk.ac.bham.codeclassroom.generator.api.GenerationService -- [JHipster] Loaded JHipster local fork path property: '/Users/theverma/Developer/experiments/jh'
+Debugging [CLIInvoker]: Executing command: sh -c node -v
+Debugging [CLIInvoker]: Working directory: null
+Debugging [CLIInvoker]: Process exited with code: 0
+Debugging [CLIInvoker]: Process Output (stdout + stderr):
+v25.8.1
+
+Debugging [CLIInvoker]: End of Process Output
+Debugging [CLIInvoker]: Executing command: sh -c npm -v
+Debugging [CLIInvoker]: Working directory: null
+Debugging [CLIInvoker]: Process exited with code: 0
+Debugging [CLIInvoker]: Process Output (stdout + stderr):
+11.11.0
+
+Debugging [CLIInvoker]: End of Process Output
+13:38:25.003 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterCLIInvoker -- [JHipster] Using Local Fork (JIT Node script) from path: /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs
+[JHipster] Using Local Fork (JIT Node script) from path: /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs
+Debugging [CLIInvoker]: Executing command: node /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs --version
+Debugging [CLIInvoker]: Working directory: null
+Debugging [CLIInvoker]: Process exited with code: 0
+Debugging [CLIInvoker]: Process Output (stdout + stderr):
+jhipster --version
+9.2.0
+
+Debugging [CLIInvoker]: End of Process Output
+Debugging [JHipsterPipeline]: Generated JDL:
+application {
+  config {
+    baseName generatedApp
+    packageName uk.ac.bham.codeclassroom
+    databaseType sql
+    prodDatabaseType postgresql
+    authenticationType jwt
+    buildTool maven
+    clientFramework react
+  }
+
+  entities GraduateProject, Professor
+}
+
+entity GraduateProject {
+    description String
+    title String
+}
+
+entity Professor {
+    email String
+    name String
+}
+
+Debugging [JHipsterPipeline]: Entities in JDL:
+ - GraduateProject
+ - Professor
+Debugging [CLIInvoker]: Verifying JDL file exists at: /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/jhipster-gen-15095325802192168085/app.jdl
+Debugging [CLIInvoker]: JDL file verified and exists.
+13:38:25.778 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterCLIInvoker -- [JHipster] Using Local Fork (JIT Node script) from path: /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs
+[JHipster] Using Local Fork (JIT Node script) from path: /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs
+Debugging [CLIInvoker]: Executing command: node /Users/theverma/Developer/experiments/jh/generator-jhipster/bin/jhipster.cjs jdl /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/jhipster-gen-15095325802192168085/app.jdl --no-insight --skip-git --skip-install
+Debugging [CLIInvoker]: Working directory: /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/jhipster-gen-15095325802192168085
+Debugging [CLIInvoker]: Process exited with code: 0
+Debugging [CLIInvoker]: Process Output (stdout + stderr):
+jhipster jdl /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/jhipster-gen-15095325802192168085/app.jdl --no-insight --skip-git --skip-install
+
+        ██╗ ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗
+        ██║ ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗
+        ██║ ████████║    ██║    ███████╔╝ ╚█████╗     ██║    ██████╗   ███████╔╝
+  ██╗   ██║ ██╔═══██║    ██║    ██╔════╝   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║
+  ╚██████╔╝ ██║   ██║ ████████╗ ██║       ██████╔╝    ██║    ████████╗ ██║  ╚██╗
+   ╚═════╝  ╚═╝   ╚═╝ ╚═══════╝ ╚═╝       ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝
+                            https://www.jhipster.tech
+Welcome to JHipster v9.2.0
+
+INFO! Generating jdls /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/jhipster-gen-15095325802192168085/app.jdl
+     info Generating 1 application
+ _______________________________________________________________________________________________________________
+
+  Documentation for creating an application is at https://www.jhipster.tech/creating-an-app/
+
+  Application files will be generated in folder: /private/var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/jhipster-gen-15095325802192168085
+ _______________________________________________________________________________________________________________
+
+WARNING! Your Node version is not LTS (Long Term Support), use it at your own risk! JHipster does not support non-LTS releases, so if you encounter a bug, please use a LTS version first.
+WARNING! Java 21 or 25 are not found on your computer. Your Java version is: 26.0.1" 2026-04-21
+OpenJDK Runtime Environment Homebrew (build 26.0.1)
+OpenJDK 64-Bit Server VM Homebrew (build 26.0.1, mixed mode,
+     info Generating 2048-bit RSA key pair and self-signed certificate (SHA384withRSA) with a validity of 99,999 days
+     info 	for: CN=Java Hipster, OU=Development, O=uk.ac.bham.codeclassroom, L=, ST=, C=
+     info KeyStore '/private/var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/jhipster-gen-15095325802192168085/src/main/resources/config/tls/keystore.p12' generated successfully.
+- applying multi-step templates
+WARNING! jiti dependency is not defined in the nodeDependencies, the client generator must define it
+   create .prettierrc
+   create .prettierignore
+&amp#27;[32m✔&amp#27;[39m prettier configuration files committed to disk
+- loading translations
+- updating package.json dependencies versions
+- prettifying sonar-project.properties
+- adding package-info.java files
+- sorting pom.xml file
+   create sonar-project.properties
+   create .husky/pre-commit
+   create .devcontainer/Dockerfile
+   create pom.xml
+   create src/main/resources/banner.txt
+   create src/main/resources/logback-spring.xml
+   create src/test/resources/logback.xml
+   create src/test/resources/junit-platform.properties
+   create mvnw
+   create mvnw.cmd
+   create .mvn/wrapper/maven-wrapper.jar
+   create .mvn/wrapper/maven-wrapper.properties
+   create .mvn/jvm.config
+   create src/main/resources/i18n/messages.properties
+   create src/test/resources/i18n/messages_en.properties
+   create src/main/resources/i18n/messages_en.properties
+   create src/main/docker/jib/entrypoint.sh
+   create checkstyle.xml
+   create src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml
+   create src/main/resources/config/liquibase/master.xml
+   create src/main/resources/config/liquibase/data/user.csv
+   create src/main/resources/config/liquibase/data/user_authority.csv
+   create src/main/resources/config/liquibase/data/authority.csv
+   create src/main/webapp/manifest.webapp
+   create src/main/webapp/content/images/jhipster_family_member_0.svg
+   create src/main/webapp/content/images/jhipster_family_member_0_head-192.png
+   create src/main/webapp/content/images/jhipster_family_member_0_head-256.png
+   create src/main/webapp/content/images/jhipster_family_member_0_head-384.png
+   create src/main/webapp/content/images/jhipster_family_member_0_head-512.png
+   create src/main/webapp/content/images/jhipster_family_member_1.svg
+   create src/main/webapp/content/images/jhipster_family_member_1_head-192.png
+   create src/main/webapp/content/images/jhipster_family_member_1_head-256.png
+   create src/main/webapp/content/images/jhipster_family_member_1_head-384.png
+   create src/main/webapp/content/images/jhipster_family_member_1_head-512.png
+   create src/main/webapp/content/images/jhipster_family_member_2.svg
+   create src/main/webapp/content/images/jhipster_family_member_2_head-192.png
+   create src/main/webapp/content/images/jhipster_family_member_2_head-256.png
+   create src/main/webapp/content/images/jhipster_family_member_2_head-384.png
+   create src/main/webapp/content/images/jhipster_family_member_2_head-512.png
+   create src/main/webapp/content/images/jhipster_family_member_3.svg
+   create src/main/webapp/content/images/jhipster_family_member_3_head-192.png
+   create src/main/webapp/content/images/jhipster_family_member_3_head-256.png
+   create src/main/webapp/content/images/jhipster_family_member_3_head-384.png
+   create src/main/webapp/content/images/jhipster_family_member_3_head-512.png
+   create src/main/webapp/content/images/logo-jhipster.png
+   create src/main/webapp/favicon.ico
+   create src/main/webapp/WEB-INF/web.xml
+   create src/main/webapp/robots.txt
+   create webpack/logo-jhipster.png
+   create package.json
+    force .yo-rc.json
+    force .jhipster/Professor.json
+   create src/main/resources/templates/error.html
+   create src/main/resources/config/application-dev.yml
+   create src/main/resources/config/application-secret-samples.yml
+   create src/test/resources/config/application.yml
+   create src/main/resources/templates/mail/creationEmail.html
+   create npmw
+   create npmw.cmd
+   create src/test/resources/templates/mail/activationEmail.html
+   create src/test/resources/templates/mail/passwordResetEmail.html
+   create src/main/docker/postgresql.yml
+   create src/main/docker/jhipster-control-center.yml
+   create src/main/docker/grafana/provisioning/dashboards/dashboard.yml
+   create src/main/docker/grafana/provisioning/datasources/datasource.yml
+   create src/main/docker/prometheus/prometheus.yml
+   create src/test/resources/config/application-testprod.yml
+   create src/main/webapp/404.html
+   create src/main/resources/config/liquibase/changelog/20231207153829_added_entity_GraduateProject.xml
+   create src/main/resources/config/liquibase/fake-data/graduate_project.csv
+   create src/main/resources/config/liquibase/changelog/20231207153929_added_entity_Professor.xml
+   create src/main/resources/config/liquibase/fake-data/professor.csv
+   create src/main/webapp/swagger-ui/index.html
+   create tsconfig.vitest.json
+    force .jhipster/GraduateProject.json
+   create src/main/webapp/app/_bootstrap-variables.scss
+   create src/main/webapp/app/modules/home/home.scss
+   create src/main/webapp/app/modules/administration/docs/docs.scss
+   create .gitignore
+   create .gitattributes
+   create src/main/webapp/app/shared/layout/header/header.scss
+   create .editorconfig
+   create src/main/webapp/app/shared/layout/password/password-strength-bar.scss
+   create src/main/resources/templates/mail/activationEmail.html
+   create src/test/resources/templates/mail/creationEmail.html
+   create src/main/docker/app.yml
+   create src/main/docker/grafana/provisioning/dashboards/JVM.json
+   create src/test/resources/config/application-testdev.yml
+   create src/main/webapp/index.html
+   create src/main/webapp/i18n/en/error.json
+   create src/main/webapp/i18n/en/password.json
+   create src/main/webapp/i18n/en/sessions.json
+   create src/main/webapp/i18n/en/activate.json
+   create src/main/webapp/i18n/en/home.json
+   create src/main/webapp/i18n/en/configuration.json
+   create src/main/webapp/i18n/en/metrics.json
+   create src/main/webapp/i18n/en/graduateProject.json
+   create src/main/webapp/i18n/en/professor.json
+   create .devcontainer/devcontainer.json
+   create src/main/resources/config/application-prod.yml
+   create src/main/resources/config/application-tls.yml
+   create src/main/resources/templates/mail/passwordResetEmail.html
+   create src/test/resources/templates/mail/testEmail.html
+   create src/main/docker/monitoring.yml
+   create src/main/webapp/content/css/loading.css
+   create src/main/webapp/i18n/en/login.json
+   create src/main/webapp/i18n/en/settings.json
+   create src/main/webapp/i18n/en/reset.json
+   create src/main/webapp/i18n/en/health.json
+   create src/main/webapp/app/app.scss
+   create src/main/webapp/app/shared/layout/footer/footer.scss
+   create src/main/docker/services.yml
+   create src/main/docker/sonar.yml
+   create src/main/webapp/i18n/en/register.json
+   create src/main/webapp/i18n/en/logs.json
+   create src/main/resources/config/application.yml
+   create src/main/webapp/i18n/en/user-management.json
+   create src/main/webapp/i18n/en/global.json
+   create README.md
+   create webpack/package.json
+   create tsconfig.json
+   create src/test/java/uk/ac/bham/codeclassroom/domain/AssertUtils.java
+   create .lintstagedrc.cjs
+   create src/test/java/uk/ac/bham/codeclassroom/config/SpringBootTestClassOrderer.java
+   create src/test/java/uk/ac/bham/codeclassroom/security/SecurityUtilsUnitTest.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/filter/SpaWebFilterIT.java
+   create src/main/java/uk/ac/bham/codeclassroom/GeneratedByJHipster.java
+   create src/test/java/uk/ac/bham/codeclassroom/config/AsyncSyncConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/SecurityConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/CRLFLogConverter.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/DateTimeFormatConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/WebConfigurer.java
+   create src/test/java/uk/ac/bham/codeclassroom/config/CRLFLogConverterTest.java
+   create src/test/java/uk/ac/bham/codeclassroom/config/WebConfigurerTestController.java
+   create src/test/java/uk/ac/bham/codeclassroom/security/jwt/TokenAuthenticationSecurityMetersIT.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/AuthenticateControllerIT.java
+   create src/test/java/uk/ac/bham/codeclassroom/config/DatabaseTestcontainer.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslatorTestController.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/WithUnauthenticatedMockUser.java
+   create src/test/java/uk/ac/bham/codeclassroom/service/MailServiceIT.java
+   create src/test/java/uk/ac/bham/codeclassroom/security/jwt/AuthenticationIntegrationTest.java
+   create src/main/java/uk/ac/bham/codeclassroom/aop/logging/LoggingAspect.java
+   create src/test/java/uk/ac/bham/codeclassroom/repository/timezone/DateTimeWrapper.java
+   create webpack/environment.js
+   create webpack/webpack.dev.js
+   create webpack/utils.js
+   create vite.config.ts
+   create src/main/java/uk/ac/bham/codeclassroom/config/JacksonConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/security/SecurityUtils.java
+   create src/main/webapp/app/app.tsx
+   create src/main/webapp/app/routes.tsx
+   create src/main/webapp/app/config/dayjs.ts
+   create src/main/webapp/app/typings.d.ts
+   create src/main/webapp/app/config/error-middleware.ts
+   create src/main/webapp/app/config/icon-loader.ts
+   create src/main/webapp/app/config/translation.ts
+   create src/main/webapp/app/entities/menu.tsx
+   create src/main/webapp/app/config/notification-middleware.ts
+   create src/main/webapp/app/modules/home/home.tsx
+   create src/main/webapp/app/modules/login/login.tsx
+   create src/main/webapp/app/shared/reducers/authentication.ts
+   create src/main/webapp/app/shared/reducers/loading-bar.ts
+   create src/main/webapp/app/modules/account/index.tsx
+   create src/main/webapp/app/shared/reducers/index.ts
+   create src/main/webapp/app/modules/account/password/password.tsx
+   create src/main/webapp/app/modules/account/password-reset/init/password-reset-init.tsx
+   create src/main/webapp/app/modules/account/activate/activate.reducer.ts
+   create src/main/webapp/app/modules/account/settings/settings.tsx
+   create src/main/webapp/app/modules/account/password/password.reducer.ts
+   create src/main/webapp/app/modules/administration/docs/docs.tsx
+   create src/main/webapp/app/modules/administration/index.tsx
+   create src/main/webapp/app/modules/administration/health/health.tsx
+   create src/main/webapp/app/modules/administration/user-management/index.tsx
+   create src/main/webapp/app/modules/administration/logs/logs.tsx
+   create src/main/webapp/app/modules/administration/user-management/user-management-delete-dialog.tsx
+   create src/main/webapp/app/modules/administration/user-management/user-management-update.tsx
+   create src/main/webapp/app/shared/layout/footer/footer.tsx
+   create src/main/webapp/app/shared/layout/header/header-components.tsx
+   create src/main/webapp/app/shared/layout/menus/entities.tsx
+   create src/main/webapp/app/shared/layout/menus/menu-item.tsx
+   create src/main/webapp/app/shared/util/date-utils.ts
+   create src/main/webapp/app/shared/layout/menus/admin.tsx
+   create src/main/webapp/app/shared/error/error-boundary.tsx
+   create src/main/webapp/app/shared/util/entity-utils.ts
+   create src/main/webapp/app/shared/model/user.model.ts
+   create src/main/webapp/app/shared/error/page-not-found.tsx
+   create src/main/webapp/app/config/axios-interceptor.spec.ts
+   create src/main/webapp/app/shared/reducers/application-profile.spec.ts
+   create src/main/webapp/app/shared/util/entity-utils.spec.ts
+   create src/main/webapp/app/shared/error/error-boundary.spec.tsx
+   create src/main/webapp/app/shared/layout/header/header.spec.tsx
+   create src/main/webapp/app/modules/account/activate/activate.reducer.spec.ts
+   create src/main/webapp/app/modules/administration/administration.reducer.spec.ts
+   create src/main/webapp/app/shared/reducers/locale.spec.ts
+   create src/main/webapp/app/modules/account/settings/settings.reducer.spec.ts
+   create src/main/webapp/app/shared/jhipster/problem-details.ts
+   create src/test/java/uk/ac/bham/codeclassroom/domain/AuthorityTest.java
+   create src/main/webapp/app/shared/jhipster/data-utils.ts
+   create src/test/java/uk/ac/bham/codeclassroom/domain/GraduateProjectTestSamples.java
+   create src/main/java/uk/ac/bham/codeclassroom/domain/AbstractAuditingEntity.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/filter/SpaWebFilter.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/ManagedUserVM.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/InvalidPasswordException.java
+   create src/test/java/uk/ac/bham/codeclassroom/service/mapper/UserMapperTest.java
+   create src/test/java/uk/ac/bham/codeclassroom/domain/ProfessorTest.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/ErrorConstants.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/UserResourceIT.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/ProfessorResourceIT.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/dto/PasswordChangeDTO.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/AuthorityResourceIT.java
+   create src/main/webapp/app/shared/jhipster/headers.ts
+   create src/main/java/uk/ac/bham/codeclassroom/security/UserNotActivatedException.java
+   create src/main/webapp/app/entities/graduate-project/graduate-project-delete-dialog.tsx
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/FieldErrorVM.java
+   create src/main/webapp/app/entities/graduate-project/graduate-project.tsx
+   create src/main/webapp/app/entities/graduate-project/index.tsx
+   create src/test/java/uk/ac/bham/codeclassroom/domain/GraduateProjectAsserts.java
+   create src/main/webapp/app/entities/professor/professor.tsx
+   create src/main/webapp/app/entities/graduate-project/graduate-project-reducer.spec.ts
+   create src/main/webapp/app/entities/professor/index.tsx
+   create src/main/webapp/app/entities/professor/professor-delete-dialog.tsx
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/KeyAndPasswordVM.java
+   create src/main/java/uk/ac/bham/codeclassroom/ApplicationWebXml.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/InvalidPasswordException.java
+   create src/main/java/uk/ac/bham/codeclassroom/management/SecurityMetersService.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/AuthenticateController.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/CacheConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/domain/User.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/JacksonHibernateConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/dto/AdminUserDTO.java
+   create src/main/webapp/app/entities/professor/professor-reducer.spec.ts
+   create src/main/java/uk/ac/bham/codeclassroom/repository/GraduateProjectRepository.java
+   create src/main/java/uk/ac/bham/codeclassroom/domain/Authority.java
+   create src/main/java/uk/ac/bham/codeclassroom/security/package-info.java
+   create src/main/java/uk/ac/bham/codeclassroom/aop/logging/package-info.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/package-info.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/package-info.java
+   create src/main/java/uk/ac/bham/codeclassroom/repository/package-info.java
+   create src/test/java/uk/ac/bham/codeclassroom/IntegrationTest.java
+   create src/main/java/uk/ac/bham/codeclassroom/security/AuthoritiesConstants.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/ApplicationProperties.java
+   create src/test/java/uk/ac/bham/codeclassroom/config/WebConfigurerTest.java
+   create src/test/java/uk/ac/bham/codeclassroom/config/timezone/HibernateTimeZoneIT.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/ProfessorResource.java
+   create src/main/java/uk/ac/bham/codeclassroom/repository/UserRepository.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/AccountResourceIT.java
+   create src/main/java/uk/ac/bham/codeclassroom/management/package-info.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/TestUtil.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/AsyncConfiguration.java
+   create src/main/webapp/app/setup-tests.ts
+   create src/main/webapp/i18n/en/en.js
+   create webpack/webpack.common.js
+   create src/main/webapp/app/entities/reducers.ts
+   create src/main/java/uk/ac/bham/codeclassroom/domain/Professor.java
+   create src/main/webapp/app/config/store.ts
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/AuthorityResource.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/Constants.java
+   create src/test/java/uk/ac/bham/codeclassroom/security/jwt/JwtAuthenticationTestUtils.java
+   create src/main/webapp/app/modules/account/register/register.reducer.ts
+   create src/main/webapp/app/modules/login/logout.tsx
+   create src/main/webapp/app/modules/account/register/register.tsx
+   create postcss.config.ts
+   create src/main/webapp/app/config/axios-interceptor.ts
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/UserResource.java
+   create src/main/webapp/app/shared/reducers/reducer.utils.ts
+   create src/main/webapp/app/modules/account/settings/settings.reducer.ts
+   create src/main/webapp/app/modules/administration/metrics/metrics.tsx
+   create src/main/webapp/app/shared/reducers/locale.ts
+   create src/main/webapp/app/modules/administration/configuration/configuration.tsx
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/package-info.java
+   create src/main/webapp/app/modules/administration/user-management/user-management-detail.tsx
+   create src/main/webapp/app/shared/layout/header/header.tsx
+   create src/main/webapp/app/shared/layout/password/password-strength-bar.tsx
+   create src/main/webapp/app/shared/layout/menus/account.tsx
+   create src/main/webapp/app/shared/DurationFormat.tsx
+   create src/main/webapp/app/shared/auth/private-route.tsx
+   create src/main/webapp/app/config/notification-middleware.spec.ts
+   create src/main/webapp/app/shared/auth/private-route.spec.tsx
+   create src/main/webapp/app/shared/layout/menus/account.spec.tsx
+   create src/main/webapp/app/shared/jhipster/constants.ts
+   create src/main/webapp/app/shared/jhipster/link-header.ts
+   create src/test/java/uk/ac/bham/codeclassroom/domain/AuthorityTestSamples.java
+   create src/test/java/uk/ac/bham/codeclassroom/domain/ProfessorAsserts.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/BadRequestAlertException.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/StaticResourcesWebConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/security/DomainUserDetailsService.java
+   create src/main/webapp/app/modules/account/password/password.reducer.spec.ts
+   create src/main/java/uk/ac/bham/codeclassroom/service/EmailAlreadyUsedException.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/GraduateProjectResourceIT.java
+   create src/test/java/uk/ac/bham/codeclassroom/service/UserServiceIT.java
+   create src/main/webapp/app/entities/graduate-project/graduate-project.reducer.ts
+   create src/main/webapp/app/entities/graduate-project/graduate-project-update.tsx
+   create src/main/webapp/app/entities/professor/professor.reducer.ts
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/EmailAlreadyUsedException.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/DatabaseConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/SecurityJwtConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/LiquibaseConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/mapper/UserMapper.java
+   create src/main/java/uk/ac/bham/codeclassroom/repository/AuthorityRepository.java
+   create src/main/webapp/app/entities/professor/professor-update.tsx
+   create src/main/java/uk/ac/bham/codeclassroom/web/filter/package-info.java
+   create src/test/java/uk/ac/bham/codeclassroom/TechnicalStructureTest.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslatorIT.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/LoggingAspectConfiguration.java
+   create src/test/java/uk/ac/bham/codeclassroom/management/SecurityMetersServiceTests.java
+   create src/main/webapp/app/config/loading-bar-middleware.ts
+   create src/main/webapp/app/config/constants.ts
+   create src/main/java/uk/ac/bham/codeclassroom/service/dto/package-info.java
+   create src/main/java/uk/ac/bham/codeclassroom/GeneratedApp.java
+   create webpack/webpack.prod.js
+   create src/main/webapp/app/modules/account/activate/activate.tsx
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/PublicUserResource.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/package-info.java
+   create src/main/java/uk/ac/bham/codeclassroom/domain/GraduateProject.java
+   create src/test/java/uk/ac/bham/codeclassroom/repository/timezone/DateTimeWrapperRepository.java
+   create src/main/webapp/app/modules/login/login-modal.tsx
+   create src/main/webapp/app/modules/account/password-reset/password-reset.reducer.ts
+   create src/main/webapp/app/modules/administration/health/health-modal.tsx
+   create src/main/webapp/app/modules/administration/user-management/user-management.reducer.ts
+   create src/main/webapp/app/shared/layout/menus/menu-components.tsx
+   create src/main/webapp/app/shared/error/error-boundary-routes.tsx
+   create src/main/webapp/app/modules/account/register/register.reducer.spec.ts
+   create src/main/webapp/app/shared/jhipster/error.constants.ts
+   create src/test/java/uk/ac/bham/codeclassroom/domain/GraduateProjectTest.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslator.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/MailService.java
+   create src/main/webapp/app/shared/model/graduate-project.model.ts
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/LoginAlreadyUsedException.java
+   create src/test/java/uk/ac/bham/codeclassroom/web/rest/PublicUserResourceIT.java
+   create src/main/java/uk/ac/bham/codeclassroom/repository/ProfessorRepository.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/mapper/package-info.java
+   create src/main/webapp/app/shared/model/professor.model.ts
+   create src/main/java/uk/ac/bham/codeclassroom/config/CacheKeyGeneratorConfiguration.java
+   create vitest.config.ts
+   create src/main/java/uk/ac/bham/codeclassroom/security/SpringSecurityAuditorAware.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/UserService.java
+   create src/main/java/uk/ac/bham/codeclassroom/domain/package-info.java
+   create src/main/webapp/app/config/logger-middleware.ts
+   create src/test/java/uk/ac/bham/codeclassroom/security/DomainUserDetailsServiceIT.java
+   create src/main/webapp/app/shared/reducers/application-profile.ts
+   create src/main/webapp/app/modules/administration/administration.reducer.ts
+   create src/main/webapp/app/shared/layout/menus/index.ts
+   create src/main/webapp/app/shared/reducers/authentication.spec.ts
+   create src/main/webapp/app/shared/layout/menus/locale.tsx
+   create src/main/java/uk/ac/bham/codeclassroom/service/UsernameAlreadyUsedException.java
+   create src/test/java/uk/ac/bham/codeclassroom/domain/ProfessorTestSamples.java
+   create src/main/webapp/app/entities/professor/professor-detail.tsx
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/LoginVM.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/GraduateProjectResource.java
+   create src/main/java/uk/ac/bham/codeclassroom/config/LoggingConfiguration.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/package-info.java
+   create src/main/webapp/app/index.tsx
+   create src/main/webapp/app/modules/administration/user-management/user-management.reducer.spec.ts
+   create src/main/webapp/app/shared/util/pagination.constants.ts
+   create src/main/webapp/app/modules/account/password-reset/finish/password-reset-finish.tsx
+   create src/test/java/uk/ac/bham/codeclassroom/config/StaticResourcesWebConfigurerTest.java
+   create src/main/java/uk/ac/bham/codeclassroom/service/dto/UserDTO.java
+   create src/test/java/uk/ac/bham/codeclassroom/domain/AuthorityAsserts.java
+   create src/main/webapp/app/entities/routes.tsx
+   create src/main/webapp/app/shared/error/error-boundary-routes.spec.tsx
+   create src/main/webapp/app/entities/graduate-project/graduate-project-detail.tsx
+   create src/test/java/uk/ac/bham/codeclassroom/security/jwt/TokenAuthenticationIT.java
+   create src/main/java/uk/ac/bham/codeclassroom/web/rest/AccountResource.java
+   create eslint.config.ts
+   create src/main/java/uk/ac/bham/codeclassroom/package-info.java
+   create src/main/webapp/app/modules/administration/user-management/user-management.tsx
+&amp#27;[32m✔&amp#27;[39m files committed to disk
+
+Changes to package.json were detected.
+Skipping package manager install.
+
+     info No deployment configured
+&amp#27;[32m✔&amp#27;[39m Spring Boot 4.0.7 application generated successfully.
+  Run your Spring Boot application:
+  ./mvnw
+&amp#27;[32m✔&amp#27;[39m React 19.2.7 application generated successfully.
+  Start your Webpack development server with:
+  npm start
+
+
+Congratulations, JHipster execution is complete!
+If you find JHipster useful consider sponsoring the project https://www.jhipster.tech/sponsors/
+
+Thanks for using JHipster!
+
+Debugging [CLIInvoker]: End of Process Output
+Debugging [CLIInvoker]: Starting 30-second polling for file generation race conditions...
+Debugging [CLIInvoker]: Polling #1 at 13:38:32.505745
+  [New File/Dir]: .husky
+  [New File/Dir]: .husky/pre-commit
+  [New File/Dir]: app.jdl
+  [New File/Dir]: mvnw.cmd
+  [New File/Dir]: npmw.cmd
+  [New File/Dir]: .yo-rc.json
+  [New File/Dir]: pom.xml
+  [New File/Dir]: eslint.config.ts
+  [New File/Dir]: .devcontainer
+  [New File/Dir]: .devcontainer/Dockerfile
+  [New File/Dir]: .devcontainer/devcontainer.json
+  [New File/Dir]: .prettierignore
+  [New File/Dir]: .editorconfig
+  [New File/Dir]: postcss.config.ts
+  [New File/Dir]: README.md
+  [New File/Dir]: webpack
+  [New File/Dir]: webpack/logo-jhipster.png
+  [New File/Dir]: webpack/webpack.dev.js
+  [New File/Dir]: webpack/package.json
+  [New File/Dir]: webpack/webpack.prod.js
+  [New File/Dir]: webpack/utils.js
+  [New File/Dir]: webpack/webpack.common.js
+  [New File/Dir]: webpack/environment.js
+  [New File/Dir]: sonar-project.properties
+  [New File/Dir]: .gitignore
+  [New File/Dir]: package.json
+  [New File/Dir]: .mvn
+  [New File/Dir]: .mvn/wrapper
+  [New File/Dir]: .mvn/wrapper/maven-wrapper.properties
+  [New File/Dir]: .mvn/wrapper/maven-wrapper.jar
+  [New File/Dir]: .mvn/jvm.config
+  [New File/Dir]: .jhipster
+  [New File/Dir]: .jhipster/Professor.json
+  [New File/Dir]: .jhipster/GraduateProject.json
+  [New File/Dir]: .prettierrc
+  [New File/Dir]: .gitattributes
+  [New File/Dir]: checkstyle.xml
+  [New File/Dir]: tsconfig.vitest.json
+  [New File/Dir]: npmw
+  [New File/Dir]: tsconfig.json
+  [New File/Dir]: vite.config.ts
+  [New File/Dir]: vitest.config.ts
+  [New File/Dir]: .lintstagedrc.cjs
+  [New File/Dir]: mvnw
+  [New File/Dir]: src
+  [New File/Dir]: src/test
+  [New File/Dir]: src/test/resources
+  [New File/Dir]: src/test/resources/logback.xml
+  [New File/Dir]: src/test/resources/config
+  [New File/Dir]: src/test/resources/config/application-testdev.yml
+  [New File/Dir]: src/test/resources/config/application-testprod.yml
+  [New File/Dir]: src/test/resources/config/application.yml
+  [New File/Dir]: src/test/resources/templates
+  [New File/Dir]: src/test/resources/templates/mail
+  [New File/Dir]: src/test/resources/templates/mail/activationEmail.html
+  [New File/Dir]: src/test/resources/templates/mail/testEmail.html
+  [New File/Dir]: src/test/resources/templates/mail/creationEmail.html
+  [New File/Dir]: src/test/resources/templates/mail/passwordResetEmail.html
+  [New File/Dir]: src/test/resources/junit-platform.properties
+  [New File/Dir]: src/test/resources/i18n
+  [New File/Dir]: src/test/resources/i18n/messages_en.properties
+  [New File/Dir]: src/test/java
+  [New File/Dir]: src/test/java/uk
+  [New File/Dir]: src/test/java/uk/ac
+  [New File/Dir]: src/test/java/uk/ac/bham
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/repository
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/repository/timezone
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/repository/timezone/DateTimeWrapper.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/repository/timezone/DateTimeWrapperRepository.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/TechnicalStructureTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/timezone
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/timezone/HibernateTimeZoneIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/WebConfigurerTestController.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/CRLFLogConverterTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/DatabaseTestcontainer.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/AsyncSyncConfiguration.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/SpringBootTestClassOrderer.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/StaticResourcesWebConfigurerTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/config/WebConfigurerTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security/jwt
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security/jwt/AuthenticationIntegrationTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security/jwt/TokenAuthenticationSecurityMetersIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security/jwt/TokenAuthenticationIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security/jwt/JwtAuthenticationTestUtils.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security/SecurityUtilsUnitTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/security/DomainUserDetailsServiceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/filter
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/filter/SpaWebFilterIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/AccountResourceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/GraduateProjectResourceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/WithUnauthenticatedMockUser.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/UserResourceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/ProfessorResourceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/PublicUserResourceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/TestUtil.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/errors
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslatorIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslatorTestController.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/AuthenticateControllerIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/web/rest/AuthorityResourceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/management
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/management/SecurityMetersServiceTests.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/IntegrationTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/service
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/service/mapper
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/service/mapper/UserMapperTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/service/MailServiceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/service/UserServiceIT.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/AuthorityAsserts.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/GraduateProjectTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/AuthorityTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/AssertUtils.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/ProfessorTestSamples.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/ProfessorAsserts.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/ProfessorTest.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/GraduateProjectTestSamples.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/AuthorityTestSamples.java
+  [New File/Dir]: src/test/java/uk/ac/bham/codeclassroom/domain/GraduateProjectAsserts.java
+  [New File/Dir]: src/main
+  [New File/Dir]: src/main/docker
+  [New File/Dir]: src/main/docker/jib
+  [New File/Dir]: src/main/docker/jib/entrypoint.sh
+  [New File/Dir]: src/main/docker/postgresql.yml
+  [New File/Dir]: src/main/docker/jhipster-control-center.yml
+  [New File/Dir]: src/main/docker/sonar.yml
+  [New File/Dir]: src/main/docker/grafana
+  [New File/Dir]: src/main/docker/grafana/provisioning
+  [New File/Dir]: src/main/docker/grafana/provisioning/datasources
+  [New File/Dir]: src/main/docker/grafana/provisioning/datasources/datasource.yml
+  [New File/Dir]: src/main/docker/grafana/provisioning/dashboards
+  [New File/Dir]: src/main/docker/grafana/provisioning/dashboards/JVM.json
+  [New File/Dir]: src/main/docker/grafana/provisioning/dashboards/dashboard.yml
+  [New File/Dir]: src/main/docker/services.yml
+  [New File/Dir]: src/main/docker/monitoring.yml
+  [New File/Dir]: src/main/docker/prometheus
+  [New File/Dir]: src/main/docker/prometheus/prometheus.yml
+  [New File/Dir]: src/main/docker/app.yml
+  [New File/Dir]: src/main/resources
+  [New File/Dir]: src/main/resources/config
+  [New File/Dir]: src/main/resources/config/application-prod.yml
+  [New File/Dir]: src/main/resources/config/tls
+  [New File/Dir]: src/main/resources/config/tls/keystore.p12
+  [New File/Dir]: src/main/resources/config/application-secret-samples.yml
+  [New File/Dir]: src/main/resources/config/application-dev.yml
+  [New File/Dir]: src/main/resources/config/application-tls.yml
+  [New File/Dir]: src/main/resources/config/application.yml
+  [New File/Dir]: src/main/resources/config/liquibase
+  [New File/Dir]: src/main/resources/config/liquibase/fake-data
+  [New File/Dir]: src/main/resources/config/liquibase/fake-data/professor.csv
+  [New File/Dir]: src/main/resources/config/liquibase/fake-data/graduate_project.csv
+  [New File/Dir]: src/main/resources/config/liquibase/changelog
+  [New File/Dir]: src/main/resources/config/liquibase/changelog/20231207153929_added_entity_Professor.xml
+  [New File/Dir]: src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml
+  [New File/Dir]: src/main/resources/config/liquibase/changelog/20231207153829_added_entity_GraduateProject.xml
+  [New File/Dir]: src/main/resources/config/liquibase/master.xml
+  [New File/Dir]: src/main/resources/config/liquibase/data
+  [New File/Dir]: src/main/resources/config/liquibase/data/authority.csv
+  [New File/Dir]: src/main/resources/config/liquibase/data/user.csv
+  [New File/Dir]: src/main/resources/config/liquibase/data/user_authority.csv
+  [New File/Dir]: src/main/resources/logback-spring.xml
+  [New File/Dir]: src/main/resources/banner.txt
+  [New File/Dir]: src/main/resources/templates
+  [New File/Dir]: src/main/resources/templates/mail
+  [New File/Dir]: src/main/resources/templates/mail/activationEmail.html
+  [New File/Dir]: src/main/resources/templates/mail/creationEmail.html
+  [New File/Dir]: src/main/resources/templates/mail/passwordResetEmail.html
+  [New File/Dir]: src/main/resources/templates/error.html
+  [New File/Dir]: src/main/resources/i18n
+  [New File/Dir]: src/main/resources/i18n/messages_en.properties
+  [New File/Dir]: src/main/resources/i18n/messages.properties
+  [New File/Dir]: src/main/webapp
+  [New File/Dir]: src/main/webapp/favicon.ico
+  [New File/Dir]: src/main/webapp/index.html
+  [New File/Dir]: src/main/webapp/app
+  [New File/Dir]: src/main/webapp/app/index.tsx
+  [New File/Dir]: src/main/webapp/app/_bootstrap-variables.scss
+  [New File/Dir]: src/main/webapp/app/app.tsx
+  [New File/Dir]: src/main/webapp/app/config
+  [New File/Dir]: src/main/webapp/app/config/notification-middleware.ts
+  [New File/Dir]: src/main/webapp/app/config/translation.ts
+  [New File/Dir]: src/main/webapp/app/config/axios-interceptor.spec.ts
+  [New File/Dir]: src/main/webapp/app/config/error-middleware.ts
+  [New File/Dir]: src/main/webapp/app/config/icon-loader.ts
+  [New File/Dir]: src/main/webapp/app/config/constants.ts
+  [New File/Dir]: src/main/webapp/app/config/axios-interceptor.ts
+  [New File/Dir]: src/main/webapp/app/config/notification-middleware.spec.ts
+  [New File/Dir]: src/main/webapp/app/config/logger-middleware.ts
+  [New File/Dir]: src/main/webapp/app/config/loading-bar-middleware.ts
+  [New File/Dir]: src/main/webapp/app/config/dayjs.ts
+  [New File/Dir]: src/main/webapp/app/config/store.ts
+  [New File/Dir]: src/main/webapp/app/typings.d.ts
+  [New File/Dir]: src/main/webapp/app/shared
+  [New File/Dir]: src/main/webapp/app/shared/jhipster
+  [New File/Dir]: src/main/webapp/app/shared/jhipster/headers.ts
+  [New File/Dir]: src/main/webapp/app/shared/jhipster/problem-details.ts
+  [New File/Dir]: src/main/webapp/app/shared/jhipster/constants.ts
+  [New File/Dir]: src/main/webapp/app/shared/jhipster/error.constants.ts
+  [New File/Dir]: src/main/webapp/app/shared/jhipster/link-header.ts
+  [New File/Dir]: src/main/webapp/app/shared/jhipster/data-utils.ts
+  [New File/Dir]: src/main/webapp/app/shared/DurationFormat.tsx
+  [New File/Dir]: src/main/webapp/app/shared/util
+  [New File/Dir]: src/main/webapp/app/shared/util/date-utils.ts
+  [New File/Dir]: src/main/webapp/app/shared/util/pagination.constants.ts
+  [New File/Dir]: src/main/webapp/app/shared/util/entity-utils.spec.ts
+  [New File/Dir]: src/main/webapp/app/shared/util/entity-utils.ts
+  [New File/Dir]: src/main/webapp/app/shared/auth
+  [New File/Dir]: src/main/webapp/app/shared/auth/private-route.tsx
+  [New File/Dir]: src/main/webapp/app/shared/auth/private-route.spec.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout
+  [New File/Dir]: src/main/webapp/app/shared/layout/footer
+  [New File/Dir]: src/main/webapp/app/shared/layout/footer/footer.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/footer/footer.scss
+  [New File/Dir]: src/main/webapp/app/shared/layout/password
+  [New File/Dir]: src/main/webapp/app/shared/layout/password/password-strength-bar.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/password/password-strength-bar.scss
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/menu-components.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/menu-item.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/account.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/entities.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/account.spec.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/locale.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/index.ts
+  [New File/Dir]: src/main/webapp/app/shared/layout/menus/admin.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/header
+  [New File/Dir]: src/main/webapp/app/shared/layout/header/header.spec.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/header/header-components.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/header/header.tsx
+  [New File/Dir]: src/main/webapp/app/shared/layout/header/header.scss
+  [New File/Dir]: src/main/webapp/app/shared/model
+  [New File/Dir]: src/main/webapp/app/shared/model/user.model.ts
+  [New File/Dir]: src/main/webapp/app/shared/model/professor.model.ts
+  [New File/Dir]: src/main/webapp/app/shared/model/graduate-project.model.ts
+  [New File/Dir]: src/main/webapp/app/shared/error
+  [New File/Dir]: src/main/webapp/app/shared/error/error-boundary-routes.spec.tsx
+  [New File/Dir]: src/main/webapp/app/shared/error/error-boundary.tsx
+  [New File/Dir]: src/main/webapp/app/shared/error/page-not-found.tsx
+  [New File/Dir]: src/main/webapp/app/shared/error/error-boundary-routes.tsx
+  [New File/Dir]: src/main/webapp/app/shared/error/error-boundary.spec.tsx
+  [New File/Dir]: src/main/webapp/app/shared/reducers
+  [New File/Dir]: src/main/webapp/app/shared/reducers/application-profile.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/reducer.utils.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/locale.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/authentication.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/loading-bar.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/locale.spec.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/application-profile.spec.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/index.ts
+  [New File/Dir]: src/main/webapp/app/shared/reducers/authentication.spec.ts
+  [New File/Dir]: src/main/webapp/app/routes.tsx
+  [New File/Dir]: src/main/webapp/app/modules
+  [New File/Dir]: src/main/webapp/app/modules/home
+  [New File/Dir]: src/main/webapp/app/modules/home/home.scss
+  [New File/Dir]: src/main/webapp/app/modules/home/home.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration
+  [New File/Dir]: src/main/webapp/app/modules/administration/index.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/metrics
+  [New File/Dir]: src/main/webapp/app/modules/administration/metrics/metrics.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/configuration
+  [New File/Dir]: src/main/webapp/app/modules/administration/configuration/configuration.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/health
+  [New File/Dir]: src/main/webapp/app/modules/administration/health/health.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/health/health-modal.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/docs
+  [New File/Dir]: src/main/webapp/app/modules/administration/docs/docs.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/docs/docs.scss
+  [New File/Dir]: src/main/webapp/app/modules/administration/administration.reducer.ts
+  [New File/Dir]: src/main/webapp/app/modules/administration/logs
+  [New File/Dir]: src/main/webapp/app/modules/administration/logs/logs.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/administration.reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management/index.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management/user-management.reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management/user-management-update.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management/user-management.reducer.ts
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management/user-management-delete-dialog.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management/user-management.tsx
+  [New File/Dir]: src/main/webapp/app/modules/administration/user-management/user-management-detail.tsx
+  [New File/Dir]: src/main/webapp/app/modules/account
+  [New File/Dir]: src/main/webapp/app/modules/account/index.tsx
+  [New File/Dir]: src/main/webapp/app/modules/account/settings
+  [New File/Dir]: src/main/webapp/app/modules/account/settings/settings.tsx
+  [New File/Dir]: src/main/webapp/app/modules/account/settings/settings.reducer.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/settings/settings.reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/password
+  [New File/Dir]: src/main/webapp/app/modules/account/password/password.reducer.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/password/password.tsx
+  [New File/Dir]: src/main/webapp/app/modules/account/password/password.reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/register
+  [New File/Dir]: src/main/webapp/app/modules/account/register/register.reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/register/register.tsx
+  [New File/Dir]: src/main/webapp/app/modules/account/register/register.reducer.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/password-reset
+  [New File/Dir]: src/main/webapp/app/modules/account/password-reset/init
+  [New File/Dir]: src/main/webapp/app/modules/account/password-reset/init/password-reset-init.tsx
+  [New File/Dir]: src/main/webapp/app/modules/account/password-reset/finish
+  [New File/Dir]: src/main/webapp/app/modules/account/password-reset/finish/password-reset-finish.tsx
+  [New File/Dir]: src/main/webapp/app/modules/account/password-reset/password-reset.reducer.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/activate
+  [New File/Dir]: src/main/webapp/app/modules/account/activate/activate.reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/activate/activate.reducer.ts
+  [New File/Dir]: src/main/webapp/app/modules/account/activate/activate.tsx
+  [New File/Dir]: src/main/webapp/app/modules/login
+  [New File/Dir]: src/main/webapp/app/modules/login/login.tsx
+  [New File/Dir]: src/main/webapp/app/modules/login/login-modal.tsx
+  [New File/Dir]: src/main/webapp/app/modules/login/logout.tsx
+  [New File/Dir]: src/main/webapp/app/setup-tests.ts
+  [New File/Dir]: src/main/webapp/app/app.scss
+  [New File/Dir]: src/main/webapp/app/entities
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project/index.tsx
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project/graduate-project.reducer.ts
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project/graduate-project-reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project/graduate-project-update.tsx
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project/graduate-project-detail.tsx
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project/graduate-project.tsx
+  [New File/Dir]: src/main/webapp/app/entities/graduate-project/graduate-project-delete-dialog.tsx
+  [New File/Dir]: src/main/webapp/app/entities/routes.tsx
+  [New File/Dir]: src/main/webapp/app/entities/menu.tsx
+  [New File/Dir]: src/main/webapp/app/entities/reducers.ts
+  [New File/Dir]: src/main/webapp/app/entities/professor
+  [New File/Dir]: src/main/webapp/app/entities/professor/professor-detail.tsx
+  [New File/Dir]: src/main/webapp/app/entities/professor/index.tsx
+  [New File/Dir]: src/main/webapp/app/entities/professor/professor-reducer.spec.ts
+  [New File/Dir]: src/main/webapp/app/entities/professor/professor.tsx
+  [New File/Dir]: src/main/webapp/app/entities/professor/professor.reducer.ts
+  [New File/Dir]: src/main/webapp/app/entities/professor/professor-delete-dialog.tsx
+  [New File/Dir]: src/main/webapp/app/entities/professor/professor-update.tsx
+  [New File/Dir]: src/main/webapp/swagger-ui
+  [New File/Dir]: src/main/webapp/swagger-ui/index.html
+  [New File/Dir]: src/main/webapp/404.html
+  [New File/Dir]: src/main/webapp/content
+  [New File/Dir]: src/main/webapp/content/css
+  [New File/Dir]: src/main/webapp/content/css/loading.css
+  [New File/Dir]: src/main/webapp/content/images
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_1_head-192.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_1_head-384.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_0_head-384.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_0_head-192.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_0_head-256.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_3.svg
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_2.svg
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_0.svg
+  [New File/Dir]: src/main/webapp/content/images/logo-jhipster.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_1.svg
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_3_head-512.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_1_head-256.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_2_head-512.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_3_head-256.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_0_head-512.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_2_head-256.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_1_head-512.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_2_head-192.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_2_head-384.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_3_head-384.png
+  [New File/Dir]: src/main/webapp/content/images/jhipster_family_member_3_head-192.png
+  [New File/Dir]: src/main/webapp/WEB-INF
+  [New File/Dir]: src/main/webapp/WEB-INF/web.xml
+  [New File/Dir]: src/main/webapp/robots.txt
+  [New File/Dir]: src/main/webapp/i18n
+  [New File/Dir]: src/main/webapp/i18n/en
+  [New File/Dir]: src/main/webapp/i18n/en/password.json
+  [New File/Dir]: src/main/webapp/i18n/en/metrics.json
+  [New File/Dir]: src/main/webapp/i18n/en/error.json
+  [New File/Dir]: src/main/webapp/i18n/en/sessions.json
+  [New File/Dir]: src/main/webapp/i18n/en/settings.json
+  [New File/Dir]: src/main/webapp/i18n/en/logs.json
+  [New File/Dir]: src/main/webapp/i18n/en/activate.json
+  [New File/Dir]: src/main/webapp/i18n/en/health.json
+  [New File/Dir]: src/main/webapp/i18n/en/professor.json
+  [New File/Dir]: src/main/webapp/i18n/en/login.json
+  [New File/Dir]: src/main/webapp/i18n/en/register.json
+  [New File/Dir]: src/main/webapp/i18n/en/configuration.json
+  [New File/Dir]: src/main/webapp/i18n/en/global.json
+  [New File/Dir]: src/main/webapp/i18n/en/en.js
+  [New File/Dir]: src/main/webapp/i18n/en/user-management.json
+  [New File/Dir]: src/main/webapp/i18n/en/home.json
+  [New File/Dir]: src/main/webapp/i18n/en/reset.json
+  [New File/Dir]: src/main/webapp/i18n/en/graduateProject.json
+  [New File/Dir]: src/main/webapp/manifest.webapp
+  [New File/Dir]: src/main/java
+  [New File/Dir]: src/main/java/uk
+  [New File/Dir]: src/main/java/uk/ac
+  [New File/Dir]: src/main/java/uk/ac/bham
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/GeneratedByJHipster.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/repository
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/repository/AuthorityRepository.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/repository/ProfessorRepository.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/repository/UserRepository.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/repository/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/repository/GraduateProjectRepository.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/LiquibaseConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/LoggingAspectConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/ApplicationProperties.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/WebConfigurer.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/DateTimeFormatConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/SecurityJwtConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/CacheConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/JacksonHibernateConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/CacheKeyGeneratorConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/StaticResourcesWebConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/AsyncConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/LoggingConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/SecurityConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/JacksonConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/DatabaseConfiguration.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/Constants.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/config/CRLFLogConverter.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/security
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/security/AuthoritiesConstants.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/security/SecurityUtils.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/security/SpringSecurityAuditorAware.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/security/UserNotActivatedException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/security/DomainUserDetailsService.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/security/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/filter
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/filter/SpaWebFilter.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/filter/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/PublicUserResource.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/AccountResource.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/UserResource.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/AuthorityResource.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/vm
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/KeyAndPasswordVM.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/LoginVM.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/vm/ManagedUserVM.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/GraduateProjectResource.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/LoginAlreadyUsedException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/BadRequestAlertException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/EmailAlreadyUsedException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/InvalidPasswordException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/ErrorConstants.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslator.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/FieldErrorVM.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/errors/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/AuthenticateController.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/web/rest/ProfessorResource.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/management
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/management/SecurityMetersService.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/management/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/aop
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/aop/logging
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/aop/logging/LoggingAspect.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/aop/logging/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/ApplicationWebXml.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/GeneratedApp.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/dto
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/dto/PasswordChangeDTO.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/dto/AdminUserDTO.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/dto/UserDTO.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/dto/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/UserService.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/MailService.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/mapper
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/mapper/UserMapper.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/mapper/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/EmailAlreadyUsedException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/InvalidPasswordException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/UsernameAlreadyUsedException.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/service/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/domain
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/domain/AbstractAuditingEntity.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/domain/GraduateProject.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/domain/User.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/domain/Professor.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/domain/Authority.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/domain/package-info.java
+  [New File/Dir]: src/main/java/uk/ac/bham/codeclassroom/package-info.java
+Debugging [CLIInvoker]: Polling #2 at 13:38:33.529543
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #3 at 13:38:34.541083
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #4 at 13:38:35.555504
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #5 at 13:38:36.569860
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #6 at 13:38:37.589596
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #7 at 13:38:38.603842
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #8 at 13:38:39.617207
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #9 at 13:38:40.634977
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #10 at 13:38:41.648691
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #11 at 13:38:42.665544
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #12 at 13:38:43.674397
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #13 at 13:38:44.689635
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #14 at 13:38:45.706397
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #15 at 13:38:46.721061
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #16 at 13:38:47.736828
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #17 at 13:38:48.752383
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #18 at 13:38:49.769887
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #19 at 13:38:50.788851
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #20 at 13:38:51.808571
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #21 at 13:38:52.824415
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #22 at 13:38:53.841036
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #23 at 13:38:54.856736
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #24 at 13:38:55.871935
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #25 at 13:38:56.887848
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #26 at 13:38:57.915547
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #27 at 13:38:58.933577
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #28 at 13:38:59.949349
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #29 at 13:39:00.965486
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling #30 at 13:39:01.976300
+  No new files detected in this poll.
+Debugging [CLIInvoker]: Polling finished.
+13:39:03.185 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Debugging [Pipeline]: Listing all .java files under /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/codeclassroom-gen-13917909081083017951/build/generated-app/src/main/java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/GeneratedByJHipster.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/repository/AuthorityRepository.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/repository/ProfessorRepository.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/repository/UserRepository.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/repository/package-info.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/repository/GraduateProjectRepository.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/LiquibaseConfiguration.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/LoggingAspectConfiguration.java
+13:39:03.189 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/ApplicationProperties.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/WebConfigurer.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/DateTimeFormatConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/SecurityJwtConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/CacheConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/JacksonHibernateConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/CacheKeyGeneratorConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/StaticResourcesWebConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/AsyncConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/LoggingConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/SecurityConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/JacksonConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/DatabaseConfiguration.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/Constants.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/config/CRLFLogConverter.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/security/AuthoritiesConstants.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/security/SecurityUtils.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/security/SpringSecurityAuditorAware.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/security/UserNotActivatedException.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/security/DomainUserDetailsService.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/security/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/filter/SpaWebFilter.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/filter/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/PublicUserResource.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/AccountResource.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/UserResource.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/AuthorityResource.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/vm/KeyAndPasswordVM.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/vm/LoginVM.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/vm/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/vm/ManagedUserVM.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/GraduateProjectResource.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/LoginAlreadyUsedException.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/BadRequestAlertException.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/EmailAlreadyUsedException.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/InvalidPasswordException.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/ErrorConstants.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslator.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/FieldErrorVM.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/errors/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/AuthenticateController.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/web/rest/ProfessorResource.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/management/SecurityMetersService.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/management/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/aop/logging/LoggingAspect.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/aop/logging/package-info.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/ApplicationWebXml.java
+13:39:03.190 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/GeneratedApp.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/dto/PasswordChangeDTO.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/dto/AdminUserDTO.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/dto/UserDTO.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/dto/package-info.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/UserService.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/MailService.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/mapper/UserMapper.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/mapper/package-info.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/EmailAlreadyUsedException.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/InvalidPasswordException.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/UsernameAlreadyUsedException.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/service/package-info.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/domain/AbstractAuditingEntity.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/domain/GraduateProject.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/domain/User.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/domain/Professor.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/domain/Authority.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/domain/package-info.java
+13:39:03.191 [main] INFO uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Generated file: uk/ac/bham/codeclassroom/package-info.java
+13:39:03.192 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Debugging [Pipeline]: Student.java NOT FOUND. Logging package structure:
+13:39:03.192 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: 
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/repository
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/config
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/security
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/web
+13:39:03.193 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/web/filter
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/web/rest
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/web/rest/vm
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/web/rest/errors
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/management
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/aop
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/aop/logging
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/service
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/service/dto
+13:39:03.194 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/service/mapper
+13:39:03.195 [main] ERROR uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationPipeline -- Directory: uk/ac/bham/codeclassroom/domain
+Debugging [PostProcessor]: Listing all .java files under /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/codeclassroom-gen-13917909081083017951/build/generated-app/src/main/java
+Generated file: uk/ac/bham/codeclassroom/GeneratedByJHipster.java
+Generated file: uk/ac/bham/codeclassroom/repository/AuthorityRepository.java
+Generated file: uk/ac/bham/codeclassroom/repository/ProfessorRepository.java
+Generated file: uk/ac/bham/codeclassroom/repository/UserRepository.java
+Generated file: uk/ac/bham/codeclassroom/repository/package-info.java
+Generated file: uk/ac/bham/codeclassroom/repository/GraduateProjectRepository.java
+Generated file: uk/ac/bham/codeclassroom/config/LiquibaseConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/LoggingAspectConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/ApplicationProperties.java
+Generated file: uk/ac/bham/codeclassroom/config/WebConfigurer.java
+Generated file: uk/ac/bham/codeclassroom/config/DateTimeFormatConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/SecurityJwtConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/CacheConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/JacksonHibernateConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/CacheKeyGeneratorConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/StaticResourcesWebConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/AsyncConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/LoggingConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/SecurityConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/JacksonConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/DatabaseConfiguration.java
+Generated file: uk/ac/bham/codeclassroom/config/package-info.java
+Generated file: uk/ac/bham/codeclassroom/config/Constants.java
+Generated file: uk/ac/bham/codeclassroom/config/CRLFLogConverter.java
+Generated file: uk/ac/bham/codeclassroom/security/AuthoritiesConstants.java
+Generated file: uk/ac/bham/codeclassroom/security/SecurityUtils.java
+Generated file: uk/ac/bham/codeclassroom/security/SpringSecurityAuditorAware.java
+Generated file: uk/ac/bham/codeclassroom/security/UserNotActivatedException.java
+Generated file: uk/ac/bham/codeclassroom/security/DomainUserDetailsService.java
+Generated file: uk/ac/bham/codeclassroom/security/package-info.java
+Generated file: uk/ac/bham/codeclassroom/web/filter/SpaWebFilter.java
+Generated file: uk/ac/bham/codeclassroom/web/filter/package-info.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/PublicUserResource.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/AccountResource.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/UserResource.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/AuthorityResource.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/vm/KeyAndPasswordVM.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/vm/LoginVM.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/vm/package-info.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/vm/ManagedUserVM.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/GraduateProjectResource.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/LoginAlreadyUsedException.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/BadRequestAlertException.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/EmailAlreadyUsedException.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/InvalidPasswordException.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/ErrorConstants.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/ExceptionTranslator.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/FieldErrorVM.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/errors/package-info.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/AuthenticateController.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/package-info.java
+Generated file: uk/ac/bham/codeclassroom/web/rest/ProfessorResource.java
+Generated file: uk/ac/bham/codeclassroom/management/SecurityMetersService.java
+Generated file: uk/ac/bham/codeclassroom/management/package-info.java
+Generated file: uk/ac/bham/codeclassroom/aop/logging/LoggingAspect.java
+Generated file: uk/ac/bham/codeclassroom/aop/logging/package-info.java
+Generated file: uk/ac/bham/codeclassroom/ApplicationWebXml.java
+Generated file: uk/ac/bham/codeclassroom/GeneratedApp.java
+Generated file: uk/ac/bham/codeclassroom/service/dto/PasswordChangeDTO.java
+Generated file: uk/ac/bham/codeclassroom/service/dto/AdminUserDTO.java
+Generated file: uk/ac/bham/codeclassroom/service/dto/UserDTO.java
+Generated file: uk/ac/bham/codeclassroom/service/dto/package-info.java
+Generated file: uk/ac/bham/codeclassroom/service/UserService.java
+Generated file: uk/ac/bham/codeclassroom/service/MailService.java
+Generated file: uk/ac/bham/codeclassroom/service/mapper/UserMapper.java
+Generated file: uk/ac/bham/codeclassroom/service/mapper/package-info.java
+Generated file: uk/ac/bham/codeclassroom/service/EmailAlreadyUsedException.java
+Generated file: uk/ac/bham/codeclassroom/service/InvalidPasswordException.java
+Generated file: uk/ac/bham/codeclassroom/service/UsernameAlreadyUsedException.java
+Generated file: uk/ac/bham/codeclassroom/service/package-info.java
+Generated file: uk/ac/bham/codeclassroom/domain/AbstractAuditingEntity.java
+Generated file: uk/ac/bham/codeclassroom/domain/GraduateProject.java
+Generated file: uk/ac/bham/codeclassroom/domain/User.java
+Generated file: uk/ac/bham/codeclassroom/domain/Professor.java
+Generated file: uk/ac/bham/codeclassroom/domain/Authority.java
+Generated file: uk/ac/bham/codeclassroom/domain/package-info.java
+Generated file: uk/ac/bham/codeclassroom/package-info.java
+Debugging [PostProcessor]: Student.java NOT FOUND. Logging package structure:
+Directory: 
+Directory: uk
+Directory: uk/ac
+Directory: uk/ac/bham
+Directory: uk/ac/bham/codeclassroom
+Directory: uk/ac/bham/codeclassroom/repository
+Directory: uk/ac/bham/codeclassroom/config
+Directory: uk/ac/bham/codeclassroom/security
+Directory: uk/ac/bham/codeclassroom/web
+Directory: uk/ac/bham/codeclassroom/web/filter
+Directory: uk/ac/bham/codeclassroom/web/rest
+Directory: uk/ac/bham/codeclassroom/web/rest/vm
+Directory: uk/ac/bham/codeclassroom/web/rest/errors
+Directory: uk/ac/bham/codeclassroom/management
+Directory: uk/ac/bham/codeclassroom/aop
+Directory: uk/ac/bham/codeclassroom/aop/logging
+Directory: uk/ac/bham/codeclassroom/service
+Directory: uk/ac/bham/codeclassroom/service/dto
+Directory: uk/ac/bham/codeclassroom/service/mapper
+Directory: uk/ac/bham/codeclassroom/domain
+CodeClassroom Inheritance Post-Processor completed in 8 ms.
+Transformed 0 files.
+Generated ZIP exists at: /var/folders/7z/s9d026g95y7f43pxjddrxz700000gn/T/codeclassroom-gen-13917909081083017951/zip-out/generated-app.zip
+====== COMPLETED REAL GENERATION TEST ======
+]]></system-out>
+  </testcase>
+</testsuite>

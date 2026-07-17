@@ -1,0 +1,60 @@
+package {{basePackage}}.web.rest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import {{basePackage}}.service.dto.{{className}}DTO;
+import {{basePackage}}.service.{{className}}Service;
+
+import java.util.List;
+
+/**
+ * REST controller for managing {@link {{basePackage}}.domain.{{className}}}.
+ */
+@RestController
+@RequestMapping("/api/{{pluralLowerName}}")
+public class {{className}}Resource {
+
+    private final {{className}}Service service;
+
+    /**
+     * Constructor injection.
+     */
+    public {{className}}Resource({{className}}Service service) {
+        this.service = service;
+    }
+
+    /**
+     * POST /api/{{pluralLowerName}} : Create a new entity.
+     */
+    @PostMapping
+    public ResponseEntity<{{className}}DTO> create(@RequestBody {{className}}DTO dto) {
+        return ResponseEntity.ok(service.save(dto));
+    }
+
+    /**
+     * GET /api/{{pluralLowerName}} : Get all entities.
+     */
+    @GetMapping
+    public ResponseEntity<List<{{className}}DTO>> getAll() {
+        return ResponseEntity.ok(service.findAll());
+    }
+
+    /**
+     * GET /api/{{pluralLowerName}}/:id : Get entity by ID.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<{{className}}DTO> get(@PathVariable Long id) {
+        return service.findOne(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * DELETE /api/{{pluralLowerName}}/:id : Delete entity by ID.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}
