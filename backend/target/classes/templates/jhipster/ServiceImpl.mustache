@@ -1,0 +1,57 @@
+package {{basePackage}}.service.impl;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import {{basePackage}}.service.dto.{{className}}DTO;
+import {{basePackage}}.service.mapper.{{className}}Mapper;
+import {{basePackage}}.repository.{{className}}Repository;
+import {{basePackage}}.service.{{className}}Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+/**
+ * Service Implementation for managing {@link {{basePackage}}.domain.{{className}}}.
+ */
+@Service
+@Transactional
+public class {{className}}ServiceImpl implements {{className}}Service {
+
+    private final {{className}}Repository repository;
+    private final {{className}}Mapper mapper;
+
+    /**
+     * Constructor injection.
+     */
+    public {{className}}ServiceImpl({{className}}Repository repository, {{className}}Mapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+
+    @Override
+    public {{className}}DTO save({{className}}DTO dto) {
+        // Stub implementation
+        return dto;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<{{className}}DTO> findAll() {
+        return repository.findAll().stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<{{className}}DTO> findOne(Long id) {
+        return repository.findById(id)
+                .map(mapper::toDto);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+}

@@ -1,5 +1,7 @@
 package uk.ac.bham.codeclassroom.generator.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import uk.ac.bham.codeclassroom.exception.ErrorResponse;
 import uk.ac.bham.codeclassroom.generator.exception.LexerException;
 import uk.ac.bham.codeclassroom.generator.exception.ParserException;
+import uk.ac.bham.codeclassroom.generator.jhipster.fullstack.FullStackGenerationException;
+import uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterGenerationException;
+import uk.ac.bham.codeclassroom.generator.jhipster.postprocessor.TransformationException;
 import uk.ac.bham.codeclassroom.generator.inheritance.InheritanceResolutionException;
 import uk.ac.bham.codeclassroom.generator.project.ProjectBuilderException;
 import uk.ac.bham.codeclassroom.generator.semantic.SemanticException;
@@ -24,6 +29,8 @@ import java.time.LocalDateTime;
 @RestControllerAdvice(assignableTypes = GenerationController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class GenerationExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GenerationExceptionHandler.class);
 
     @ExceptionHandler(LexerException.class)
     public ResponseEntity<ErrorResponse> handleLexerException(LexerException ex) {
@@ -119,8 +126,51 @@ public class GenerationExceptionHandler {
         return new ResponseEntity<>(response, status);
     }
 
+    @ExceptionHandler(FullStackGenerationException.class)
+    public ResponseEntity<ErrorResponse> handleFullStackGenerationException(FullStackGenerationException ex) {
+        log.error("Full-stack JHipster generation pipeline failed with stack trace", ex);
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ErrorResponse response = new ErrorResponse(
+                LocalDateTime.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
+                "/api/generate"
+        );
+        return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler(JHipsterGenerationException.class)
+    public ResponseEntity<ErrorResponse> handleJHipsterGenerationException(JHipsterGenerationException ex) {
+        log.error("JHipster CLI JDL import execution failed with stack trace", ex);
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ErrorResponse response = new ErrorResponse(
+                LocalDateTime.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
+                "/api/generate"
+        );
+        return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler(TransformationException.class)
+    public ResponseEntity<ErrorResponse> handleTransformationException(TransformationException ex) {
+        log.error("JHipster inheritance post-processing failed with stack trace", ex);
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ErrorResponse response = new ErrorResponse(
+                LocalDateTime.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
+                "/api/generate"
+        );
+        return new ResponseEntity<>(response, status);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleUnexpectedException(Exception ex) {
+        log.error("An unexpected error occurred during project generation with stack trace", ex);
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         ErrorResponse response = new ErrorResponse(
                 LocalDateTime.now(),

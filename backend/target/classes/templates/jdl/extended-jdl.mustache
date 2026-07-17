@@ -1,0 +1,41 @@
+{{#configuration}}
+application {
+  config {
+    baseName {{applicationName}}
+    packageName {{basePackage}}
+    databaseType sql
+    prodDatabaseType {{databaseType}}
+    authenticationType {{authenticationType}}
+    buildTool {{buildTool}}
+    clientFramework {{frontendFramework}}
+  }
+  {{#hasEntities}}
+
+  entities {{formattedEntitiesList}}
+  {{/hasEntities}}
+}
+
+{{/configuration}}
+{{#entities}}
+entity {{name}} {
+{{#fields}}
+    {{name}} {{type}}
+{{/fields}}
+}
+
+{{/entities}}
+{{#relationships}}
+relationship {{type}} {
+    {{sourceEntity}}{{formattedSourceProperty}} to {{targetEntity}}{{formattedTargetProperty}}
+}
+
+{{/relationships}}
+{{#hasInheritances}}
+// CodeClassroom Extension
+
+inheritance {
+{{#inheritanceDeclarations}}
+    {{childEntity}} extends {{parentEntity}}
+{{/inheritanceDeclarations}}
+}
+{{/hasInheritances}}

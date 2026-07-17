@@ -7,3 +7,10 @@
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/SemanticValidatorTest.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/SpringBootProjectBuilderTest.java
 /Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/ZipGeneratorTest.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/jdl/ExtendedJDLTest.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/jhipster/JHipsterAdapterTest.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/jhipster/fullstack/FullStackGenerationPipelineTest.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/jhipster/pipeline/JHipsterForkIntegrationTest.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/jhipster/pipeline/JHipsterGenerationPipelineTest.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/jhipster/postprocessor/JHipsterPostProcessorTest.java
+/Users/theverma/Developer/learning/d/codeClassroom/codeclassroom/backend/src/test/java/uk/ac/bham/codeclassroom/generator/jhipster/template/JHipsterTemplateEngineTest.java

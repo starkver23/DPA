@@ -1,0 +1,41 @@
+package {{basePackage}}.service;
+
+import {{basePackage}}.service.dto.{{className}}DTO;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Service Interface for managing {@link {{basePackage}}.domain.{{className}}}.
+ */
+public interface {{className}}Service {
+
+    /**
+     * Save a {{className}}.
+     *
+     * @param dto the DTO to save
+     * @return the persisted DTO
+     */
+    {{className}}DTO save({{className}}DTO dto);
+
+    /**
+     * Get all the entities.
+     *
+     * @return the list of DTOs
+     */
+    List<{{className}}DTO> findAll();
+
+    /**
+     * Get the "id" entity.
+     *
+     * @param id the id of the entity
+     * @return the Optional DTO
+     */
+    Optional<{{className}}DTO> findOne(Long id);
+
+    /**
+     * Delete the "id" entity.
+     *
+     * @param id the id of the entity
+     */
+    void delete(Long id);
+}

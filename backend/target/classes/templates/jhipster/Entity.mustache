@@ -1,0 +1,48 @@
+package {{basePackage}}.domain;
+
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
+import java.util.Collection;
+
+@Entity
+@Table(name = "{{instanceName}}")
+{{#requiresInheritanceAnnotation}}
+@Inheritance(strategy = InheritanceType.JOINED)
+{{/requiresInheritanceAnnotation}}
+public class {{className}}{{#requiresExtends}} extends {{parentClassName}}{{/requiresExtends}} {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    {{#fields}}
+    private {{type}} {{name}};
+    {{/fields}}
+
+    /**
+     * Default constructor.
+     */
+    public {{className}}() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    {{#fields}}
+    public {{type}} get{{capitalizedName}}() {
+        return {{name}};
+    }
+
+    public void set{{capitalizedName}}({{type}} {{name}}) {
+        this.{{name}} = {{name}};
+    }
+    {{/fields}}
+}
