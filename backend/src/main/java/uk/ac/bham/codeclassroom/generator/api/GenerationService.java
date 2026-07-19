@@ -116,7 +116,7 @@ public class GenerationService {
             // JHipster baseName must match /^[A-Za-z]\w*$/, so generatedApp is used instead of generated-app.
             JHipsterProjectConfiguration config = new JHipsterProjectConfiguration(
                 "generatedApp",
-                "uk.ac.bham.codeclassroom",
+                "com.mycompany.codeclassroom",
                 "21",
                 "3.2.5",
                 "8.2.1",
