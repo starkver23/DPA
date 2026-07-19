@@ -126,7 +126,7 @@ class GenerationServiceTest {
             assertNotNull(zipFile.getEntry("generated-app/src/main/webapp/app/entities"), "Should contain React entities folder");
             assertNotNull(zipFile.getEntry("generated-app/src/main/docker"), "Should contain Docker configuration folder");
             assertNotNull(zipFile.getEntry("generated-app/src/main/resources/config/liquibase"), "Should contain Liquibase database folder");
-            assertNotNull(zipFile.getEntry("generated-app/src/main/java/uk/ac/bham/codeclassroom/domain/Student.java"), "Should contain Student.java");
+            assertNotNull(zipFile.getEntry("generated-app/src/main/java/com/mycompany/codeclassroom/domain/Student.java"), "Should contain Student.java");
         } finally {
             // Cleanup ZIP and its temporary parent folder
             Files.deleteIfExists(zipPath);

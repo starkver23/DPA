@@ -33,7 +33,7 @@ public record JHipsterProjectConfiguration(
     public static JHipsterProjectConfiguration createDefault(String applicationName) {
         return new JHipsterProjectConfiguration(
             applicationName,
-            "uk.ac.bham.codeclassroom",
+            "com.mycompany.codeclassroom",
             "21",
             "3.2.5",
             "8.2.1",

@@ -96,7 +96,7 @@ class JHipsterForkIntegrationTest {
 
     @Test
     void testVersionCheckExecutesWithLocalForkIfPresent() {
-        Path realFork = Path.of("/Users/theverma/Developer/experiments/jh");
+        Path realFork = Path.of("/Users/theverma/Developer/experiments/jj");
         if (Files.exists(realFork)) {
             JHipsterCLIInvoker invoker = new JHipsterCLIInvoker();
             invoker.setJHipsterForkPath(realFork.toAbsolutePath().toString());
@@ -110,7 +110,7 @@ class JHipsterForkIntegrationTest {
 
     @Test
     void testRealGenerationOfProfessorAndGraduateProject() throws Exception {
-        Path realFork = Path.of("/Users/theverma/Developer/experiments/jh");
+        Path realFork = Path.of("/Users/theverma/Developer/experiments/jj");
         if (Files.exists(realFork)) {
             System.out.println("====== STARTING REAL GENERATION TEST ======");
             // Instantiate real GenerationService with local fork path
