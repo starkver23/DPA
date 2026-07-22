@@ -1,0 +1,15 @@
+.git
+.github
+.vscode
+.idea
+
+frontend/node_modules
+frontend/dist
+
+backend/target
+
+generator-jhipster/.git
+generator-jhipster/node_modules
+generator-jhipster/.cache
+generator-jhipster/.idea
+generator-jhipster/.vscode
