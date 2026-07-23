@@ -1,20 +1,38 @@
-# Stage 1: Build the Java application
-FROM maven:3.9-eclipse-temurin-21-jammy AS build
+# Stage 1: Build the React Frontend
+FROM node:22-alpine AS frontend-build
 WORKDIR /app
 
-# Copy the pom.xml and download dependencies for offline caching
+# Copy package descriptors and install dependencies using clean install
+COPY frontend/package*.json ./
+RUN npm ci
+
+# Copy the rest of the frontend source and build the production bundle
+COPY frontend/ ./
+ENV VITE_API_BASE_URL=""
+RUN npm run build
+
+# Stage 2: Build the Java Spring Boot Backend
+FROM maven:3.9-eclipse-temurin-21-jammy AS backend-build
+WORKDIR /app
+
+# Copy the pom.xml and cache Maven dependencies offline
 COPY backend/pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy the source code and build the application
+# Copy the backend source code
 COPY backend/ .
+
+# Inject the compiled frontend assets from Stage 1 into Spring Boot's static resources
+COPY --from=frontend-build /app/dist/ ./src/main/resources/static/
+
+# Build the final self-contained executable JAR
 RUN mvn clean package -DskipTests
 
-# Stage 2: Create the production runtime image
+# Stage 3: Create the final production runtime image
 FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 
-# Install Node.js 22 LTS and npm
+# Install Node.js 22 LTS and npm (required for JHipster generator invocation)
 RUN apt-get update && \
     apt-get install -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
@@ -23,17 +41,22 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy the compiled JAR file from the build stage
-COPY --from=build /app/target/*.jar app.jar
+# Copy the unified executable JAR file from Stage 2
+COPY --from=backend-build /app/target/*.jar app.jar
 
-# Copy the modified JHipster generator
+# Copy the custom JHipster generator fork
 COPY generator-jhipster /app/generator-jhipster
 
-# Set the environment variable for the JHipster generator fork
+# Install JHipster dependencies, build the TypeScript distribution, and prune devDependencies
+RUN cd /app/generator-jhipster && \
+    npm ci && \
+    npm prune --production
+
+# Set environment variables for the generator fork
 ENV JHIPSTER_FORK_PATH=/app/generator-jhipster
 
-# Expose the application port
+# Expose the standard port
 EXPOSE 8080
 
-# Start the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Start the unified Spring Boot and React application
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=70.0", "-jar", "app.jar"]
