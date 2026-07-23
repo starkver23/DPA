@@ -1,0 +1,54 @@
+{
+  "include": [
+    {
+      "name": "react-default",
+      "app-sample": "react-default",
+      "entity": "sqlfull"
+    },
+    {
+      "name": "react-maven-h2mem-memcached",
+      "app-sample": "react-maven-h2mem-memcached",
+      "entity": "sql",
+      "generatorOptions": {
+        "defaultEnvironment": "dev"
+      }
+    },
+    {
+      "name": "react-gradle-mysql-es-noi18n-mapsid",
+      "app-sample": "react-gradle-mysql-es-noi18n-mapsid",
+      "entity": "sql"
+    },
+    {
+      "name": "react-gradle-cassandra-session-redis",
+      "app-sample": "react-gradle-cassandra-session-redis",
+      "entity": "cassandra"
+    },
+    {
+      "name": "react-default-windows",
+      "app-sample": "none",
+      "environment": "dev",
+      "os": "windows-latest",
+      "generatorOptions": {
+        "defaults": true,
+        "devDatabaseType": "h2Disk",
+        "clientFramework": "react"
+      }
+    },
+    {
+      "name": "ms-react-consul-jwt-cassandra-redis",
+      "jdl-samples": "ms-react-consul-jwt-cassandra-redis",
+      "generatorOptions": {
+        "workspaces": true,
+        "monorepository": true
+      }
+    },
+    {
+      "name": "ms-mf-react-eureka-oauth2-mariadb-infinispan",
+      "jdl-samples": "ms-mf-react-eureka-oauth2-mariadb-infinispan",
+      "generatorOptions": {
+        "workspaces": true,
+        "monorepository": true
+      }
+    }
+  ]
+}

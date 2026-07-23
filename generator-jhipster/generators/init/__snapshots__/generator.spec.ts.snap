@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`generator - init help should print expected information 1`] = `
+"Usage: jhipster init [options]
+
+Init project (alpha)
+
+Options:
+  --auto-crlf                   Detect line endings
+  --remove-needles              Remove needles, needles are used by entity and language generators to inject code
+  --skip-git                    Skip git repository initialization
+  --force-git                   Force commit to git repository
+  --commit-msg <value>          Commit changes (implies forceGit)
+  --monorepository              Use monorepository
+  --base-name <value>           Application base name
+  --prettier-tab-width <value>  Default tab width for prettier (default: 2)
+  --skip-commit-hook            Skip adding husky commit hooks
+  -h, --help                    display help for command
+"
+`;
+
+exports[`generator - init with default config should write files and match snapshot 1`] = `
+{
+  ".editorconfig": {
+    "stateCleared": "modified",
+  },
+  ".gitattributes": {
+    "stateCleared": "modified",
+  },
+  ".gitignore": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "README.md": {
+    "stateCleared": "modified",
+  },
+}
+`;

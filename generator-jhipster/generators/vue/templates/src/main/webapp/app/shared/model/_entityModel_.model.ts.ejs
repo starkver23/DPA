@@ -1,0 +1,45 @@
+<%#
+ Copyright 2013-2026 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+<%_ const variablesWithTypes = this.generateEntityClientFields(primaryKey, fields.filter(field => !field.id), relationships, dto, customDateType = 'Date', embedded);
+    const typeImports = this.generateEntityClientImports(relationships, dto);
+    const defaultVariablesValues = this.generateEntityClientFieldDefaultValues(fields.filter(field => !field.id));
+    const enumImports = this.generateEntityClientEnumImports(fields.filter(field => !field.id));
+_%>
+<%_ for (const [importedType, importedPath] of typeImports) { _%>
+  <%_ if (importedType !== 'I'.concat(entityAngularName)) { _%>
+import { type <%- importedType %> } from '<%- importedPath %>';
+  <%_ } _%>
+<%_ } _%>
+
+<%_ for (const [importedType, importedPath] of enumImports) { _%>
+import { type <%- importedType %> } from '<%- importedPath %>';
+<%_ } _%>
+export interface I<%- entityAngularName %> {
+<%_ for (const variablesWithType of variablesWithTypes) { _%>
+    <%- variablesWithType %>;
+<%_ } _%>
+}
+
+export class <%- entityAngularName %> implements I<%- entityAngularName %> {
+    constructor(<% for (const variablesWithType of variablesWithTypes) { %>
+        public <%- variablesWithType %>,<% } %>
+    ) {<% for (const defaultVariablesValue of Object.values(defaultVariablesValues)) { %>
+        <%- defaultVariablesValue %><% } %>
+    }
+}

@@ -1,0 +1,177 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import type {
+  ExportApplicationPropertiesFromCommand,
+  ExportGeneratorOptionsFromCommand,
+  ExportStoragePropertiesFromCommand,
+} from './types.ts';
+
+const _testCommand = {
+  configs: {
+    stringRootType: {
+      cli: { type: String },
+      scope: 'storage',
+    },
+    booleanCliType: {
+      cli: { type: Boolean },
+      scope: 'storage',
+    },
+    none: {
+      scope: 'none',
+    },
+    choiceType: {
+      cli: {
+        type: String,
+      },
+      choices: ['foo', 'no'],
+      scope: 'storage',
+    },
+    unknownType: {
+      cli: {
+        type: () => {},
+      },
+      scope: 'storage',
+    },
+  },
+} as const;
+
+type TestCommand = typeof _testCommand;
+
+type StorageProperties = ExportStoragePropertiesFromCommand<TestCommand>;
+
+({
+  stringRootType: 'foo',
+}) satisfies StorageProperties;
+
+({
+  // @ts-expect-error invalid value
+  stringRootType: false,
+}) satisfies StorageProperties;
+
+({
+  booleanCliType: false,
+}) satisfies StorageProperties;
+
+({
+  // @ts-expect-error invalid value
+  booleanCliType: 'false',
+}) satisfies StorageProperties;
+
+({
+  choiceType: 'foo',
+}) satisfies StorageProperties;
+
+({
+  // @ts-expect-error invalid value
+  choiceType: 'bar',
+}) satisfies StorageProperties;
+
+({
+  unknownType: true,
+}) satisfies StorageProperties;
+
+({
+  unknownType: 'string',
+}) satisfies StorageProperties;
+
+type ApplicationProperties = ExportApplicationPropertiesFromCommand<TestCommand>;
+
+const _applicationChoiceType = {
+  choiceType: 'foo',
+  // @ts-expect-error missing fields
+} satisfies ApplicationProperties;
+
+const _applicationChoiceTypeNo = {
+  choiceTypeNo: false,
+  // @ts-expect-error missing fields
+} satisfies ApplicationProperties;
+
+const _applicationChoiceTypeFoo = {
+  choiceTypeFoo: true,
+  // @ts-expect-error missing fields
+} satisfies ApplicationProperties;
+
+const _applicationChoiceTypeAny = {
+  choiceTypeAny: true,
+  // @ts-expect-error missing fields
+} satisfies ApplicationProperties;
+
+({
+  ..._applicationChoiceType,
+  ..._applicationChoiceTypeNo,
+  ..._applicationChoiceTypeFoo,
+  ..._applicationChoiceTypeAny,
+}) satisfies ApplicationProperties;
+
+type ApplicationOptions = ExportGeneratorOptionsFromCommand<TestCommand>;
+
+({
+  stringRootType: 'foo',
+  booleanCliType: false,
+  choiceType: 'foo',
+  none: 'foo',
+}) satisfies ApplicationOptions;
+
+({
+  // @ts-expect-error unknown field
+  foo: 'bar',
+}) satisfies ApplicationOptions;
+
+const _dummyCommand = {
+  options: {},
+  configs: {},
+} as const;
+
+// Check if the type allows any property.
+// @ts-expect-error unknown field
+(() => {})(({} as ExportApplicationPropertiesFromCommand<typeof _dummyCommand>).nonExisting);
+// @ts-expect-error unknown field
+(() => {})(({} as ExportStoragePropertiesFromCommand<typeof _dummyCommand>).nonExisting);
+
+({}) satisfies ExportApplicationPropertiesFromCommand<typeof _dummyCommand>;
+
+const _simpleConfig = {
+  options: {},
+  configs: {
+    stringOption: {
+      cli: { type: String },
+      scope: 'storage',
+    },
+  },
+} as const;
+
+({}) satisfies ExportApplicationPropertiesFromCommand<typeof _simpleConfig>;
+
+const _choiceConfig = {
+  options: {},
+  configs: {
+    stringOption: {
+      choices: ['foo', 'bar'],
+      scope: 'storage',
+    },
+  },
+} as const;
+
+({
+  stringOption: 'foo',
+  stringOptionFoo: true,
+  stringOptionBar: false,
+  stringOptionAny: false,
+}) satisfies ExportApplicationPropertiesFromCommand<typeof _choiceConfig>;

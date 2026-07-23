@@ -1,0 +1,9 @@
+{
+  "include": [
+    {
+      "app-sample": "vue-default",
+      "cache": "vue",
+      "entity": "sqllight"
+    }
+  ]
+}

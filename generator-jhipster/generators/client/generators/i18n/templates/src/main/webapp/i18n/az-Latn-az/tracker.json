@@ -1,0 +1,12 @@
+{
+  "tracker": {
+    "title": "Cari zamanda istifadəçi əməliyyatları",
+    "table": {
+      "userlogin": "İstifadəçi",
+      "ipaddress": "IP Adresi",
+      "userAgent": "İstifadəçi məlumatı",
+      "page": "Mövcud səhifə",
+      "time": "Vaxt"
+    }
+  }
+}

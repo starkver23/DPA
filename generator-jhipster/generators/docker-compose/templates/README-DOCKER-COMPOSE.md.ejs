@@ -1,0 +1,46 @@
+# JHipster generated Docker-Compose configuration
+
+## Usage
+
+Launch all your infrastructure by running: `docker compose up -d`.
+
+## Configured Docker services
+<%_ if (serviceDiscoveryAny) { _%>
+
+### Service registry and configuration server:
+<%_ } _%>
+<%_ if (serviceDiscoveryEureka) { _%>
+- [JHipster Registry](http://localhost:8761)
+<%_ } _%>
+<%_ if (serviceDiscoveryConsul) { _%>
+- [Consul](http://localhost:8500)
+<%_ } _%>
+
+### Applications and dependencies:
+<%_ for (const app of appConfigs) { _%>
+- <%- app.baseName %> (<%- app.applicationType %> application)
+- <%- app.baseName %>'s <%- app.databaseTypeSql ? app.prodDatabaseType : app.databaseType %> database
+  <%_ if (app.searchEngineAny && !app.searchEngineCouchbase) { _%>
+- <%- app.baseName %>'s <%- app.searchEngine %> search engine
+  <%_ } _%>
+<%_ } _%>
+
+### Additional Services:
+
+<%_ if (useMemcached) { _%>
+- [Memcached](http://localhost:11211)
+<%_ } _%>
+<%_ if (useKafka) { _%>
+- Kafka
+<%_ } _%>
+<%_ if (usePulsar) { _%>
+- Pulsar
+<%_ } _%>
+<%_ if (monitoring === 'prometheus') { _%>
+- [Prometheus server](http://localhost:9090)
+- [Prometheus Alertmanager](http://localhost:9093)
+- [Grafana](http://localhost:3000)
+<%_ } _%>
+<%_ if (usesOauth2) { _%>
+- [Keycloak server](http://localhost:9080)
+<%_ } _%>

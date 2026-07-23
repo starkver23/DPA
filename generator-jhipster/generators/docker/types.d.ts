@@ -1,0 +1,37 @@
+import type { CommandTypeMap } from '../../lib/command/types.ts';
+import type {
+  Application as BaseSimpleApplicationApplication,
+  Config as BaseSimpleApplicationConfig,
+  Options as BaseSimpleApplicationOptions,
+  Source as BaseSimpleApplicationSource,
+} from '../base-simple-application/types.d.ts';
+
+import type { DockerAddedApplicationLoadingProperties, DockerAddedApplicationPreparingProperties } from './application.ts';
+import type command from './command.ts';
+
+export type { Features } from '../base-simple-application/types.d.ts';
+
+type Command = CommandTypeMap<typeof command>;
+
+export type Config = BaseSimpleApplicationConfig & Command['Config'];
+
+export type Options = BaseSimpleApplicationOptions & Command['Options'];
+
+export type DockerComposeService = {
+  serviceName: string;
+  serviceFile?: string;
+  condition?: string;
+  additionalConfig?: any;
+  extendedServiceName?: string;
+};
+
+export type Application = BaseSimpleApplicationApplication &
+  DockerAddedApplicationLoadingProperties &
+  DockerAddedApplicationPreparingProperties;
+
+export type Source = BaseSimpleApplicationSource & {
+  addDockerExtendedServiceToApplicationAndServices?(...services: DockerComposeService[]): void;
+  addDockerExtendedServiceToServices?(...services: DockerComposeService[]): void;
+  addDockerExtendedServiceToApplication?(...services: DockerComposeService[]): void;
+  addDockerDependencyToApplication?(...services: DockerComposeService[]): void;
+};

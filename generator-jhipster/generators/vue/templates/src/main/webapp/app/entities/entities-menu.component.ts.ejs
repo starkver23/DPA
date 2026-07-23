@@ -1,0 +1,24 @@
+import {
+  defineComponent,
+<%_ if (enableTranslation && applicationTypeMicroservice) { _%>
+  inject,
+  onMounted,
+  watch,
+  type ComputedRef,
+<%_ } _%>
+} from 'vue';
+<%_ if (enableTranslation) { _%>
+import { useI18n } from 'vue-i18n';
+<%_ } _%>
+
+export default defineComponent({
+  name: 'EntitiesMenu',
+<%_ if (enableTranslation) { _%>
+  setup() {
+    const i18n = useI18n();
+    return {
+      t$: i18n.t,
+    };
+  },
+<%_ } _%>
+});

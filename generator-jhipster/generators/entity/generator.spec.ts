@@ -1,0 +1,82 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { before, describe, expect, it } from 'esmocha';
+import { basename } from 'node:path';
+
+import { shouldSupportFeatures, testBlueprintSupport } from '../../test/support/tests.ts';
+
+import Generator from './index.ts';
+
+import { basicHelpers, defaultHelpers as helpers, result as runResult } from '#testing';
+
+const generator = basename(import.meta.dirname);
+
+describe(`generator - ${generator}`, () => {
+  shouldSupportFeatures(Generator);
+  describe.skip('blueprint support', () => testBlueprintSupport(generator));
+
+  describe('with default configuration', () => {
+    before(async () => {
+      const res = await basicHelpers.runJHipster('app').withJHipsterConfig({});
+      res.memFs = undefined as any;
+      await runResult
+        .createJHipster('entity')
+        .withJHipsterContextOptions()
+        .withAnswers({ fieldAdd: false, relationshipAdd: false, service: 'no', dto: 'no', pagination: 'no' })
+        .withArguments(['Foo'])
+        .withMockedSource();
+    });
+
+    it('should match source calls', () => {
+      expect(runResult.sourceCallsArg).toMatchSnapshot();
+    });
+
+    it('should match files snapshot', () => {
+      expect(runResult.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('should correctly translate pages', () => {
+      runResult.assertNoFileContent('src/main/webapp/app/entities/foo/list/foo.html', 'Translation missing for');
+    });
+  });
+
+  describe('with enableTranslation disabled', () => {
+    before(async () => {
+      await helpers
+        .runJHipster('entity')
+        .withJHipsterConfig({ enableTranslation: false })
+        .withJHipsterContextOptions()
+        .withAnswers({ fieldAdd: false, relationshipAdd: false, service: 'no', dto: 'no', pagination: 'no' })
+        .withArguments(['Foo'])
+        .withMockedSource();
+    });
+
+    it('should match source calls', () => {
+      expect(runResult.sourceCallsArg).toMatchSnapshot();
+    });
+
+    it('should match files snapshot', () => {
+      expect(runResult.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('should correctly translate pages', () => {
+      runResult.assertNoFileContent('src/main/webapp/app/entities/foo/list/foo.html', 'Translation missing for');
+    });
+  });
+});

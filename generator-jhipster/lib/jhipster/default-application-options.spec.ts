@@ -1,0 +1,452 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { before, describe, expect, it } from 'esmocha';
+
+import * as defaultApplicationOptions from './default-application-options.ts';
+
+const {
+  getConfigForMonolithApplication,
+  getConfigForGatewayApplication,
+  getConfigForMicroserviceApplication,
+  getDefaultConfigForNewApplication,
+} = defaultApplicationOptions;
+
+describe('jdl - DefaultApplicationOptions', () => {
+  describe('getConfigForMonolithApplication', () => {
+    describe('without passing custom options', () => {
+      let options: ReturnType<typeof getConfigForMonolithApplication>;
+
+      before(() => {
+        options = getConfigForMonolithApplication();
+      });
+
+      it('should set the application type to monolith', () => {
+        expect(options.applicationType).toBe('monolith');
+      });
+      it('should set the server port to 8080', () => {
+        expect(options.serverPort).toBe(8080);
+      });
+      it('should set the authentication type to jwt', () => {
+        expect(options.authenticationType).toBe('jwt');
+      });
+      it('should set the cache provider to ehcache', () => {
+        expect(options.cacheProvider).toBe('ehcache');
+      });
+      it('should set the user management skipping option to false', () => {
+        expect(options.skipUserManagement).toBe(false);
+      });
+      it('should set the client framework option to angular', () => {
+        expect(options.clientFramework).toBe('angular');
+      });
+      it('should set the client theme option to none', () => {
+        expect(options.clientTheme).toBe('none');
+      });
+      it('should set the client theme variant option to undefined', () => {
+        expect(options.clientThemeVariant).toBeUndefined();
+      });
+      it('should set withAdminUI option to true', () => {
+        expect(options.withAdminUi).toBe(true);
+      });
+    });
+    describe('when passing a custom client theme and no variant', () => {
+      let clientThemeVariantOption: string | undefined;
+
+      before(() => {
+        clientThemeVariantOption = getConfigForMonolithApplication({
+          clientTheme: 'custom',
+        }).clientThemeVariant;
+      });
+
+      it('should set the client theme variant to the primary', () => {
+        expect(clientThemeVariantOption).toBe('primary');
+      });
+    });
+    describe('when the authentication type is oauth2', () => {
+      let skipUserManagementOption: boolean | undefined;
+
+      before(() => {
+        skipUserManagementOption = getConfigForMonolithApplication({
+          authenticationType: 'oauth2',
+        }).skipUserManagement;
+      });
+
+      it('should set the user management skipping option to true', () => {
+        expect(skipUserManagementOption).toBe(true);
+      });
+    });
+    describe('when passing custom options', () => {
+      let options: ReturnType<typeof getConfigForMonolithApplication>;
+
+      before(() => {
+        options = getConfigForMonolithApplication({
+          // @ts-expect-error check invalid option
+          applicationType: 'custom',
+        });
+      });
+
+      it('should ignore the application type', () => {
+        expect(options.applicationType).toBe('monolith');
+      });
+    });
+  });
+  describe('getConfigForGatewayApplication', () => {
+    describe('without passing custom options', () => {
+      let options: ReturnType<typeof getConfigForGatewayApplication>;
+
+      before(() => {
+        options = getConfigForGatewayApplication();
+      });
+
+      it('should set the application type to gateway', () => {
+        expect(options.applicationType).toBe('gateway');
+      });
+      it('should set the server port to 8080', () => {
+        expect(options.serverPort).toBe(8080);
+      });
+      it('should set the authentication type to jwt', () => {
+        expect(options.authenticationType).toBe('jwt');
+      });
+      it('should set the cache provider to no', () => {
+        expect(options.cacheProvider).toBe('no');
+      });
+      it('should disable hibernate cache', () => {
+        expect(options.enableHibernateCache).toBe(false);
+      });
+      it('should set the user management skipping option to false', () => {
+        expect(options.skipUserManagement).toBe(false);
+      });
+      it('should set the client framework option to angular', () => {
+        expect(options.clientFramework).toBe('angular');
+      });
+      it('should set the client theme option to none', () => {
+        expect(options.clientTheme).toBe('none');
+      });
+      it('should set the client theme variant option to undefined', () => {
+        expect(options.clientThemeVariant).toBeUndefined();
+      });
+      it('should set the withAdminUi option to true', () => {
+        expect(options.withAdminUi).toBe(true);
+      });
+      it('should set the service discovery type to consul', () => {
+        expect(options.serviceDiscoveryType).toBe('consul');
+      });
+      it('should set the reactive to true', () => {
+        expect(options.reactive).toBe(true);
+      });
+    });
+    describe('when the service discovery type option is no', () => {
+      let serviceDiscoveryTypeOption: ReturnType<typeof getConfigForGatewayApplication>['serviceDiscoveryType'];
+
+      before(() => {
+        serviceDiscoveryTypeOption = getConfigForGatewayApplication({
+          serviceDiscoveryType: 'no',
+        }).serviceDiscoveryType;
+      });
+
+      it('should set it to no', () => {
+        expect(serviceDiscoveryTypeOption).toBe('no');
+      });
+    });
+    describe('when passing a custom client theme and no variant', () => {
+      let clientThemeVariantOption: ReturnType<typeof getConfigForGatewayApplication>['clientThemeVariant'];
+
+      before(() => {
+        clientThemeVariantOption = getConfigForGatewayApplication({
+          clientTheme: 'custom',
+        }).clientThemeVariant;
+      });
+
+      it('should set the client theme variant to the primary', () => {
+        expect(clientThemeVariantOption).toBe('primary');
+      });
+    });
+    describe('when the authentication type is oauth2', () => {
+      let skipUserManagementOption: ReturnType<typeof getConfigForGatewayApplication>['skipUserManagement'];
+
+      before(() => {
+        skipUserManagementOption = getConfigForGatewayApplication({
+          authenticationType: 'oauth2',
+        }).skipUserManagement;
+      });
+
+      it('should set the user management skipping option to true', () => {
+        expect(skipUserManagementOption).toBe(true);
+      });
+    });
+    describe('when passing custom options', () => {
+      let options: ReturnType<typeof getConfigForGatewayApplication>;
+
+      before(() => {
+        options = getConfigForGatewayApplication({
+          // @ts-expect-error check invalid option
+          applicationType: 'custom',
+        });
+      });
+
+      it('should ignore the application type', () => {
+        expect(options.applicationType).toBe('gateway');
+      });
+    });
+  });
+  describe('getConfigForMicroserviceApplication', () => {
+    describe('without passing custom options', () => {
+      let options: ReturnType<typeof getConfigForMicroserviceApplication>;
+
+      before(() => {
+        options = getConfigForMicroserviceApplication();
+      });
+
+      it('should set the application type to microservice', () => {
+        expect(options.applicationType).toBe('microservice');
+      });
+      it('should set the server port to 8081', () => {
+        expect(options.serverPort).toBe(8081);
+      });
+      it('should set the authentication type to jwt', () => {
+        expect(options.authenticationType).toBe('jwt');
+      });
+      it('should set the cache provider to hazelcast', () => {
+        expect(options.cacheProvider).toBe('hazelcast');
+      });
+      it('should set the user management skipping option to true', () => {
+        expect(options.skipUserManagement).toBe(true);
+      });
+      it('should set the service discovery type option to consul', () => {
+        expect(options.serviceDiscoveryType).toBe('consul');
+      });
+      it('should set the client skipping option to true', () => {
+        expect(options.clientFramework).toBe('no');
+      });
+      it('should unset the client theme option', () => {
+        expect(options.clientTheme).toBeUndefined();
+      });
+      it('should unset the client theme variant option', () => {
+        expect(options.clientThemeVariant).toBeUndefined();
+      });
+      it('should unset the withAdminUi option', () => {
+        expect(options.withAdminUi).toBe(false);
+      });
+      it('should unset the server skipping option', () => {
+        expect(options.skipServer).toBeUndefined();
+      });
+    });
+    describe('when the service discovery type option is no', () => {
+      let serviceDiscoveryTypeOption: ReturnType<typeof getConfigForMicroserviceApplication>['serviceDiscoveryType'];
+
+      before(() => {
+        serviceDiscoveryTypeOption = getConfigForMicroserviceApplication({
+          serviceDiscoveryType: 'no',
+        }).serviceDiscoveryType;
+      });
+
+      it('should set it to no', () => {
+        expect(serviceDiscoveryTypeOption).toBe('no');
+      });
+    });
+    describe('when passing custom options', () => {
+      let options: ReturnType<typeof getConfigForMicroserviceApplication>;
+
+      before(() => {
+        options = getConfigForMicroserviceApplication({
+          // @ts-expect-error check invalid option
+          applicationType: 'ignored',
+          skipClient: false,
+          clientFramework: 'react',
+          clientTheme: 'something',
+          clientThemeVariant: 'dark',
+          skipServer: true,
+        });
+      });
+
+      it('should ignore the application type option', () => {
+        expect(options.applicationType).toBe('microservice');
+      });
+      it('should not ignore the client skipping option', () => {
+        expect(options.skipClient).toBe(false);
+      });
+      it('should not remove the client framework option', () => {
+        expect(options.clientFramework).toBe('react');
+      });
+      it('should remove the client theme option', () => {
+        expect(options.clientTheme).toBe('something');
+      });
+      it('should remove the client theme variant option', () => {
+        expect(options.clientThemeVariant).toBe('dark');
+      });
+      it('should remove the withAdminUi option', () => {
+        expect(options.withAdminUi).toBe(false);
+      });
+      it('should not remove the server skipping option', () => {
+        expect(options.skipServer).not.toBeUndefined();
+      });
+    });
+  });
+  describe('getDefaultConfigForNewApplication', () => {
+    describe('when not passing custom options', () => {
+      let options: ReturnType<typeof getDefaultConfigForNewApplication>;
+
+      before(() => {
+        options = getDefaultConfigForNewApplication();
+      });
+
+      it('should set the base name option to jhipster', () => {
+        expect(options.baseName).toBe('jhipster');
+      });
+      it('should set the build tool option to maven', () => {
+        expect(options.buildTool).toBe('maven');
+      });
+      it('should set the database type option to sql', () => {
+        expect(options.databaseType).toBe('sql');
+      });
+      it('should set the development database type option to the same that production database', () => {
+        expect(options.devDatabaseType).toBe(options.prodDatabaseType);
+      });
+      it('should set the hibernate cache enabling option to true', () => {
+        expect(options.enableHibernateCache).toBe(true);
+      });
+      it('should set the swagger codegen enabling option to false', () => {
+        expect(options.enableSwaggerCodegen).toBe(false);
+      });
+      it('should set the translation enabling option to true', () => {
+        expect(options.enableTranslation).toBe(true);
+      });
+      it('should set the jhipster prefix option to jhi', () => {
+        expect(options.jhiPrefix).toBe('jhi');
+      });
+      it('should set the languages option to an empty array', () => {
+        expect(options.languages).toEqual([]);
+      });
+      it('should set the package name to com.mycompany.myapp', () => {
+        expect(options.packageName).toBe('com.mycompany.myapp');
+      });
+      it('should set the production database type option to postgresql', () => {
+        expect(options.prodDatabaseType).toBe('postgresql');
+      });
+      it('should set the search engine option to no', () => {
+        expect(options.searchEngine).toBe('no');
+      });
+      it('should set the test frameworks option to nothing', () => {
+        expect(options.testFrameworks).toHaveLength(0);
+      });
+      it('should set the websocket option to no', () => {
+        expect(options.websocket).toBe('no');
+      });
+    });
+    describe('when there is no package name option but only a package folder', () => {
+      let packageNameOption: ReturnType<typeof getDefaultConfigForNewApplication>['packageName'];
+
+      before(() => {
+        packageNameOption = getDefaultConfigForNewApplication({
+          packageFolder: 'a/b/c/d',
+        }).packageName;
+      });
+
+      it('should set the package name accordingly', () => {
+        expect(packageNameOption).toBe('a.b.c.d');
+      });
+    });
+    describe('when the client framework option is angular', () => {
+      let clientFrameworkOption: ReturnType<typeof getDefaultConfigForNewApplication>['clientFramework'];
+
+      before(() => {
+        clientFrameworkOption = getDefaultConfigForNewApplication({
+          clientFramework: 'angular',
+        }).clientFramework;
+      });
+
+      it('should set the option to angular', () => {
+        expect(clientFrameworkOption).toBe('angular');
+      });
+    });
+    describe('when the database type option is MongoDB', () => {
+      let enableHibernateCacheOption: ReturnType<typeof getDefaultConfigForNewApplication>['enableHibernateCache'];
+
+      before(() => {
+        const options = getDefaultConfigForNewApplication({
+          databaseType: 'mongodb',
+        });
+        enableHibernateCacheOption = options.enableHibernateCache;
+      });
+
+      it('should set the enableHibernateCache option to false', () => {
+        expect(enableHibernateCacheOption).toBe(false);
+      });
+    });
+    describe('when the database type option is couchbase', () => {
+      let enableHibernateCacheOption: ReturnType<typeof getDefaultConfigForNewApplication>['enableHibernateCache'];
+
+      before(() => {
+        const options = getDefaultConfigForNewApplication({
+          databaseType: 'couchbase',
+        });
+        enableHibernateCacheOption = options.enableHibernateCache;
+      });
+
+      it('should set the enableHibernateCache option to false', () => {
+        expect(enableHibernateCacheOption).toBe(false);
+      });
+    });
+    describe('when the database type option is cassandra', () => {
+      let enableHibernateCacheOption: ReturnType<typeof getDefaultConfigForNewApplication>['enableHibernateCache'];
+
+      before(() => {
+        const options = getDefaultConfigForNewApplication({
+          databaseType: 'cassandra',
+        });
+        enableHibernateCacheOption = options.enableHibernateCache;
+      });
+
+      it('should set the enableHibernateCache option to false', () => {
+        expect(enableHibernateCacheOption).toBe(false);
+      });
+    });
+    describe('when the reactive option is set', () => {
+      let cacheProviderOption: ReturnType<typeof getDefaultConfigForNewApplication>['cacheProvider'];
+
+      before(() => {
+        cacheProviderOption = getDefaultConfigForNewApplication({
+          reactive: true,
+        }).cacheProvider;
+      });
+
+      it('should set the cache provider option to no', () => {
+        expect(cacheProviderOption).toBe('no');
+      });
+    });
+    describe('when the cache option is set to ehcache', () => {
+      it('should set the enableHibernateCache option to true', () => {
+        expect(
+          getDefaultConfigForNewApplication({
+            cacheProvider: 'ehcache',
+          }).enableHibernateCache,
+        ).toBe(true);
+      });
+    });
+    describe('when the cache option is set to memcached', () => {
+      it('should set the enableHibernateCache option to false', () => {
+        expect(
+          getDefaultConfigForNewApplication({
+            cacheProvider: 'memcached',
+          }).enableHibernateCache,
+        ).toBe(false);
+      });
+    });
+  });
+});

@@ -1,0 +1,151 @@
+<%#
+ Copyright 2013-2026 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+package <%- packageName %>.security;
+
+import <%- user.entityAbsoluteClass %>;
+<%_ if (databaseTypeSql || databaseTypeMongodb || databaseTypeNeo4j) { _%>
+import <%- packageName %>.domain.Authority;
+<%_ } _%>
+import <%- packageName %>.repository.UserRepository;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
+<%_ if (reactive) { _%>
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+<%_ } _%>
+import org.springframework.security.core.userdetails.UserDetails;
+<%_ if (!reactive) { _%>
+import org.springframework.security.core.userdetails.UserDetailsService;
+<%_ } _%>
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+<%_ if (databaseTypeSql) { _%>
+import org.springframework.transaction.annotation.Transactional;
+<%_ } _%>
+<%_ if (reactive) { _%>
+import reactor.core.publisher.Mono;
+<%_ } _%>
+
+import java.util.*;
+
+/**
+ * Authenticate a user from the database.
+ */
+@Service("userDetailsService")
+public class DomainUserDetailsService implements <%- reactive ? 'Reactive' : '' %>UserDetailsService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DomainUserDetailsService.class);
+
+    private final UserRepository userRepository;
+
+    public DomainUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+<%_ if (databaseTypeSql) { _%>
+    @Transactional(readOnly = true)
+<%_ } _%>
+    public <%- reactive ? 'Mono<UserDetails> findByUsername' : 'UserDetails loadUserByUsername' %>(final String login) {
+        LOG.debug("Authenticating {}", login);
+
+        if (new EmailValidator().isValid(login, null)) {
+            return userRepository.<%- databaseTypeSql ? 'findOneWithAuthoritiesByEmailIgnoreCase' : 'findOneByEmailIgnoreCase' %>(login)
+<%_ if (reactive) { _%>
+                .switchIfEmpty(Mono.error(new UsernameNotFoundException("User with email " + login + " was not found in the database")))
+<%_ } _%>
+                .map(user -> createSpringSecurityUser(login, user))<% if (!reactive) { %>
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"))<% } %>;
+        }
+
+        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
+        return userRepository.findOne<%- databaseTypeSql ? 'WithAuthorities' : '' %>ByLogin(lowercaseLogin)
+<%_ if (reactive) { _%>
+            .switchIfEmpty(Mono.error(new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database")))
+<%_ } _%>
+            .map(user -> createSpringSecurityUser(lowercaseLogin, user))<% if (!reactive) { %>
+            .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"))<% } %>;
+
+    }
+
+    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, <%- user.persistClass %> user) {
+        if (!user.isActivated()) {
+            throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
+        }
+<%_ if (user) { _%>
+        return UserWithId.fromUser(user);
+<%_ } else { _%>
+        return org.springframework.security.core.userdetails.User.withUsername(user.getLogin())
+            .password(user.getPassword())
+            .authorities(
+                user.getAuthorities()
+                    .stream()
+  <%_ if (databaseTypeSql || databaseTypeMongodb || databaseTypeNeo4j) { _%>
+                    .map(Authority::getName)
+  <%_ } _%>
+                    .map(SimpleGrantedAuthority::new)
+                    .toList()
+            )
+            .build();
+<%_ } _%>
+    }
+<%_ if (user) { _%>
+
+    public static class UserWithId extends org.springframework.security.core.userdetails.User {
+
+        private final <%- user.primaryKey.type %> id;
+
+        public UserWithId(String login, String password, Collection<? extends GrantedAuthority> authorities, <%- user.primaryKey.type %> id) {
+            super(login, password, authorities);
+            this.id = id;
+        }
+
+        public <%- user.primaryKey.type %> getId() {
+            return id;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return super.equals(obj);
+        }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
+
+        public static UserWithId fromUser(<%- user.persistClass %> user) {
+            return new UserWithId(
+                user.getLogin(),
+                user.getPassword(),
+                user.getAuthorities()
+                    .stream()
+  <%_ if (databaseTypeSql || databaseTypeMongodb || databaseTypeNeo4j) { _%>
+                    .map(Authority::getName)
+  <%_ } _%>
+                    .map(SimpleGrantedAuthority::new)
+                    .toList(),
+                user.getId()
+            );
+        }
+    }
+<%_ } _%>
+}

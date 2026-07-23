@@ -1,0 +1,135 @@
+import { computed, <%- microfrontend ? 'defineAsyncComponent, ' : '' %>defineComponent, inject, ref, type Ref } from 'vue';
+<%_ if (enableTranslation) { _%>
+import { useI18n } from 'vue-i18n';
+<%_ } _%>
+<%_ if (authenticationUsesCsrf) { _%>
+import type LoginService from '@/account/login.service';
+<%_ } %>
+<%_ if (generateUserManagement) { %>
+import { useLoginModal } from '@/account/login-modal';
+<%_ } _%>
+import type AccountService from '@/account/account.service';
+<%_ if (enableTranslation) { _%>
+import languages from '@/shared/config/languages';
+<%_ } _%>
+<%_ if (authenticationTypeJwt) { _%>
+import { AUTHENTICATION_TOKEN_KEY } from '@/shared/jhipster/constants';
+<%_ } _%>
+import EntitiesMenu from '@/entities/entities-menu.vue';
+
+import { useStore } from '@/store';
+import { useRouter } from 'vue-router';
+<%_ if (microfrontend) { _%>
+import { loadRemote } from '@module-federation/<%- clientBundlerVite ? '' : 'enhanced/' %>runtime';
+<%_ } _%>
+
+export default defineComponent({
+  name: 'JhiNavbar',
+  components: {
+<%_ if (exposeMicrofrontend) { _%>
+    // Load entities menu exposed by microfrontend
+<%_ } _%>
+    <%- exposeMicrofrontend ? '// ' : '' %>'entities-menu': EntitiesMenu,
+<%_ if (microfrontend) { _%>
+  <%_ for (const remote of microfrontends) { _%>
+    '<%- remote.moduleFederationName %>-menu': defineAsyncComponent(() => {
+      return loadRemote<any>('<%- remote.moduleFederationName %>/entities-menu')
+        .catch(() => import('@/core/error/error-loading.vue'));
+    }),
+  <%_ } _%>
+<%_ } _%>
+  },
+  setup() {
+<%_ if (authenticationUsesCsrf) { _%>
+    const loginService = inject<LoginService>('loginService');
+  <%_ if (authenticationTypeOauth2) { _%>
+    const { login } = loginService;
+  <%_ } %>
+<%_ } %>
+<%_ if (generateUserManagement) { %>
+    const { showLogin } = useLoginModal();
+<%_ } _%>
+    const accountService = inject<AccountService>('accountService');
+    const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? '<%- nativeLanguage %>'), true);
+<%_ if (enableTranslation) { _%>
+    const changeLanguage = inject<(string) => Promise<void>>('changeLanguage');
+
+    const isActiveLanguage = (key: string) => {
+      return key === currentLanguage.value;
+    };
+<%_ } _%>
+
+    const router = useRouter();
+    const store = useStore();
+
+    const version = `v${APP_VERSION}`;
+    const hasAnyAuthorityValues: Ref<any> = ref({});
+
+    const openAPIEnabled = computed(() => store.activeProfiles.includes('api-docs'));
+    const inProduction = computed(() => store.activeProfiles.includes('prod'));
+    const authenticated = computed(() => store.authenticated);
+
+    const subIsActive = (input: string | string[]) => {
+      const paths = Array.isArray(input) ? input : [input];
+      return paths.some(path => {
+        return router.currentRoute.value.path.startsWith(path); // current path starts with this path string
+      });
+    };
+
+    const logout = async () => {
+<%_ if (authenticationTypeJwt) { _%>
+      localStorage.removeItem(AUTHENTICATION_TOKEN_KEY);
+      sessionStorage.removeItem(AUTHENTICATION_TOKEN_KEY);
+      store.logout();
+      if (router.currentRoute.value.path !== '/') {
+        router.push('/');
+      }
+<%_ } else { _%>
+      const response = await loginService.logout();
+      store.logout();
+  <%_ if (authenticationTypeOauth2) { _%>
+      window.location.href = response.data.logoutUrl;
+      const next = response.data?.logoutUrl ?? '/';
+      if (router.currentRoute.value.path !== next) {
+        await router.push(next);
+      }
+  <%_ } else { _%>
+      if (router.currentRoute.value.path !== '/') {
+        await router.push('/');
+      }
+  <%_ } _%>
+<%_ } _%>
+    },
+
+    return {
+      logout,
+      subIsActive,
+      accountService,
+      <%- authenticationTypeOauth2 ? 'login' : 'showLogin' %>,
+<%_ if (enableTranslation) { _%>
+      changeLanguage,
+      languages: languages(),
+      isActiveLanguage,
+<%_ } _%>
+      version,
+      currentLanguage,
+      hasAnyAuthorityValues,
+      openAPIEnabled,
+      inProduction,
+      authenticated,
+<%_ if (enableTranslation) { _%>
+      t$: useI18n().t,
+<%_ } _%>
+    };
+  },
+  methods: {
+    hasAnyAuthority(authorities: any): boolean {
+      this.accountService.hasAnyAuthorityAndCheckAuth(authorities).then(value => {
+        if (this.hasAnyAuthorityValues[authorities] !== value) {
+          this.hasAnyAuthorityValues = { ...this.hasAnyAuthorityValues, [authorities]: value };
+        }
+      });
+      return this.hasAnyAuthorityValues[authorities] ?? false;
+    },
+  },
+});

@@ -1,0 +1,5806 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`generator - react gateway-jwt-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(true) should match application snapshot 1`] = `
+{
+  "addLanguageCallbacks": Any<Array>,
+  "anyEntityHasRelationshipWithUser": false,
+  "applicationType": "gateway",
+  "applicationTypeAny": true,
+  "applicationTypeGateway": true,
+  "applicationTypeMicroservice": false,
+  "applicationTypeMonolith": false,
+  "authenticationType": "jwt",
+  "authenticationTypeAny": true,
+  "authenticationTypeJwt": true,
+  "authenticationTypeOauth2": false,
+  "authenticationTypeSession": false,
+  "authenticationTypeUsesRemoteAuthorization": false,
+  "authenticationUsesCsrf": false,
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "buildToolAny": true,
+  "buildToolGradle": false,
+  "buildToolMaven": true,
+  "buildToolUnknown": false,
+  "cacheProvider": "no",
+  "cacheProviderAny": false,
+  "cacheProviderCaffeine": false,
+  "cacheProviderEhcache": false,
+  "cacheProviderHazelcast": false,
+  "cacheProviderInfinispan": false,
+  "cacheProviderMemcached": false,
+  "cacheProviderNo": true,
+  "cacheProviderRedis": false,
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientBundler": "webpack",
+  "clientBundlerAny": true,
+  "clientBundlerEsbuild": false,
+  "clientBundlerName": "Webpack",
+  "clientBundlerRsbuild": false,
+  "clientBundlerVite": false,
+  "clientBundlerWebpack": true,
+  "clientDistDir": "dist/",
+  "clientFramework": "react",
+  "clientFrameworkAngular": false,
+  "clientFrameworkAny": true,
+  "clientFrameworkBuiltIn": true,
+  "clientFrameworkNo": false,
+  "clientFrameworkReact": true,
+  "clientFrameworkVue": false,
+  "clientI18nDir": "clientRoot/src/i18n/",
+  "clientPackageJsonScripts": {},
+  "clientRootDir": "clientRoot/",
+  "clientSrcDir": "clientRoot/src/",
+  "clientTestDir": "clientRoot/test/",
+  "clientTestFramework": "vitest",
+  "clientTestFrameworkAny": true,
+  "clientTestFrameworkName": "Vitest",
+  "clientTestFrameworkVitest": true,
+  "clientTestFrameworks": undefined,
+  "clientTestFrameworksAny": false,
+  "clientTestFrameworksCypress": false,
+  "clientTheme": "none",
+  "clientThemeAny": false,
+  "clientThemeNone": true,
+  "clientThemeVariant": undefined,
+  "clientThemeVariantAny": false,
+  "clientThemeVariantDark": false,
+  "clientThemeVariantLight": false,
+  "clientThemeVariantPrimary": false,
+  "commandName": "react",
+  "communicationSpringWebsocket": undefined,
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseMigrationAny": true,
+  "databaseMigrationLiquibase": true,
+  "databaseMigrationNo": false,
+  "databaseType": "sql",
+  "databaseTypeAny": true,
+  "databaseTypeCassandra": false,
+  "databaseTypeCouchbase": false,
+  "databaseTypeMongodb": false,
+  "databaseTypeNeo4j": false,
+  "databaseTypeNo": false,
+  "databaseTypeSql": true,
+  "defaultAdminPassword": "admin",
+  "defaultAdminRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultAdminUsername": "admin",
+  "defaultEnvironment": "prod",
+  "defaultEnvironmentAny": true,
+  "defaultEnvironmentDev": false,
+  "defaultEnvironmentProd": true,
+  "defaultPackaging": "jar",
+  "defaultPackagingAny": true,
+  "defaultPackagingJar": true,
+  "defaultPackagingWar": false,
+  "defaultUserPassword": "admin",
+  "defaultUserRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultUserUsername": "admin",
+  "devDatabaseType": "postgresql",
+  "devDatabaseTypeAny": true,
+  "devDatabaseTypeH2Any": undefined,
+  "devDatabaseTypeH2Disk": false,
+  "devDatabaseTypeH2Memory": false,
+  "devDatabaseTypeMariadb": false,
+  "devDatabaseTypeMssql": false,
+  "devDatabaseTypeMysql": false,
+  "devDatabaseTypeOracle": false,
+  "devDatabaseTypePostgresql": true,
+  "devServerPort": 9060,
+  "devServerPortProxy": 9000,
+  "dockerApplicationEnvironment": {},
+  "dockerContainers": Any<Object>,
+  "dockerServices": [],
+  "dockerServicesDir": "src/main/docker/",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableGradleDevelocity": false,
+  "enableHibernateCache": false,
+  "enableI18nRTL": false,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": false,
+  "endpointPrefix": "",
+  "entities": Any<Array>,
+  "entitySuffix": "",
+  "exposeMicrofrontend": false,
+  "feignClient": false,
+  "filterEntitiesAndPropertiesForClient": [Function],
+  "filterEntitiesForClient": [Function],
+  "filterEntityPropertiesForClient": [Function],
+  "frontendAppName": "jhipsterApp",
+  "gatewayServerPort": undefined,
+  "gatewayServicesApiAvailable": true,
+  "generateAuthenticationApi": true,
+  "generateBuiltInAuthorityEntity": false,
+  "generateBuiltInUserEntity": false,
+  "generateInMemoryUserCredentials": true,
+  "generateUserManagement": false,
+  "getWebappTranslation": [Function],
+  "graalvmSupport": undefined,
+  "gradleDevelocityHost": undefined,
+  "hasNonBuiltInEntity": true,
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "incrementalChangelog": undefined,
+  "javaNodeBuildPaths": Any<Array>,
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "jwtSecretKey": undefined,
+  "languages": Any<Array>,
+  "languagesDefinition": [
+    {
+      "angularLocale": "fr",
+      "dayjsLocale": "fr",
+      "displayName": "Français",
+      "fakerjsLocale": "fr",
+      "javaLocaleMessageSourceSuffix": "fr",
+      "languageTag": "fr",
+      "name": "French",
+      "rtl": false,
+    },
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "languagesToGenerate": [
+    "en",
+  ],
+  "languagesToGenerateDefinition": [
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "loginRegex": "^(?>[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$",
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "messageBrokerAny": false,
+  "messageBrokerKafka": false,
+  "messageBrokerNo": true,
+  "messageBrokerPulsar": false,
+  "messageHeaderNameAlert": "x-jhipsterapp-alert",
+  "messageHeaderNameError": "x-jhipsterapp-error",
+  "messageHeaderNameParam": "x-jhipsterapp-params",
+  "microfrontend": false,
+  "microfrontends": undefined,
+  "monorepository": undefined,
+  "nativeLanguage": "en",
+  "nativeLanguageDefinition": {
+    "angularLocale": "en",
+    "dayjsLocale": "en",
+    "displayName": "English",
+    "fakerjsLocale": "en",
+    "javaLocaleMessageSourceSuffix": "en",
+    "languageTag": "en",
+    "name": "English",
+    "rtl": false,
+  },
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageFolder": undefined,
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": {},
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prettierTabWidth": 2,
+  "prodDatabaseType": "postgresql",
+  "prodDatabaseTypeAny": true,
+  "prodDatabaseTypeMariadb": false,
+  "prodDatabaseTypeMssql": false,
+  "prodDatabaseTypeMysql": false,
+  "prodDatabaseTypeOracle": false,
+  "prodDatabaseTypePostgresql": true,
+  "projectDescription": "Description for JHipster",
+  "projectVersion": undefined,
+  "reactBootstrapBsTheme": "dark",
+  "reactBootstrapVariant": "dark",
+  "reactive": true,
+  "rememberMeKey": undefined,
+  "routes": undefined,
+  "searchEngine": "no",
+  "searchEngineAny": false,
+  "searchEngineCouchbase": false,
+  "searchEngineElasticsearch": false,
+  "searchEngineNo": true,
+  "serverPort": 8080,
+  "serviceDiscovery": "consul",
+  "serviceDiscoveryAny": true,
+  "serviceDiscoveryConsul": true,
+  "serviceDiscoveryEureka": false,
+  "serviceDiscoveryNo": false,
+  "serviceDiscoveryType": "consul",
+  "serviceDiscoveryTypeAny": true,
+  "serviceDiscoveryTypeConsul": true,
+  "serviceDiscoveryTypeEureka": false,
+  "serviceDiscoveryTypeNo": false,
+  "skipCheckLengthOfIdentifier": undefined,
+  "skipClient": undefined,
+  "skipCommitHook": undefined,
+  "skipFakeData": undefined,
+  "skipJhipsterDependencies": false,
+  "skipServer": undefined,
+  "skipUserManagement": true,
+  "srcMain": "src/main/",
+  "srcTest": "src/test/",
+  "supportedLanguages": Any<Array>,
+  "syncUserWithIdp": false,
+  "temporaryDir": "temp/",
+  "testFrameworks": [],
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "user": undefined,
+  "webappEnumerationsDir": "clientRoot/src/app/shared/model/enumerations/",
+  "webappLoginRegExp": "^[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$",
+  "websocket": true,
+  "withAdminUi": false,
+  "withGeneratedFlag": undefined,
+}
+`;
+
+exports[`generator - react gateway-jwt-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(true) should match generated files snapshot 1`] = `
+{
+  ".jhipster/EntityWithCustomId.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Microservice.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Simple.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/SkipClient.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/eslint.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/package.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/postcss.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/404.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/WEB-INF/web.xml": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/_bootstrap-variables.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/app.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/app.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/axios-interceptor.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/axios-interceptor.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/dayjs.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/error-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/loading-bar-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/logger-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/notification-middleware.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/notification-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/store.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/menu.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/reducers.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/administration.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/administration.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/docs/docs.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/docs/docs.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/gateway/gateway.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/home/home.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/home/home.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/login-modal.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/login.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/logout.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/setup-tests.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/DurationFormat.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/auth/private-route.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/auth/private-route.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary-routes.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary-routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/page-not-found.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/data-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/error.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/headers.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/link-header.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/problem-details.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/footer/footer.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/footer/footer.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/account.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/account.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/admin.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/entities.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/index.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/menu-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/menu-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/password/password-strength-bar.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/password/password-strength-bar.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/entity-with-custom-id.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/microservice.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/simple.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/user.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/application-profile.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/application-profile.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/authentication.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/authentication.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/index.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/reducer.utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/date-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/entity-utils.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/entity-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/pagination.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/typings.d.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/css/loading.css": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/favicon.ico": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/index.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/manifest.webapp": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/robots.txt": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/swagger-ui/index.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/vitest.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/environment.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/package.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/utils.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.prod.js": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - react gateway-jwt-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(true) should match source calls snapshot 1`] = `
+{
+  "addEntitiesToClient": [
+    {
+      "application": "Application[jhipster]",
+      "entities": [
+        "Entity[Simple]",
+        "Entity[Microservice]",
+        "Entity[EntityWithCustomId]",
+      ],
+    },
+  ],
+  "addSonarProperties": [
+    [
+      {
+        "key": "sonar.test.inclusions",
+        "value": "clientRoot/src/app/**/*.spec.ts, clientRoot/src/app/**/*.spec.tsx",
+        "valueSep": ", ",
+      },
+      {
+        "key": "sonar.testExecutionReportPaths",
+        "value": "temp/test-results/jest/TESTS-results-vitest.xml",
+      },
+      {
+        "key": "sonar.javascript.lcov.reportPaths",
+        "value": "temp/test-results/lcov-report/lcov.info",
+      },
+      {
+        "key": "sonar.exclusions",
+        "value": "clientRoot/src/content/**/*.*, clientRoot/src/i18n/*.ts, dist/**/*.*",
+        "valueSep": ", ",
+      },
+    ],
+  ],
+  "mergeClientPackageJson": [
+    {
+      "devDependencies": {
+        "eslint-config-prettier": "ESLINT_CONFIG_PRETTIER_VERSION",
+        "eslint-plugin-prettier": "ESLINT_PLUGIN_PRETTIER_VERSION",
+        "globals": "GLOBALS_VERSION",
+        "jiti": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`generator - react gateway-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)-clientRoot/-websocket(true) should match application snapshot 1`] = `
+{
+  "addLanguageCallbacks": Any<Array>,
+  "anyEntityHasRelationshipWithUser": false,
+  "applicationType": "gateway",
+  "applicationTypeAny": true,
+  "applicationTypeGateway": true,
+  "applicationTypeMicroservice": false,
+  "applicationTypeMonolith": false,
+  "authenticationType": "oauth2",
+  "authenticationTypeAny": true,
+  "authenticationTypeJwt": false,
+  "authenticationTypeOauth2": true,
+  "authenticationTypeSession": false,
+  "authenticationTypeUsesRemoteAuthorization": true,
+  "authenticationUsesCsrf": true,
+  "authority": Any<Object>,
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "buildToolAny": true,
+  "buildToolGradle": false,
+  "buildToolMaven": true,
+  "buildToolUnknown": false,
+  "cacheProvider": "no",
+  "cacheProviderAny": false,
+  "cacheProviderCaffeine": false,
+  "cacheProviderEhcache": false,
+  "cacheProviderHazelcast": false,
+  "cacheProviderInfinispan": false,
+  "cacheProviderMemcached": false,
+  "cacheProviderNo": true,
+  "cacheProviderRedis": false,
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientBundler": "webpack",
+  "clientBundlerAny": true,
+  "clientBundlerEsbuild": false,
+  "clientBundlerName": "Webpack",
+  "clientBundlerRsbuild": false,
+  "clientBundlerVite": false,
+  "clientBundlerWebpack": true,
+  "clientDistDir": "dist/",
+  "clientFramework": "react",
+  "clientFrameworkAngular": false,
+  "clientFrameworkAny": true,
+  "clientFrameworkBuiltIn": true,
+  "clientFrameworkNo": false,
+  "clientFrameworkReact": true,
+  "clientFrameworkVue": false,
+  "clientI18nDir": "clientRoot/src/i18n/",
+  "clientPackageJsonScripts": {},
+  "clientRootDir": "clientRoot/",
+  "clientSrcDir": "clientRoot/src/",
+  "clientTestDir": "clientRoot/test/",
+  "clientTestFramework": "vitest",
+  "clientTestFrameworkAny": true,
+  "clientTestFrameworkName": "Vitest",
+  "clientTestFrameworkVitest": true,
+  "clientTestFrameworks": undefined,
+  "clientTestFrameworksAny": false,
+  "clientTestFrameworksCypress": false,
+  "clientTheme": "none",
+  "clientThemeAny": false,
+  "clientThemeNone": true,
+  "clientThemeVariant": undefined,
+  "clientThemeVariantAny": false,
+  "clientThemeVariantDark": false,
+  "clientThemeVariantLight": false,
+  "clientThemeVariantPrimary": false,
+  "commandName": "react",
+  "communicationSpringWebsocket": undefined,
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseMigrationAny": true,
+  "databaseMigrationLiquibase": true,
+  "databaseMigrationNo": false,
+  "databaseType": "sql",
+  "databaseTypeAny": true,
+  "databaseTypeCassandra": false,
+  "databaseTypeCouchbase": false,
+  "databaseTypeMongodb": false,
+  "databaseTypeNeo4j": false,
+  "databaseTypeNo": false,
+  "databaseTypeSql": true,
+  "defaultAdminPassword": "admin",
+  "defaultAdminRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultAdminUsername": "admin",
+  "defaultEnvironment": "prod",
+  "defaultEnvironmentAny": true,
+  "defaultEnvironmentDev": false,
+  "defaultEnvironmentProd": true,
+  "defaultPackaging": "jar",
+  "defaultPackagingAny": true,
+  "defaultPackagingJar": true,
+  "defaultPackagingWar": false,
+  "defaultUserPassword": "user",
+  "defaultUserRoles": [
+    "USER",
+  ],
+  "defaultUserUsername": "user",
+  "devDatabaseType": "postgresql",
+  "devDatabaseTypeAny": true,
+  "devDatabaseTypeH2Any": undefined,
+  "devDatabaseTypeH2Disk": false,
+  "devDatabaseTypeH2Memory": false,
+  "devDatabaseTypeMariadb": false,
+  "devDatabaseTypeMssql": false,
+  "devDatabaseTypeMysql": false,
+  "devDatabaseTypeOracle": false,
+  "devDatabaseTypePostgresql": true,
+  "devServerPort": 9060,
+  "devServerPortProxy": 9000,
+  "dockerApplicationEnvironment": {},
+  "dockerContainers": Any<Object>,
+  "dockerServices": [],
+  "dockerServicesDir": "src/main/docker/",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableGradleDevelocity": false,
+  "enableHibernateCache": false,
+  "enableI18nRTL": false,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": true,
+  "endpointPrefix": "",
+  "entities": Any<Array>,
+  "entitySuffix": "",
+  "exposeMicrofrontend": false,
+  "feignClient": false,
+  "filterEntitiesAndPropertiesForClient": [Function],
+  "filterEntitiesForClient": [Function],
+  "filterEntityPropertiesForClient": [Function],
+  "frontendAppName": "jhipsterApp",
+  "gatewayServerPort": undefined,
+  "gatewayServicesApiAvailable": true,
+  "generateAuthenticationApi": true,
+  "generateBuiltInAuthorityEntity": true,
+  "generateBuiltInUserEntity": true,
+  "generateInMemoryUserCredentials": false,
+  "generateUserManagement": false,
+  "getWebappTranslation": [Function],
+  "graalvmSupport": undefined,
+  "gradleDevelocityHost": undefined,
+  "hasNonBuiltInEntity": true,
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "incrementalChangelog": undefined,
+  "javaNodeBuildPaths": Any<Array>,
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "jwtSecretKey": undefined,
+  "languages": Any<Array>,
+  "languagesDefinition": [
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+    {
+      "angularLocale": "fr",
+      "dayjsLocale": "fr",
+      "displayName": "Français",
+      "fakerjsLocale": "fr",
+      "javaLocaleMessageSourceSuffix": "fr",
+      "languageTag": "fr",
+      "name": "French",
+      "rtl": false,
+    },
+  ],
+  "languagesToGenerate": [
+    "en",
+    "fr",
+  ],
+  "languagesToGenerateDefinition": Any<Array>,
+  "loginRegex": "^(?>[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$",
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "messageBrokerAny": false,
+  "messageBrokerKafka": false,
+  "messageBrokerNo": true,
+  "messageBrokerPulsar": false,
+  "messageHeaderNameAlert": "x-jhipsterapp-alert",
+  "messageHeaderNameError": "x-jhipsterapp-error",
+  "messageHeaderNameParam": "x-jhipsterapp-params",
+  "microfrontend": false,
+  "microfrontends": undefined,
+  "monorepository": undefined,
+  "nativeLanguage": "en",
+  "nativeLanguageDefinition": {
+    "angularLocale": "en",
+    "dayjsLocale": "en",
+    "displayName": "English",
+    "fakerjsLocale": "en",
+    "javaLocaleMessageSourceSuffix": "en",
+    "languageTag": "en",
+    "name": "English",
+    "rtl": false,
+  },
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageFolder": undefined,
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": {},
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prettierTabWidth": 2,
+  "prodDatabaseType": "postgresql",
+  "prodDatabaseTypeAny": true,
+  "prodDatabaseTypeMariadb": false,
+  "prodDatabaseTypeMssql": false,
+  "prodDatabaseTypeMysql": false,
+  "prodDatabaseTypeOracle": false,
+  "prodDatabaseTypePostgresql": true,
+  "projectDescription": "Description for JHipster",
+  "projectVersion": undefined,
+  "reactBootstrapBsTheme": "dark",
+  "reactBootstrapVariant": "dark",
+  "reactive": true,
+  "rememberMeKey": undefined,
+  "routes": undefined,
+  "searchEngine": "no",
+  "searchEngineAny": false,
+  "searchEngineCouchbase": false,
+  "searchEngineElasticsearch": false,
+  "searchEngineNo": true,
+  "serverPort": 8080,
+  "serviceDiscovery": "consul",
+  "serviceDiscoveryAny": true,
+  "serviceDiscoveryConsul": true,
+  "serviceDiscoveryEureka": false,
+  "serviceDiscoveryNo": false,
+  "serviceDiscoveryType": "consul",
+  "serviceDiscoveryTypeAny": true,
+  "serviceDiscoveryTypeConsul": true,
+  "serviceDiscoveryTypeEureka": false,
+  "serviceDiscoveryTypeNo": false,
+  "skipCheckLengthOfIdentifier": undefined,
+  "skipClient": undefined,
+  "skipCommitHook": undefined,
+  "skipFakeData": undefined,
+  "skipJhipsterDependencies": true,
+  "skipServer": undefined,
+  "skipUserManagement": true,
+  "srcMain": "src/main/",
+  "srcTest": "src/test/",
+  "supportedLanguages": Any<Array>,
+  "syncUserWithIdp": true,
+  "temporaryDir": "temp/",
+  "testFrameworks": [],
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "user": Any<Object>,
+  "webappEnumerationsDir": "clientRoot/src/app/shared/model/enumerations/",
+  "webappLoginRegExp": "^[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$",
+  "websocket": true,
+  "withAdminUi": true,
+  "withGeneratedFlag": undefined,
+}
+`;
+
+exports[`generator - react gateway-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)-clientRoot/-websocket(true) should match generated files snapshot 1`] = `
+{
+  ".jhipster/EntityWithCustomId.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Microservice.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Simple.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/SkipClient.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/eslint.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/package.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/postcss.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/404.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/WEB-INF/web.xml": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/_bootstrap-variables.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/app.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/app.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/axios-interceptor.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/axios-interceptor.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/dayjs.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/error-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/loading-bar-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/logger-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/notification-middleware.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/notification-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/store.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/translation.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/menu.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/reducers.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/administration.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/administration.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/configuration/configuration.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/docs/docs.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/docs/docs.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/gateway/gateway.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/health/health-modal.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/health/health.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/logs/logs.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/metrics/metrics.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/home/home.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/home/home.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/login-redirect.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/logout.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/setup-tests.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/DurationFormat.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/auth/private-route.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/auth/private-route.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary-routes.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary-routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/page-not-found.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/data-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/error.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/headers.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/link-header.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/problem-details.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/footer/footer.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/footer/footer.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/account.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/account.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/admin.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/entities.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/index.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/locale.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/menu-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/menu-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/password/password-strength-bar.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/password/password-strength-bar.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/entity-with-custom-id.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/microservice.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/simple.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/user.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/application-profile.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/application-profile.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/authentication.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/authentication.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/index.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/locale.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/locale.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/reducer.utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/user-management.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/user-management.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/date-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/entity-utils.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/entity-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/pagination.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/url-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/typings.d.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/css/loading.css": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/favicon.ico": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/index.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/manifest.webapp": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/robots.txt": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/swagger-ui/index.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/vitest.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/environment.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/package.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/utils.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.prod.js": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - react gateway-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)-clientRoot/-websocket(true) should match source calls snapshot 1`] = `
+{
+  "addEntitiesToClient": [
+    {
+      "application": "Application[jhipster]",
+      "entities": [
+        "Entity[Simple]",
+        "Entity[Microservice]",
+        "Entity[EntityWithCustomId]",
+      ],
+    },
+  ],
+  "addSonarProperties": [
+    [
+      {
+        "key": "sonar.test.inclusions",
+        "value": "clientRoot/src/app/**/*.spec.ts, clientRoot/src/app/**/*.spec.tsx",
+        "valueSep": ", ",
+      },
+      {
+        "key": "sonar.testExecutionReportPaths",
+        "value": "temp/test-results/jest/TESTS-results-vitest.xml",
+      },
+      {
+        "key": "sonar.javascript.lcov.reportPaths",
+        "value": "temp/test-results/lcov-report/lcov.info",
+      },
+      {
+        "key": "sonar.exclusions",
+        "value": "clientRoot/src/content/**/*.*, clientRoot/src/i18n/*.ts, dist/**/*.*",
+        "valueSep": ", ",
+      },
+    ],
+  ],
+  "mergeClientPackageJson": [
+    {
+      "devDependencies": {
+        "eslint-config-prettier": "ESLINT_CONFIG_PRETTIER_VERSION",
+        "eslint-plugin-prettier": "ESLINT_PLUGIN_PRETTIER_VERSION",
+        "globals": "GLOBALS_VERSION",
+        "jiti": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`generator - react microservice-jwt-skipUserManagement(false)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(false) should match application snapshot 1`] = `
+{
+  "addLanguageCallbacks": Any<Array>,
+  "anyEntityHasRelationshipWithUser": false,
+  "applicationType": "microservice",
+  "applicationTypeAny": true,
+  "applicationTypeGateway": false,
+  "applicationTypeMicroservice": true,
+  "applicationTypeMonolith": false,
+  "authenticationType": "jwt",
+  "authenticationTypeAny": true,
+  "authenticationTypeJwt": true,
+  "authenticationTypeOauth2": false,
+  "authenticationTypeSession": false,
+  "authenticationTypeUsesRemoteAuthorization": false,
+  "authenticationUsesCsrf": false,
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "buildToolAny": true,
+  "buildToolGradle": false,
+  "buildToolMaven": true,
+  "buildToolUnknown": false,
+  "cacheProvider": "hazelcast",
+  "cacheProviderAny": true,
+  "cacheProviderCaffeine": false,
+  "cacheProviderEhcache": false,
+  "cacheProviderHazelcast": true,
+  "cacheProviderInfinispan": false,
+  "cacheProviderMemcached": false,
+  "cacheProviderNo": false,
+  "cacheProviderRedis": false,
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientBundler": "webpack",
+  "clientBundlerAny": true,
+  "clientBundlerEsbuild": false,
+  "clientBundlerName": "Webpack",
+  "clientBundlerRsbuild": false,
+  "clientBundlerVite": false,
+  "clientBundlerWebpack": true,
+  "clientDistDir": "dist/",
+  "clientFramework": "react",
+  "clientFrameworkAngular": false,
+  "clientFrameworkAny": true,
+  "clientFrameworkBuiltIn": true,
+  "clientFrameworkNo": false,
+  "clientFrameworkReact": true,
+  "clientFrameworkVue": false,
+  "clientI18nDir": "clientRoot/src/i18n/",
+  "clientPackageJsonScripts": {},
+  "clientRootDir": "clientRoot/",
+  "clientSrcDir": "clientRoot/src/",
+  "clientTestDir": "clientRoot/test/",
+  "clientTestFramework": "vitest",
+  "clientTestFrameworkAny": true,
+  "clientTestFrameworkName": "Vitest",
+  "clientTestFrameworkVitest": true,
+  "clientTestFrameworks": undefined,
+  "clientTestFrameworksAny": false,
+  "clientTestFrameworksCypress": false,
+  "clientTheme": "none",
+  "clientThemeAny": false,
+  "clientThemeNone": true,
+  "clientThemeVariant": undefined,
+  "clientThemeVariantAny": false,
+  "clientThemeVariantDark": false,
+  "clientThemeVariantLight": false,
+  "clientThemeVariantPrimary": false,
+  "commandName": "react",
+  "communicationSpringWebsocket": undefined,
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseMigrationAny": true,
+  "databaseMigrationLiquibase": true,
+  "databaseMigrationNo": false,
+  "databaseType": "sql",
+  "databaseTypeAny": true,
+  "databaseTypeCassandra": false,
+  "databaseTypeCouchbase": false,
+  "databaseTypeMongodb": false,
+  "databaseTypeNeo4j": false,
+  "databaseTypeNo": false,
+  "databaseTypeSql": true,
+  "defaultAdminPassword": "admin",
+  "defaultAdminRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultAdminUsername": "admin",
+  "defaultEnvironment": "prod",
+  "defaultEnvironmentAny": true,
+  "defaultEnvironmentDev": false,
+  "defaultEnvironmentProd": true,
+  "defaultPackaging": "jar",
+  "defaultPackagingAny": true,
+  "defaultPackagingJar": true,
+  "defaultPackagingWar": false,
+  "defaultUserPassword": "user",
+  "defaultUserRoles": [
+    "USER",
+  ],
+  "defaultUserUsername": "user",
+  "devDatabaseType": "postgresql",
+  "devDatabaseTypeAny": true,
+  "devDatabaseTypeH2Any": undefined,
+  "devDatabaseTypeH2Disk": false,
+  "devDatabaseTypeH2Memory": false,
+  "devDatabaseTypeMariadb": false,
+  "devDatabaseTypeMssql": false,
+  "devDatabaseTypeMysql": false,
+  "devDatabaseTypeOracle": false,
+  "devDatabaseTypePostgresql": true,
+  "devServerPort": 9060,
+  "devServerPortProxy": 9000,
+  "dockerApplicationEnvironment": {},
+  "dockerContainers": Any<Object>,
+  "dockerServices": [],
+  "dockerServicesDir": "src/main/docker/",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableGradleDevelocity": false,
+  "enableHibernateCache": true,
+  "enableI18nRTL": false,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": false,
+  "endpointPrefix": "services/jhipster",
+  "entities": Any<Array>,
+  "entitySuffix": "",
+  "exposeMicrofrontend": false,
+  "feignClient": false,
+  "filterEntitiesAndPropertiesForClient": [Function],
+  "filterEntitiesForClient": [Function],
+  "filterEntityPropertiesForClient": [Function],
+  "frontendAppName": "jhipsterApp",
+  "gatewayServerPort": 8080,
+  "gatewayServicesApiAvailable": false,
+  "generateAuthenticationApi": false,
+  "generateBuiltInAuthorityEntity": false,
+  "generateBuiltInUserEntity": false,
+  "generateInMemoryUserCredentials": false,
+  "generateUserManagement": false,
+  "getWebappTranslation": [Function],
+  "graalvmSupport": undefined,
+  "gradleDevelocityHost": undefined,
+  "hasNonBuiltInEntity": true,
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "incrementalChangelog": undefined,
+  "javaNodeBuildPaths": Any<Array>,
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "jwtSecretKey": undefined,
+  "languages": Any<Array>,
+  "languagesDefinition": [
+    {
+      "angularLocale": "fr",
+      "dayjsLocale": "fr",
+      "displayName": "Français",
+      "fakerjsLocale": "fr",
+      "javaLocaleMessageSourceSuffix": "fr",
+      "languageTag": "fr",
+      "name": "French",
+      "rtl": false,
+    },
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "languagesToGenerate": [
+    "en",
+  ],
+  "languagesToGenerateDefinition": [
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "loginRegex": "^(?>[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$",
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "messageBrokerAny": false,
+  "messageBrokerKafka": false,
+  "messageBrokerNo": true,
+  "messageBrokerPulsar": false,
+  "messageHeaderNameAlert": "x-jhipsterapp-alert",
+  "messageHeaderNameError": "x-jhipsterapp-error",
+  "messageHeaderNameParam": "x-jhipsterapp-params",
+  "microfrontend": true,
+  "microfrontends": [],
+  "monorepository": undefined,
+  "nativeLanguage": "en",
+  "nativeLanguageDefinition": {
+    "angularLocale": "en",
+    "dayjsLocale": "en",
+    "displayName": "English",
+    "fakerjsLocale": "en",
+    "javaLocaleMessageSourceSuffix": "en",
+    "languageTag": "en",
+    "name": "English",
+    "rtl": false,
+  },
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageFolder": undefined,
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": {},
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prettierTabWidth": 2,
+  "prodDatabaseType": "postgresql",
+  "prodDatabaseTypeAny": true,
+  "prodDatabaseTypeMariadb": false,
+  "prodDatabaseTypeMssql": false,
+  "prodDatabaseTypeMysql": false,
+  "prodDatabaseTypeOracle": false,
+  "prodDatabaseTypePostgresql": true,
+  "projectDescription": "Description for JHipster",
+  "projectVersion": undefined,
+  "reactBootstrapBsTheme": "dark",
+  "reactBootstrapVariant": "dark",
+  "reactive": false,
+  "rememberMeKey": undefined,
+  "routes": undefined,
+  "searchEngine": "no",
+  "searchEngineAny": false,
+  "searchEngineCouchbase": false,
+  "searchEngineElasticsearch": false,
+  "searchEngineNo": true,
+  "serverPort": 8081,
+  "serviceDiscovery": "consul",
+  "serviceDiscoveryAny": true,
+  "serviceDiscoveryConsul": true,
+  "serviceDiscoveryEureka": false,
+  "serviceDiscoveryNo": false,
+  "serviceDiscoveryType": "consul",
+  "serviceDiscoveryTypeAny": true,
+  "serviceDiscoveryTypeConsul": true,
+  "serviceDiscoveryTypeEureka": false,
+  "serviceDiscoveryTypeNo": false,
+  "skipCheckLengthOfIdentifier": undefined,
+  "skipClient": undefined,
+  "skipCommitHook": undefined,
+  "skipFakeData": undefined,
+  "skipJhipsterDependencies": false,
+  "skipServer": undefined,
+  "skipUserManagement": false,
+  "srcMain": "src/main/",
+  "srcTest": "src/test/",
+  "supportedLanguages": Any<Array>,
+  "syncUserWithIdp": false,
+  "temporaryDir": "temp/",
+  "testFrameworks": [],
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "user": undefined,
+  "webappEnumerationsDir": "clientRoot/src/app/shared/model/enumerations/",
+  "webappLoginRegExp": "^[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$",
+  "websocket": false,
+  "withAdminUi": false,
+  "withGeneratedFlag": undefined,
+}
+`;
+
+exports[`generator - react microservice-jwt-skipUserManagement(false)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(false) should match generated files snapshot 1`] = `
+{
+  ".jhipster/EntityWithCustomId.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Microservice.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Simple.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/SkipClient.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/eslint.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/package.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/postcss.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/404.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/WEB-INF/web.xml": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/_bootstrap-variables.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/app.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/app.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/axios-interceptor.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/axios-interceptor.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/dayjs.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/error-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/loading-bar-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/logger-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/notification-middleware.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/notification-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/config/store.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/entity-with-custom-id.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/entity-with-custom-id/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/menu.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/microservice/microservice.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/reducers.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/entities/simple/simple.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/main.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/administration.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/administration.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/docs/docs.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/docs/docs.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/administration/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/home/home.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/home/home.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/login-modal.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/login.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/modules/login/logout.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/setup-tests.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/DurationFormat.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/auth/private-route.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/auth/private-route.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary-routes.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary-routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-boundary.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/error-loading.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/error/page-not-found.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/data-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/error.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/headers.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/link-header.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/jhipster/problem-details.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/footer/footer.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/footer/footer.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/header/header.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/account.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/account.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/admin.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/entities.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/index.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/menu-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/menus/menu-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/password/password-strength-bar.scss": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/layout/password/password-strength-bar.tsx": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/entity-with-custom-id.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/microservice.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/simple.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/model/user.model.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/application-profile.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/application-profile.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/authentication.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/authentication.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/index.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/reducers/reducer.utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/date-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/entity-utils.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/entity-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/shared/util/pagination.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/app/typings.d.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/css/loading.css": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_0_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_1_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_2_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3.svg": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/jhipster_family_member_3_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/content/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/favicon.ico": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/index.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/manifest.webapp": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/robots.txt": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/src/swagger-ui/index.html": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/vitest.config.ts": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/environment.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/package.json": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/utils.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.microfrontend.js": {
+    "stateCleared": "modified",
+  },
+  "clientRoot/webpack/webpack.prod.js": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - react microservice-jwt-skipUserManagement(false)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(false) should match source calls snapshot 1`] = `
+{
+  "addEntitiesToClient": [
+    {
+      "application": "Application[jhipster]",
+      "entities": [
+        "Entity[Simple]",
+        "Entity[Microservice]",
+        "Entity[EntityWithCustomId]",
+      ],
+    },
+  ],
+  "addSonarProperties": [
+    [
+      {
+        "key": "sonar.test.inclusions",
+        "value": "clientRoot/src/app/**/*.spec.ts, clientRoot/src/app/**/*.spec.tsx",
+        "valueSep": ", ",
+      },
+      {
+        "key": "sonar.testExecutionReportPaths",
+        "value": "temp/test-results/jest/TESTS-results-vitest.xml",
+      },
+      {
+        "key": "sonar.javascript.lcov.reportPaths",
+        "value": "temp/test-results/lcov-report/lcov.info",
+      },
+      {
+        "key": "sonar.exclusions",
+        "value": "clientRoot/src/content/**/*.*, clientRoot/src/i18n/*.ts, dist/**/*.*",
+        "valueSep": ", ",
+      },
+    ],
+  ],
+  "addWebpackConfig": [
+    {
+      "config": "require('./webpack.microfrontend')({ serve: options.env.WEBPACK_SERVE })",
+    },
+  ],
+  "mergeClientPackageJson": [
+    {
+      "devDependencies": {
+        "@module-federation/enhanced": null,
+      },
+    },
+    {
+      "devDependencies": {
+        "eslint-config-prettier": "ESLINT_CONFIG_PRETTIER_VERSION",
+        "eslint-plugin-prettier": "ESLINT_PLUGIN_PRETTIER_VERSION",
+        "globals": "GLOBALS_VERSION",
+        "jiti": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`generator - react microservice-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(false) should match application snapshot 1`] = `
+{
+  "addLanguageCallbacks": Any<Array>,
+  "anyEntityHasRelationshipWithUser": false,
+  "applicationType": "microservice",
+  "applicationTypeAny": true,
+  "applicationTypeGateway": false,
+  "applicationTypeMicroservice": true,
+  "applicationTypeMonolith": false,
+  "authenticationType": "oauth2",
+  "authenticationTypeAny": true,
+  "authenticationTypeJwt": false,
+  "authenticationTypeOauth2": true,
+  "authenticationTypeSession": false,
+  "authenticationTypeUsesRemoteAuthorization": true,
+  "authenticationUsesCsrf": true,
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "buildToolAny": true,
+  "buildToolGradle": false,
+  "buildToolMaven": true,
+  "buildToolUnknown": false,
+  "cacheProvider": "hazelcast",
+  "cacheProviderAny": true,
+  "cacheProviderCaffeine": false,
+  "cacheProviderEhcache": false,
+  "cacheProviderHazelcast": true,
+  "cacheProviderInfinispan": false,
+  "cacheProviderMemcached": false,
+  "cacheProviderNo": false,
+  "cacheProviderRedis": false,
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientBundler": "webpack",
+  "clientBundlerAny": true,
+  "clientBundlerEsbuild": false,
+  "clientBundlerName": "Webpack",
+  "clientBundlerRsbuild": false,
+  "clientBundlerVite": false,
+  "clientBundlerWebpack": true,
+  "clientDistDir": "dist/",
+  "clientFramework": "react",
+  "clientFrameworkAngular": false,
+  "clientFrameworkAny": true,
+  "clientFrameworkBuiltIn": true,
+  "clientFrameworkNo": false,
+  "clientFrameworkReact": true,
+  "clientFrameworkVue": false,
+  "clientI18nDir": "src/main/webapp/i18n/",
+  "clientPackageJsonScripts": {},
+  "clientRootDir": "",
+  "clientSrcDir": "src/main/webapp/",
+  "clientTestDir": "src/test/javascript/",
+  "clientTestFramework": "vitest",
+  "clientTestFrameworkAny": true,
+  "clientTestFrameworkName": "Vitest",
+  "clientTestFrameworkVitest": true,
+  "clientTestFrameworks": undefined,
+  "clientTestFrameworksAny": false,
+  "clientTestFrameworksCypress": false,
+  "clientTheme": "none",
+  "clientThemeAny": false,
+  "clientThemeNone": true,
+  "clientThemeVariant": undefined,
+  "clientThemeVariantAny": false,
+  "clientThemeVariantDark": false,
+  "clientThemeVariantLight": false,
+  "clientThemeVariantPrimary": false,
+  "commandName": "react",
+  "communicationSpringWebsocket": undefined,
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseMigrationAny": true,
+  "databaseMigrationLiquibase": true,
+  "databaseMigrationNo": false,
+  "databaseType": "sql",
+  "databaseTypeAny": true,
+  "databaseTypeCassandra": false,
+  "databaseTypeCouchbase": false,
+  "databaseTypeMongodb": false,
+  "databaseTypeNeo4j": false,
+  "databaseTypeNo": false,
+  "databaseTypeSql": true,
+  "defaultAdminPassword": "admin",
+  "defaultAdminRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultAdminUsername": "admin",
+  "defaultEnvironment": "prod",
+  "defaultEnvironmentAny": true,
+  "defaultEnvironmentDev": false,
+  "defaultEnvironmentProd": true,
+  "defaultPackaging": "jar",
+  "defaultPackagingAny": true,
+  "defaultPackagingJar": true,
+  "defaultPackagingWar": false,
+  "defaultUserPassword": "user",
+  "defaultUserRoles": [
+    "USER",
+  ],
+  "defaultUserUsername": "user",
+  "devDatabaseType": "postgresql",
+  "devDatabaseTypeAny": true,
+  "devDatabaseTypeH2Any": undefined,
+  "devDatabaseTypeH2Disk": false,
+  "devDatabaseTypeH2Memory": false,
+  "devDatabaseTypeMariadb": false,
+  "devDatabaseTypeMssql": false,
+  "devDatabaseTypeMysql": false,
+  "devDatabaseTypeOracle": false,
+  "devDatabaseTypePostgresql": true,
+  "devServerPort": 9060,
+  "devServerPortProxy": 9000,
+  "dockerApplicationEnvironment": {},
+  "dockerContainers": Any<Object>,
+  "dockerServices": [],
+  "dockerServicesDir": "src/main/docker/",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableGradleDevelocity": false,
+  "enableHibernateCache": true,
+  "enableI18nRTL": false,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": true,
+  "endpointPrefix": "services/jhipster",
+  "entities": Any<Array>,
+  "entitySuffix": "",
+  "exposeMicrofrontend": false,
+  "feignClient": false,
+  "filterEntitiesAndPropertiesForClient": [Function],
+  "filterEntitiesForClient": [Function],
+  "filterEntityPropertiesForClient": [Function],
+  "frontendAppName": "jhipsterApp",
+  "gatewayServerPort": 8080,
+  "gatewayServicesApiAvailable": false,
+  "generateAuthenticationApi": false,
+  "generateBuiltInAuthorityEntity": false,
+  "generateBuiltInUserEntity": false,
+  "generateInMemoryUserCredentials": false,
+  "generateUserManagement": false,
+  "getWebappTranslation": [Function],
+  "graalvmSupport": undefined,
+  "gradleDevelocityHost": undefined,
+  "hasNonBuiltInEntity": true,
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "incrementalChangelog": undefined,
+  "javaNodeBuildPaths": Any<Array>,
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "jwtSecretKey": undefined,
+  "languages": Any<Array>,
+  "languagesDefinition": [
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+    {
+      "angularLocale": "fr",
+      "dayjsLocale": "fr",
+      "displayName": "Français",
+      "fakerjsLocale": "fr",
+      "javaLocaleMessageSourceSuffix": "fr",
+      "languageTag": "fr",
+      "name": "French",
+      "rtl": false,
+    },
+  ],
+  "languagesToGenerate": [
+    "en",
+    "fr",
+  ],
+  "languagesToGenerateDefinition": Any<Array>,
+  "loginRegex": "^(?>[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$",
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "messageBrokerAny": false,
+  "messageBrokerKafka": false,
+  "messageBrokerNo": true,
+  "messageBrokerPulsar": false,
+  "messageHeaderNameAlert": "x-jhipsterapp-alert",
+  "messageHeaderNameError": "x-jhipsterapp-error",
+  "messageHeaderNameParam": "x-jhipsterapp-params",
+  "microfrontend": true,
+  "microfrontends": [],
+  "monorepository": undefined,
+  "nativeLanguage": "en",
+  "nativeLanguageDefinition": {
+    "angularLocale": "en",
+    "dayjsLocale": "en",
+    "displayName": "English",
+    "fakerjsLocale": "en",
+    "javaLocaleMessageSourceSuffix": "en",
+    "languageTag": "en",
+    "name": "English",
+    "rtl": false,
+  },
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageFolder": undefined,
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": {},
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prettierTabWidth": 2,
+  "prodDatabaseType": "postgresql",
+  "prodDatabaseTypeAny": true,
+  "prodDatabaseTypeMariadb": false,
+  "prodDatabaseTypeMssql": false,
+  "prodDatabaseTypeMysql": false,
+  "prodDatabaseTypeOracle": false,
+  "prodDatabaseTypePostgresql": true,
+  "projectDescription": "Description for JHipster",
+  "projectVersion": undefined,
+  "reactBootstrapBsTheme": "dark",
+  "reactBootstrapVariant": "dark",
+  "reactive": false,
+  "rememberMeKey": undefined,
+  "routes": undefined,
+  "searchEngine": "no",
+  "searchEngineAny": false,
+  "searchEngineCouchbase": false,
+  "searchEngineElasticsearch": false,
+  "searchEngineNo": true,
+  "serverPort": 8081,
+  "serviceDiscovery": "consul",
+  "serviceDiscoveryAny": true,
+  "serviceDiscoveryConsul": true,
+  "serviceDiscoveryEureka": false,
+  "serviceDiscoveryNo": false,
+  "serviceDiscoveryType": "consul",
+  "serviceDiscoveryTypeAny": true,
+  "serviceDiscoveryTypeConsul": true,
+  "serviceDiscoveryTypeEureka": false,
+  "serviceDiscoveryTypeNo": false,
+  "skipCheckLengthOfIdentifier": undefined,
+  "skipClient": undefined,
+  "skipCommitHook": undefined,
+  "skipFakeData": undefined,
+  "skipJhipsterDependencies": true,
+  "skipServer": undefined,
+  "skipUserManagement": true,
+  "srcMain": "src/main/",
+  "srcTest": "src/test/",
+  "supportedLanguages": Any<Array>,
+  "syncUserWithIdp": false,
+  "temporaryDir": "temp/",
+  "testFrameworks": [],
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "user": undefined,
+  "webappEnumerationsDir": "src/main/webapp/app/shared/model/enumerations/",
+  "webappLoginRegExp": "^[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$",
+  "websocket": false,
+  "withAdminUi": true,
+  "withGeneratedFlag": undefined,
+}
+`;
+
+exports[`generator - react microservice-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(false) should match generated files snapshot 1`] = `
+{
+  ".jhipster/EntityWithCustomId.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Microservice.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Simple.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/SkipClient.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.ts": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+  "postcss.config.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/404.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/WEB-INF/web.xml": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/_bootstrap-variables.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/dayjs.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/error-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/loading-bar-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/logger-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/store.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/translation.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/menu.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/reducers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/main.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/configuration/configuration.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/health/health-modal.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/health/health.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/logs/logs.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/metrics/metrics.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/login-redirect.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/logout.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/setup-tests.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/DurationFormat.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-loading.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/page-not-found.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/data-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/error.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/headers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/link-header.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/problem-details.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/admin.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/entities.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/locale.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/entity-with-custom-id.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/microservice.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/simple.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/user.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/locale.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/locale.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/reducer.utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/user-management.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/user-management.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/date-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/pagination.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/url-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/typings.d.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/css/loading.css": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/favicon.ico": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/index.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/manifest.webapp": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/robots.txt": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/swagger-ui/index.html": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "vitest.config.ts": {
+    "stateCleared": "modified",
+  },
+  "webpack/environment.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "webpack/package.json": {
+    "stateCleared": "modified",
+  },
+  "webpack/utils.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.microfrontend.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.prod.js": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - react microservice-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(false) should match source calls snapshot 1`] = `
+{
+  "addEntitiesToClient": [
+    {
+      "application": "Application[jhipster]",
+      "entities": [
+        "Entity[Simple]",
+        "Entity[Microservice]",
+        "Entity[EntityWithCustomId]",
+      ],
+    },
+  ],
+  "addSonarProperties": [
+    [
+      {
+        "key": "sonar.test.inclusions",
+        "value": "src/main/webapp/app/**/*.spec.ts, src/main/webapp/app/**/*.spec.tsx",
+        "valueSep": ", ",
+      },
+      {
+        "key": "sonar.testExecutionReportPaths",
+        "value": "temp/test-results/jest/TESTS-results-vitest.xml",
+      },
+      {
+        "key": "sonar.javascript.lcov.reportPaths",
+        "value": "temp/test-results/lcov-report/lcov.info",
+      },
+      {
+        "key": "sonar.exclusions",
+        "value": "src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.ts, dist/**/*.*",
+        "valueSep": ", ",
+      },
+    ],
+  ],
+  "addWebpackConfig": [
+    {
+      "config": "require('./webpack.microfrontend')({ serve: options.env.WEBPACK_SERVE })",
+    },
+  ],
+  "mergeClientPackageJson": [
+    {
+      "devDependencies": {
+        "@module-federation/enhanced": null,
+      },
+    },
+    {
+      "devDependencies": {
+        "eslint-config-prettier": "ESLINT_CONFIG_PRETTIER_VERSION",
+        "eslint-plugin-prettier": "ESLINT_PLUGIN_PRETTIER_VERSION",
+        "globals": "GLOBALS_VERSION",
+        "jiti": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`generator - react monolith-jwt-skipUserManagement(false)-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(true) should match application snapshot 1`] = `
+{
+  "addLanguageCallbacks": Any<Array>,
+  "anyEntityHasRelationshipWithUser": false,
+  "applicationType": "monolith",
+  "applicationTypeAny": true,
+  "applicationTypeGateway": false,
+  "applicationTypeMicroservice": false,
+  "applicationTypeMonolith": true,
+  "authenticationType": "jwt",
+  "authenticationTypeAny": true,
+  "authenticationTypeJwt": true,
+  "authenticationTypeOauth2": false,
+  "authenticationTypeSession": false,
+  "authenticationTypeUsesRemoteAuthorization": false,
+  "authenticationUsesCsrf": false,
+  "authority": Any<Object>,
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "buildToolAny": true,
+  "buildToolGradle": false,
+  "buildToolMaven": true,
+  "buildToolUnknown": false,
+  "cacheProvider": "ehcache",
+  "cacheProviderAny": true,
+  "cacheProviderCaffeine": false,
+  "cacheProviderEhcache": true,
+  "cacheProviderHazelcast": false,
+  "cacheProviderInfinispan": false,
+  "cacheProviderMemcached": false,
+  "cacheProviderNo": false,
+  "cacheProviderRedis": false,
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientBundler": "webpack",
+  "clientBundlerAny": true,
+  "clientBundlerEsbuild": false,
+  "clientBundlerName": "Webpack",
+  "clientBundlerRsbuild": false,
+  "clientBundlerVite": false,
+  "clientBundlerWebpack": true,
+  "clientDistDir": "dist/",
+  "clientFramework": "react",
+  "clientFrameworkAngular": false,
+  "clientFrameworkAny": true,
+  "clientFrameworkBuiltIn": true,
+  "clientFrameworkNo": false,
+  "clientFrameworkReact": true,
+  "clientFrameworkVue": false,
+  "clientI18nDir": "src/main/webapp/i18n/",
+  "clientPackageJsonScripts": {},
+  "clientRootDir": "",
+  "clientSrcDir": "src/main/webapp/",
+  "clientTestDir": "src/test/javascript/",
+  "clientTestFramework": "vitest",
+  "clientTestFrameworkAny": true,
+  "clientTestFrameworkName": "Vitest",
+  "clientTestFrameworkVitest": true,
+  "clientTestFrameworks": undefined,
+  "clientTestFrameworksAny": false,
+  "clientTestFrameworksCypress": false,
+  "clientTheme": "none",
+  "clientThemeAny": false,
+  "clientThemeNone": true,
+  "clientThemeVariant": undefined,
+  "clientThemeVariantAny": false,
+  "clientThemeVariantDark": false,
+  "clientThemeVariantLight": false,
+  "clientThemeVariantPrimary": false,
+  "commandName": "react",
+  "communicationSpringWebsocket": undefined,
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseMigrationAny": true,
+  "databaseMigrationLiquibase": true,
+  "databaseMigrationNo": false,
+  "databaseType": "sql",
+  "databaseTypeAny": true,
+  "databaseTypeCassandra": false,
+  "databaseTypeCouchbase": false,
+  "databaseTypeMongodb": false,
+  "databaseTypeNeo4j": false,
+  "databaseTypeNo": false,
+  "databaseTypeSql": true,
+  "defaultAdminPassword": "admin",
+  "defaultAdminRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultAdminUsername": "admin",
+  "defaultEnvironment": "prod",
+  "defaultEnvironmentAny": true,
+  "defaultEnvironmentDev": false,
+  "defaultEnvironmentProd": true,
+  "defaultPackaging": "jar",
+  "defaultPackagingAny": true,
+  "defaultPackagingJar": true,
+  "defaultPackagingWar": false,
+  "defaultUserPassword": "user",
+  "defaultUserRoles": [
+    "USER",
+  ],
+  "defaultUserUsername": "user",
+  "devDatabaseType": "postgresql",
+  "devDatabaseTypeAny": true,
+  "devDatabaseTypeH2Any": undefined,
+  "devDatabaseTypeH2Disk": false,
+  "devDatabaseTypeH2Memory": false,
+  "devDatabaseTypeMariadb": false,
+  "devDatabaseTypeMssql": false,
+  "devDatabaseTypeMysql": false,
+  "devDatabaseTypeOracle": false,
+  "devDatabaseTypePostgresql": true,
+  "devServerPort": 9060,
+  "devServerPortProxy": 9000,
+  "dockerApplicationEnvironment": {},
+  "dockerContainers": Any<Object>,
+  "dockerServices": [],
+  "dockerServicesDir": "src/main/docker/",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableGradleDevelocity": false,
+  "enableHibernateCache": true,
+  "enableI18nRTL": false,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": true,
+  "endpointPrefix": "",
+  "entities": Any<Array>,
+  "entitySuffix": "",
+  "exposeMicrofrontend": false,
+  "feignClient": false,
+  "filterEntitiesAndPropertiesForClient": [Function],
+  "filterEntitiesForClient": [Function],
+  "filterEntityPropertiesForClient": [Function],
+  "frontendAppName": "jhipsterApp",
+  "gatewayServerPort": undefined,
+  "gatewayServicesApiAvailable": false,
+  "generateAuthenticationApi": true,
+  "generateBuiltInAuthorityEntity": true,
+  "generateBuiltInUserEntity": true,
+  "generateInMemoryUserCredentials": false,
+  "generateUserManagement": true,
+  "getWebappTranslation": [Function],
+  "graalvmSupport": undefined,
+  "gradleDevelocityHost": undefined,
+  "hasNonBuiltInEntity": true,
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "incrementalChangelog": undefined,
+  "javaNodeBuildPaths": Any<Array>,
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "jwtSecretKey": undefined,
+  "languages": Any<Array>,
+  "languagesDefinition": [
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+    {
+      "angularLocale": "fr",
+      "dayjsLocale": "fr",
+      "displayName": "Français",
+      "fakerjsLocale": "fr",
+      "javaLocaleMessageSourceSuffix": "fr",
+      "languageTag": "fr",
+      "name": "French",
+      "rtl": false,
+    },
+  ],
+  "languagesToGenerate": [
+    "en",
+    "fr",
+  ],
+  "languagesToGenerateDefinition": Any<Array>,
+  "loginRegex": "^(?>[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$",
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "messageBrokerAny": false,
+  "messageBrokerKafka": false,
+  "messageBrokerNo": true,
+  "messageBrokerPulsar": false,
+  "messageHeaderNameAlert": "x-jhipsterapp-alert",
+  "messageHeaderNameError": "x-jhipsterapp-error",
+  "messageHeaderNameParam": "x-jhipsterapp-params",
+  "microfrontend": false,
+  "microfrontends": undefined,
+  "monorepository": undefined,
+  "nativeLanguage": "en",
+  "nativeLanguageDefinition": {
+    "angularLocale": "en",
+    "dayjsLocale": "en",
+    "displayName": "English",
+    "fakerjsLocale": "en",
+    "javaLocaleMessageSourceSuffix": "en",
+    "languageTag": "en",
+    "name": "English",
+    "rtl": false,
+  },
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageFolder": undefined,
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": {},
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prettierTabWidth": 2,
+  "prodDatabaseType": "postgresql",
+  "prodDatabaseTypeAny": true,
+  "prodDatabaseTypeMariadb": false,
+  "prodDatabaseTypeMssql": false,
+  "prodDatabaseTypeMysql": false,
+  "prodDatabaseTypeOracle": false,
+  "prodDatabaseTypePostgresql": true,
+  "projectDescription": "Description for JHipster",
+  "projectVersion": undefined,
+  "reactBootstrapBsTheme": "dark",
+  "reactBootstrapVariant": "dark",
+  "reactive": false,
+  "rememberMeKey": undefined,
+  "routes": undefined,
+  "searchEngine": "no",
+  "searchEngineAny": false,
+  "searchEngineCouchbase": false,
+  "searchEngineElasticsearch": false,
+  "searchEngineNo": true,
+  "serverPort": 8080,
+  "serviceDiscovery": "no",
+  "serviceDiscoveryAny": false,
+  "serviceDiscoveryConsul": false,
+  "serviceDiscoveryEureka": false,
+  "serviceDiscoveryNo": true,
+  "serviceDiscoveryType": "no",
+  "serviceDiscoveryTypeAny": false,
+  "serviceDiscoveryTypeConsul": false,
+  "serviceDiscoveryTypeEureka": false,
+  "serviceDiscoveryTypeNo": true,
+  "skipCheckLengthOfIdentifier": undefined,
+  "skipClient": undefined,
+  "skipCommitHook": undefined,
+  "skipFakeData": undefined,
+  "skipJhipsterDependencies": true,
+  "skipServer": undefined,
+  "skipUserManagement": false,
+  "srcMain": "src/main/",
+  "srcTest": "src/test/",
+  "supportedLanguages": Any<Array>,
+  "syncUserWithIdp": false,
+  "temporaryDir": "temp/",
+  "testFrameworks": [],
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "user": Any<Object>,
+  "userManagement": Any<Object>,
+  "webappEnumerationsDir": "src/main/webapp/app/shared/model/enumerations/",
+  "webappLoginRegExp": "^[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$",
+  "websocket": true,
+  "withAdminUi": true,
+  "withGeneratedFlag": undefined,
+}
+`;
+
+exports[`generator - react monolith-jwt-skipUserManagement(false)-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(true) should match generated files snapshot 1`] = `
+{
+  ".jhipster/EntityWithCustomId.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Microservice.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Simple.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/SkipClient.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.ts": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+  "postcss.config.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/404.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/WEB-INF/web.xml": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/_bootstrap-variables.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/dayjs.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/error-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/loading-bar-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/logger-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/store.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/translation.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/menu.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/reducers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/activate/activate.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/activate/activate.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/activate/activate.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/password-reset/finish/password-reset-finish.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/password-reset/init/password-reset-init.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/password-reset/password-reset.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/password/password.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/password/password.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/password/password.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/register/register.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/register/register.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/register/register.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/settings/settings.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/settings/settings.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/account/settings/settings.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/configuration/configuration.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/health/health-modal.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/health/health.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/logs/logs.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/metrics/metrics.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/user-management/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/user-management/user-management-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/user-management/user-management-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/user-management/user-management-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/user-management/user-management.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/user-management/user-management.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/user-management/user-management.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/login-modal.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/login.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/logout.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/setup-tests.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/DurationFormat.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/page-not-found.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/data-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/error.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/headers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/link-header.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/problem-details.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/admin.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/entities.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/locale.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/entity-with-custom-id.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/microservice.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/simple.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/user.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/locale.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/locale.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/reducer.utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/date-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/pagination.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/typings.d.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/css/loading.css": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/favicon.ico": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/index.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/manifest.webapp": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/robots.txt": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/swagger-ui/index.html": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "vitest.config.ts": {
+    "stateCleared": "modified",
+  },
+  "webpack/environment.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "webpack/package.json": {
+    "stateCleared": "modified",
+  },
+  "webpack/utils.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.prod.js": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - react monolith-jwt-skipUserManagement(false)-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(true) should match source calls snapshot 1`] = `
+{
+  "addEntitiesToClient": [
+    {
+      "application": "Application[jhipster]",
+      "entities": [
+        "Entity[Simple]",
+        "Entity[Microservice]",
+        "Entity[EntityWithCustomId]",
+      ],
+    },
+  ],
+  "addSonarProperties": [
+    [
+      {
+        "key": "sonar.test.inclusions",
+        "value": "src/main/webapp/app/**/*.spec.ts, src/main/webapp/app/**/*.spec.tsx",
+        "valueSep": ", ",
+      },
+      {
+        "key": "sonar.testExecutionReportPaths",
+        "value": "temp/test-results/jest/TESTS-results-vitest.xml",
+      },
+      {
+        "key": "sonar.javascript.lcov.reportPaths",
+        "value": "temp/test-results/lcov-report/lcov.info",
+      },
+      {
+        "key": "sonar.exclusions",
+        "value": "src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.ts, dist/**/*.*",
+        "valueSep": ", ",
+      },
+    ],
+  ],
+  "mergeClientPackageJson": [
+    {
+      "devDependencies": {
+        "eslint-config-prettier": "ESLINT_CONFIG_PRETTIER_VERSION",
+        "eslint-plugin-prettier": "ESLINT_PLUGIN_PRETTIER_VERSION",
+        "globals": "GLOBALS_VERSION",
+        "jiti": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`generator - react monolith-oauth2-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(false) should match application snapshot 1`] = `
+{
+  "addLanguageCallbacks": Any<Array>,
+  "anyEntityHasRelationshipWithUser": false,
+  "applicationType": "monolith",
+  "applicationTypeAny": true,
+  "applicationTypeGateway": false,
+  "applicationTypeMicroservice": false,
+  "applicationTypeMonolith": true,
+  "authenticationType": "oauth2",
+  "authenticationTypeAny": true,
+  "authenticationTypeJwt": false,
+  "authenticationTypeOauth2": true,
+  "authenticationTypeSession": false,
+  "authenticationTypeUsesRemoteAuthorization": true,
+  "authenticationUsesCsrf": true,
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "buildToolAny": true,
+  "buildToolGradle": false,
+  "buildToolMaven": true,
+  "buildToolUnknown": false,
+  "cacheProvider": "ehcache",
+  "cacheProviderAny": true,
+  "cacheProviderCaffeine": false,
+  "cacheProviderEhcache": true,
+  "cacheProviderHazelcast": false,
+  "cacheProviderInfinispan": false,
+  "cacheProviderMemcached": false,
+  "cacheProviderNo": false,
+  "cacheProviderRedis": false,
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientBundler": "webpack",
+  "clientBundlerAny": true,
+  "clientBundlerEsbuild": false,
+  "clientBundlerName": "Webpack",
+  "clientBundlerRsbuild": false,
+  "clientBundlerVite": false,
+  "clientBundlerWebpack": true,
+  "clientDistDir": "dist/",
+  "clientFramework": "react",
+  "clientFrameworkAngular": false,
+  "clientFrameworkAny": true,
+  "clientFrameworkBuiltIn": true,
+  "clientFrameworkNo": false,
+  "clientFrameworkReact": true,
+  "clientFrameworkVue": false,
+  "clientI18nDir": "src/main/webapp/i18n/",
+  "clientPackageJsonScripts": {},
+  "clientRootDir": "",
+  "clientSrcDir": "src/main/webapp/",
+  "clientTestDir": "src/test/javascript/",
+  "clientTestFramework": "vitest",
+  "clientTestFrameworkAny": true,
+  "clientTestFrameworkName": "Vitest",
+  "clientTestFrameworkVitest": true,
+  "clientTestFrameworks": undefined,
+  "clientTestFrameworksAny": false,
+  "clientTestFrameworksCypress": false,
+  "clientTheme": "none",
+  "clientThemeAny": false,
+  "clientThemeNone": true,
+  "clientThemeVariant": undefined,
+  "clientThemeVariantAny": false,
+  "clientThemeVariantDark": false,
+  "clientThemeVariantLight": false,
+  "clientThemeVariantPrimary": false,
+  "commandName": "react",
+  "communicationSpringWebsocket": undefined,
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseMigrationAny": true,
+  "databaseMigrationLiquibase": true,
+  "databaseMigrationNo": false,
+  "databaseType": "sql",
+  "databaseTypeAny": true,
+  "databaseTypeCassandra": false,
+  "databaseTypeCouchbase": false,
+  "databaseTypeMongodb": false,
+  "databaseTypeNeo4j": false,
+  "databaseTypeNo": false,
+  "databaseTypeSql": true,
+  "defaultAdminPassword": "admin",
+  "defaultAdminRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultAdminUsername": "admin",
+  "defaultEnvironment": "prod",
+  "defaultEnvironmentAny": true,
+  "defaultEnvironmentDev": false,
+  "defaultEnvironmentProd": true,
+  "defaultPackaging": "jar",
+  "defaultPackagingAny": true,
+  "defaultPackagingJar": true,
+  "defaultPackagingWar": false,
+  "defaultUserPassword": "user",
+  "defaultUserRoles": [
+    "USER",
+  ],
+  "defaultUserUsername": "user",
+  "devDatabaseType": "postgresql",
+  "devDatabaseTypeAny": true,
+  "devDatabaseTypeH2Any": undefined,
+  "devDatabaseTypeH2Disk": false,
+  "devDatabaseTypeH2Memory": false,
+  "devDatabaseTypeMariadb": false,
+  "devDatabaseTypeMssql": false,
+  "devDatabaseTypeMysql": false,
+  "devDatabaseTypeOracle": false,
+  "devDatabaseTypePostgresql": true,
+  "devServerPort": 9060,
+  "devServerPortProxy": 9000,
+  "dockerApplicationEnvironment": {},
+  "dockerContainers": Any<Object>,
+  "dockerServices": [],
+  "dockerServicesDir": "src/main/docker/",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableGradleDevelocity": false,
+  "enableHibernateCache": true,
+  "enableI18nRTL": false,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": false,
+  "endpointPrefix": "",
+  "entities": Any<Array>,
+  "entitySuffix": "",
+  "exposeMicrofrontend": false,
+  "feignClient": false,
+  "filterEntitiesAndPropertiesForClient": [Function],
+  "filterEntitiesForClient": [Function],
+  "filterEntityPropertiesForClient": [Function],
+  "frontendAppName": "jhipsterApp",
+  "gatewayServerPort": undefined,
+  "gatewayServicesApiAvailable": false,
+  "generateAuthenticationApi": true,
+  "generateBuiltInAuthorityEntity": false,
+  "generateBuiltInUserEntity": false,
+  "generateInMemoryUserCredentials": false,
+  "generateUserManagement": false,
+  "getWebappTranslation": [Function],
+  "graalvmSupport": undefined,
+  "gradleDevelocityHost": undefined,
+  "hasNonBuiltInEntity": true,
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "incrementalChangelog": undefined,
+  "javaNodeBuildPaths": Any<Array>,
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "jwtSecretKey": undefined,
+  "languages": Any<Array>,
+  "languagesDefinition": [
+    {
+      "angularLocale": "fr",
+      "dayjsLocale": "fr",
+      "displayName": "Français",
+      "fakerjsLocale": "fr",
+      "javaLocaleMessageSourceSuffix": "fr",
+      "languageTag": "fr",
+      "name": "French",
+      "rtl": false,
+    },
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "languagesToGenerate": [
+    "en",
+  ],
+  "languagesToGenerateDefinition": [
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "loginRegex": "^(?>[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$",
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "messageBrokerAny": false,
+  "messageBrokerKafka": false,
+  "messageBrokerNo": true,
+  "messageBrokerPulsar": false,
+  "messageHeaderNameAlert": "x-jhipsterapp-alert",
+  "messageHeaderNameError": "x-jhipsterapp-error",
+  "messageHeaderNameParam": "x-jhipsterapp-params",
+  "microfrontend": false,
+  "microfrontends": undefined,
+  "monorepository": undefined,
+  "nativeLanguage": "en",
+  "nativeLanguageDefinition": {
+    "angularLocale": "en",
+    "dayjsLocale": "en",
+    "displayName": "English",
+    "fakerjsLocale": "en",
+    "javaLocaleMessageSourceSuffix": "en",
+    "languageTag": "en",
+    "name": "English",
+    "rtl": false,
+  },
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageFolder": undefined,
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": {},
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prettierTabWidth": 2,
+  "prodDatabaseType": "postgresql",
+  "prodDatabaseTypeAny": true,
+  "prodDatabaseTypeMariadb": false,
+  "prodDatabaseTypeMssql": false,
+  "prodDatabaseTypeMysql": false,
+  "prodDatabaseTypeOracle": false,
+  "prodDatabaseTypePostgresql": true,
+  "projectDescription": "Description for JHipster",
+  "projectVersion": undefined,
+  "reactBootstrapBsTheme": "dark",
+  "reactBootstrapVariant": "dark",
+  "reactive": false,
+  "rememberMeKey": undefined,
+  "routes": undefined,
+  "searchEngine": "no",
+  "searchEngineAny": false,
+  "searchEngineCouchbase": false,
+  "searchEngineElasticsearch": false,
+  "searchEngineNo": true,
+  "serverPort": 8080,
+  "serviceDiscovery": "no",
+  "serviceDiscoveryAny": false,
+  "serviceDiscoveryConsul": false,
+  "serviceDiscoveryEureka": false,
+  "serviceDiscoveryNo": true,
+  "serviceDiscoveryType": "no",
+  "serviceDiscoveryTypeAny": false,
+  "serviceDiscoveryTypeConsul": false,
+  "serviceDiscoveryTypeEureka": false,
+  "serviceDiscoveryTypeNo": true,
+  "skipCheckLengthOfIdentifier": undefined,
+  "skipClient": undefined,
+  "skipCommitHook": undefined,
+  "skipFakeData": undefined,
+  "skipJhipsterDependencies": false,
+  "skipServer": undefined,
+  "skipUserManagement": true,
+  "srcMain": "src/main/",
+  "srcTest": "src/test/",
+  "supportedLanguages": Any<Array>,
+  "syncUserWithIdp": false,
+  "temporaryDir": "temp/",
+  "testFrameworks": [],
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "user": undefined,
+  "webappEnumerationsDir": "src/main/webapp/app/shared/model/enumerations/",
+  "webappLoginRegExp": "^[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$",
+  "websocket": false,
+  "withAdminUi": false,
+  "withGeneratedFlag": undefined,
+}
+`;
+
+exports[`generator - react monolith-oauth2-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(false) should match generated files snapshot 1`] = `
+{
+  ".jhipster/EntityWithCustomId.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Microservice.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Simple.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/SkipClient.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.ts": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+  "postcss.config.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/404.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/WEB-INF/web.xml": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/_bootstrap-variables.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/dayjs.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/error-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/loading-bar-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/logger-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/store.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/menu.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/reducers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/login-redirect.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/logout.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/setup-tests.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/DurationFormat.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/page-not-found.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/data-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/error.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/headers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/link-header.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/problem-details.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/admin.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/entities.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/entity-with-custom-id.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/microservice.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/simple.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/user.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/reducer.utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/user-management.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/user-management.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/date-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/pagination.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/url-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/typings.d.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/css/loading.css": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/favicon.ico": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/index.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/manifest.webapp": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/robots.txt": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/swagger-ui/index.html": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "vitest.config.ts": {
+    "stateCleared": "modified",
+  },
+  "webpack/environment.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "webpack/package.json": {
+    "stateCleared": "modified",
+  },
+  "webpack/utils.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.prod.js": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - react monolith-oauth2-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(false) should match source calls snapshot 1`] = `
+{
+  "addEntitiesToClient": [
+    {
+      "application": "Application[jhipster]",
+      "entities": [
+        "Entity[Simple]",
+        "Entity[Microservice]",
+        "Entity[EntityWithCustomId]",
+      ],
+    },
+  ],
+  "addSonarProperties": [
+    [
+      {
+        "key": "sonar.test.inclusions",
+        "value": "src/main/webapp/app/**/*.spec.ts, src/main/webapp/app/**/*.spec.tsx",
+        "valueSep": ", ",
+      },
+      {
+        "key": "sonar.testExecutionReportPaths",
+        "value": "temp/test-results/jest/TESTS-results-vitest.xml",
+      },
+      {
+        "key": "sonar.javascript.lcov.reportPaths",
+        "value": "temp/test-results/lcov-report/lcov.info",
+      },
+      {
+        "key": "sonar.exclusions",
+        "value": "src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.ts, dist/**/*.*",
+        "valueSep": ", ",
+      },
+    ],
+  ],
+  "mergeClientPackageJson": [
+    {
+      "devDependencies": {
+        "eslint-config-prettier": "ESLINT_CONFIG_PRETTIER_VERSION",
+        "eslint-plugin-prettier": "ESLINT_PLUGIN_PRETTIER_VERSION",
+        "globals": "GLOBALS_VERSION",
+        "jiti": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`generator - react monolith-session-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(true) should match application snapshot 1`] = `
+{
+  "addLanguageCallbacks": Any<Array>,
+  "anyEntityHasRelationshipWithUser": false,
+  "applicationType": "monolith",
+  "applicationTypeAny": true,
+  "applicationTypeGateway": false,
+  "applicationTypeMicroservice": false,
+  "applicationTypeMonolith": true,
+  "authenticationType": "session",
+  "authenticationTypeAny": true,
+  "authenticationTypeJwt": false,
+  "authenticationTypeOauth2": false,
+  "authenticationTypeSession": true,
+  "authenticationTypeUsesRemoteAuthorization": false,
+  "authenticationUsesCsrf": true,
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "buildToolAny": true,
+  "buildToolGradle": false,
+  "buildToolMaven": true,
+  "buildToolUnknown": false,
+  "cacheProvider": "ehcache",
+  "cacheProviderAny": true,
+  "cacheProviderCaffeine": false,
+  "cacheProviderEhcache": true,
+  "cacheProviderHazelcast": false,
+  "cacheProviderInfinispan": false,
+  "cacheProviderMemcached": false,
+  "cacheProviderNo": false,
+  "cacheProviderRedis": false,
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientBundler": "webpack",
+  "clientBundlerAny": true,
+  "clientBundlerEsbuild": false,
+  "clientBundlerName": "Webpack",
+  "clientBundlerRsbuild": false,
+  "clientBundlerVite": false,
+  "clientBundlerWebpack": true,
+  "clientDistDir": "dist/",
+  "clientFramework": "react",
+  "clientFrameworkAngular": false,
+  "clientFrameworkAny": true,
+  "clientFrameworkBuiltIn": true,
+  "clientFrameworkNo": false,
+  "clientFrameworkReact": true,
+  "clientFrameworkVue": false,
+  "clientI18nDir": "src/main/webapp/i18n/",
+  "clientPackageJsonScripts": {},
+  "clientRootDir": "",
+  "clientSrcDir": "src/main/webapp/",
+  "clientTestDir": "src/test/javascript/",
+  "clientTestFramework": "vitest",
+  "clientTestFrameworkAny": true,
+  "clientTestFrameworkName": "Vitest",
+  "clientTestFrameworkVitest": true,
+  "clientTestFrameworks": undefined,
+  "clientTestFrameworksAny": false,
+  "clientTestFrameworksCypress": false,
+  "clientTheme": "none",
+  "clientThemeAny": false,
+  "clientThemeNone": true,
+  "clientThemeVariant": undefined,
+  "clientThemeVariantAny": false,
+  "clientThemeVariantDark": false,
+  "clientThemeVariantLight": false,
+  "clientThemeVariantPrimary": false,
+  "commandName": "react",
+  "communicationSpringWebsocket": undefined,
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseMigrationAny": true,
+  "databaseMigrationLiquibase": true,
+  "databaseMigrationNo": false,
+  "databaseType": "sql",
+  "databaseTypeAny": true,
+  "databaseTypeCassandra": false,
+  "databaseTypeCouchbase": false,
+  "databaseTypeMongodb": false,
+  "databaseTypeNeo4j": false,
+  "databaseTypeNo": false,
+  "databaseTypeSql": true,
+  "defaultAdminPassword": "admin",
+  "defaultAdminRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultAdminUsername": "admin",
+  "defaultEnvironment": "prod",
+  "defaultEnvironmentAny": true,
+  "defaultEnvironmentDev": false,
+  "defaultEnvironmentProd": true,
+  "defaultPackaging": "jar",
+  "defaultPackagingAny": true,
+  "defaultPackagingJar": true,
+  "defaultPackagingWar": false,
+  "defaultUserPassword": "admin",
+  "defaultUserRoles": [
+    "ADMIN",
+    "USER",
+  ],
+  "defaultUserUsername": "admin",
+  "devDatabaseType": "postgresql",
+  "devDatabaseTypeAny": true,
+  "devDatabaseTypeH2Any": undefined,
+  "devDatabaseTypeH2Disk": false,
+  "devDatabaseTypeH2Memory": false,
+  "devDatabaseTypeMariadb": false,
+  "devDatabaseTypeMssql": false,
+  "devDatabaseTypeMysql": false,
+  "devDatabaseTypeOracle": false,
+  "devDatabaseTypePostgresql": true,
+  "devServerPort": 9060,
+  "devServerPortProxy": 9000,
+  "dockerApplicationEnvironment": {},
+  "dockerContainers": Any<Object>,
+  "dockerServices": [],
+  "dockerServicesDir": "src/main/docker/",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableGradleDevelocity": false,
+  "enableHibernateCache": true,
+  "enableI18nRTL": false,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": false,
+  "endpointPrefix": "",
+  "entities": Any<Array>,
+  "entitySuffix": "",
+  "exposeMicrofrontend": false,
+  "feignClient": false,
+  "filterEntitiesAndPropertiesForClient": [Function],
+  "filterEntitiesForClient": [Function],
+  "filterEntityPropertiesForClient": [Function],
+  "frontendAppName": "jhipsterApp",
+  "gatewayServerPort": undefined,
+  "gatewayServicesApiAvailable": false,
+  "generateAuthenticationApi": true,
+  "generateBuiltInAuthorityEntity": false,
+  "generateBuiltInUserEntity": false,
+  "generateInMemoryUserCredentials": true,
+  "generateUserManagement": false,
+  "getWebappTranslation": [Function],
+  "graalvmSupport": undefined,
+  "gradleDevelocityHost": undefined,
+  "hasNonBuiltInEntity": true,
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "incrementalChangelog": undefined,
+  "javaNodeBuildPaths": Any<Array>,
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "jwtSecretKey": undefined,
+  "languages": Any<Array>,
+  "languagesDefinition": [
+    {
+      "angularLocale": "fr",
+      "dayjsLocale": "fr",
+      "displayName": "Français",
+      "fakerjsLocale": "fr",
+      "javaLocaleMessageSourceSuffix": "fr",
+      "languageTag": "fr",
+      "name": "French",
+      "rtl": false,
+    },
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "languagesToGenerate": [
+    "en",
+  ],
+  "languagesToGenerateDefinition": [
+    {
+      "angularLocale": "en",
+      "dayjsLocale": "en",
+      "displayName": "English",
+      "fakerjsLocale": "en",
+      "javaLocaleMessageSourceSuffix": "en",
+      "languageTag": "en",
+      "name": "English",
+      "rtl": false,
+    },
+  ],
+  "loginRegex": "^(?>[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$",
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "messageBrokerAny": false,
+  "messageBrokerKafka": false,
+  "messageBrokerNo": true,
+  "messageBrokerPulsar": false,
+  "messageHeaderNameAlert": "x-jhipsterapp-alert",
+  "messageHeaderNameError": "x-jhipsterapp-error",
+  "messageHeaderNameParam": "x-jhipsterapp-params",
+  "microfrontend": false,
+  "microfrontends": undefined,
+  "monorepository": undefined,
+  "nativeLanguage": "en",
+  "nativeLanguageDefinition": {
+    "angularLocale": "en",
+    "dayjsLocale": "en",
+    "displayName": "English",
+    "fakerjsLocale": "en",
+    "javaLocaleMessageSourceSuffix": "en",
+    "languageTag": "en",
+    "name": "English",
+    "rtl": false,
+  },
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageFolder": undefined,
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": {},
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prettierTabWidth": 2,
+  "prodDatabaseType": "postgresql",
+  "prodDatabaseTypeAny": true,
+  "prodDatabaseTypeMariadb": false,
+  "prodDatabaseTypeMssql": false,
+  "prodDatabaseTypeMysql": false,
+  "prodDatabaseTypeOracle": false,
+  "prodDatabaseTypePostgresql": true,
+  "projectDescription": "Description for JHipster",
+  "projectVersion": undefined,
+  "reactBootstrapBsTheme": "dark",
+  "reactBootstrapVariant": "dark",
+  "reactive": false,
+  "rememberMeKey": undefined,
+  "routes": undefined,
+  "searchEngine": "no",
+  "searchEngineAny": false,
+  "searchEngineCouchbase": false,
+  "searchEngineElasticsearch": false,
+  "searchEngineNo": true,
+  "serverPort": 8080,
+  "serviceDiscovery": "no",
+  "serviceDiscoveryAny": false,
+  "serviceDiscoveryConsul": false,
+  "serviceDiscoveryEureka": false,
+  "serviceDiscoveryNo": true,
+  "serviceDiscoveryType": "no",
+  "serviceDiscoveryTypeAny": false,
+  "serviceDiscoveryTypeConsul": false,
+  "serviceDiscoveryTypeEureka": false,
+  "serviceDiscoveryTypeNo": true,
+  "skipCheckLengthOfIdentifier": undefined,
+  "skipClient": undefined,
+  "skipCommitHook": undefined,
+  "skipFakeData": undefined,
+  "skipJhipsterDependencies": false,
+  "skipServer": undefined,
+  "skipUserManagement": true,
+  "srcMain": "src/main/",
+  "srcTest": "src/test/",
+  "supportedLanguages": Any<Array>,
+  "syncUserWithIdp": false,
+  "temporaryDir": "temp/",
+  "testFrameworks": [],
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "user": undefined,
+  "webappEnumerationsDir": "src/main/webapp/app/shared/model/enumerations/",
+  "webappLoginRegExp": "^[a-zA-Z0-9!$&*+=?^_\`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$",
+  "websocket": true,
+  "withAdminUi": false,
+  "withGeneratedFlag": undefined,
+}
+`;
+
+exports[`generator - react monolith-session-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(true) should match generated files snapshot 1`] = `
+{
+  ".jhipster/EntityWithCustomId.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Microservice.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Simple.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/SkipClient.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.ts": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+  "postcss.config.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/404.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/WEB-INF/web.xml": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/_bootstrap-variables.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/app.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/axios-interceptor.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/dayjs.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/error-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/loading-bar-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/logger-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/notification-middleware.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/store.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/entity-with-custom-id.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/entity-with-custom-id/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/menu.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/microservice/microservice.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/reducers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-delete-dialog.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-detail.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple-update.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/simple/simple.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/administration.reducer.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/docs/docs.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/administration/index.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/home/home.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/login-modal.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/login.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/modules/login/logout.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/setup-tests.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/DurationFormat.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/auth/private-route.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary-routes.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/error-boundary.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/error/page-not-found.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/data-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/error.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/headers.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/link-header.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/jhipster/problem-details.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/footer/footer.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/header/header.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.spec.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/account.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/admin.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/entities.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-components.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/menus/menu-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.scss": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.tsx": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/entity-with-custom-id.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/microservice.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/simple.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/model/user.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/application-profile.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/authentication.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/index.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/reducers/reducer.utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/date-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/entity-utils.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/shared/util/pagination.constants.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/typings.d.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/css/loading.css": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_0_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_1_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_2_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3.svg": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-192.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-256.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-384.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_3_head-512.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/favicon.ico": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/index.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/manifest.webapp": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/robots.txt": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/swagger-ui/index.html": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "vitest.config.ts": {
+    "stateCleared": "modified",
+  },
+  "webpack/environment.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "webpack/package.json": {
+    "stateCleared": "modified",
+  },
+  "webpack/utils.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.prod.js": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - react monolith-session-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(true) should match source calls snapshot 1`] = `
+{
+  "addEntitiesToClient": [
+    {
+      "application": "Application[jhipster]",
+      "entities": [
+        "Entity[Simple]",
+        "Entity[Microservice]",
+        "Entity[EntityWithCustomId]",
+      ],
+    },
+  ],
+  "addSonarProperties": [
+    [
+      {
+        "key": "sonar.test.inclusions",
+        "value": "src/main/webapp/app/**/*.spec.ts, src/main/webapp/app/**/*.spec.tsx",
+        "valueSep": ", ",
+      },
+      {
+        "key": "sonar.testExecutionReportPaths",
+        "value": "temp/test-results/jest/TESTS-results-vitest.xml",
+      },
+      {
+        "key": "sonar.javascript.lcov.reportPaths",
+        "value": "temp/test-results/lcov-report/lcov.info",
+      },
+      {
+        "key": "sonar.exclusions",
+        "value": "src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.ts, dist/**/*.*",
+        "valueSep": ", ",
+      },
+    ],
+  ],
+  "mergeClientPackageJson": [
+    {
+      "devDependencies": {
+        "eslint-config-prettier": "ESLINT_CONFIG_PRETTIER_VERSION",
+        "eslint-plugin-prettier": "ESLINT_PLUGIN_PRETTIER_VERSION",
+        "globals": "GLOBALS_VERSION",
+        "jiti": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`generator - react samples matrix should match snapshot 1`] = `
+{
+  "gateway-jwt-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(true)": {
+    "applicationType": "gateway",
+    "authenticationType": "jwt",
+    "clientFramework": "react",
+    "clientRootDir": "clientRoot/",
+    "enableTranslation": false,
+    "languages": [
+      "fr",
+      "en",
+    ],
+    "nativeLanguage": "en",
+    "skipJhipsterDependencies": false,
+    "skipUserManagement": true,
+    "websocket": true,
+    "withAdminUi": false,
+  },
+  "gateway-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)-clientRoot/-websocket(true)": {
+    "applicationType": "gateway",
+    "authenticationType": "oauth2",
+    "clientFramework": "react",
+    "clientRootDir": "clientRoot/",
+    "enableTranslation": true,
+    "languages": [
+      "fr",
+      "en",
+    ],
+    "nativeLanguage": "en",
+    "skipJhipsterDependencies": true,
+    "websocket": true,
+    "withAdminUi": true,
+  },
+  "microservice-jwt-skipUserManagement(false)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-clientRoot/-websocket(false)": {
+    "applicationType": "microservice",
+    "authenticationType": "jwt",
+    "clientFramework": "react",
+    "clientRootDir": "clientRoot/",
+    "enableTranslation": false,
+    "languages": [
+      "fr",
+      "en",
+    ],
+    "nativeLanguage": "en",
+    "skipJhipsterDependencies": false,
+    "skipUserManagement": false,
+    "websocket": false,
+    "withAdminUi": false,
+  },
+  "microservice-oauth2-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(false)": {
+    "applicationType": "microservice",
+    "authenticationType": "oauth2",
+    "clientFramework": "react",
+    "clientRootDir": "",
+    "enableTranslation": true,
+    "languages": [
+      "fr",
+      "en",
+    ],
+    "nativeLanguage": "en",
+    "skipJhipsterDependencies": true,
+    "websocket": false,
+    "withAdminUi": true,
+  },
+  "monolith-jwt-skipUserManagement(false)-withAdminUi(true)-skipJhipsterDependencies(true)-enableTranslation(true)--websocket(true)": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "clientFramework": "react",
+    "clientRootDir": "",
+    "enableTranslation": true,
+    "languages": [
+      "fr",
+      "en",
+    ],
+    "nativeLanguage": "en",
+    "skipJhipsterDependencies": true,
+    "skipUserManagement": false,
+    "websocket": true,
+    "withAdminUi": true,
+  },
+  "monolith-oauth2-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(false)": {
+    "applicationType": "monolith",
+    "authenticationType": "oauth2",
+    "clientFramework": "react",
+    "clientRootDir": undefined,
+    "enableTranslation": false,
+    "languages": [
+      "fr",
+      "en",
+    ],
+    "nativeLanguage": "en",
+    "skipJhipsterDependencies": false,
+    "websocket": false,
+    "withAdminUi": false,
+  },
+  "monolith-session-skipUserManagement(true)-withAdminUi(false)-skipJhipsterDependencies(false)-enableTranslation(false)-websocket(true)": {
+    "applicationType": "monolith",
+    "authenticationType": "session",
+    "clientFramework": "react",
+    "clientRootDir": undefined,
+    "enableTranslation": false,
+    "languages": [
+      "fr",
+      "en",
+    ],
+    "nativeLanguage": "en",
+    "skipJhipsterDependencies": false,
+    "skipUserManagement": true,
+    "websocket": true,
+    "withAdminUi": false,
+  },
+}
+`;

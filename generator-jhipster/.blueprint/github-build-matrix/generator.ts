@@ -1,0 +1,171 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+import BaseGenerator from '../../generators/base-core/index.ts';
+import {
+  type GitHubMatrixGroup,
+  type JHipsterGitHubInputMatrix,
+  type WorkflowSamples,
+  convertToGitHubMatrix,
+  getGithubOutputFile,
+  getGithubSamplesGroup,
+  setGithubTaskOutput,
+} from '../../lib/ci/index.ts';
+import { testIntegrationFolder } from '../constants.ts';
+
+import type { eventNameChoices, workflowChoices } from './command.ts';
+import { devServerMatrix } from './samples/dev-server.ts';
+import { getGitChanges } from './support/git-changes.ts';
+import { BUILD_JHIPSTER_BOM, JHIPSTER_BOM_BRANCH, JHIPSTER_BOM_CICD_VERSION } from './support/integration-test-constants.ts';
+
+export default class extends BaseGenerator {
+  workflow!: (typeof workflowChoices)[number];
+  eventName?: (typeof eventNameChoices)[number];
+  matrix!: string;
+
+  get [BaseGenerator.WRITING]() {
+    return this.asAnyTaskGroup({
+      async buildMatrix() {
+        // Push events requires a base commit for diff. Diff cannot be checked by @~1 if PR was merged with a rebase.
+        const useChanges = this.eventName === 'pull_request';
+        const changes = await getGitChanges({ allTrue: !useChanges });
+        const { base, common, devBlueprint, client, e2e, generateBlueprint, graalvm, java, workspaces, springBootDefaults } = changes;
+        const hasWorkflowChanges = (changes as Record<string, boolean>)[`${this.workflow}Workflow`];
+
+        let matrix: GitHubMatrixGroup = {};
+        let convertToGitHubMatrixInclude = true;
+        let randomEnvironment = false;
+        switch (this.workflow) {
+          case 'docker-compose-integration': {
+            const { samples, warnings } = await getGithubSamplesGroup(this.templatePath('../samples/'), this.workflow);
+            matrix = samples;
+            if (warnings.length) {
+              this.log.warn(warnings.join('\n'));
+            }
+            break;
+          }
+          case 'generators': {
+            convertToGitHubMatrixInclude = false;
+            matrix = {
+              'database-changelog': {
+                disabled: !springBootDefaults,
+              },
+              'generate-blueprint': {
+                disabled: !generateBlueprint && !devBlueprint,
+              },
+              graalvm: {
+                disabled: !graalvm,
+              },
+            };
+            break;
+          }
+          case 'graalvm': {
+            if (hasWorkflowChanges || java || graalvm) {
+              const { samples, warnings } = await getGithubSamplesGroup(this.templatePath('../samples/'), this.workflow);
+              matrix = samples;
+              if (warnings.length) {
+                this.log.warn(warnings.join('\n'));
+              }
+            }
+            break;
+          }
+          case 'devserver': {
+            if (devBlueprint || hasWorkflowChanges || client || e2e) {
+              matrix = { ...devServerMatrix.angular, ...devServerMatrix.react, ...devServerMatrix.vue };
+            } else {
+              for (const client of ['angular', 'react', 'vue']) {
+                if ((changes as Record<string, boolean>)[client]) {
+                  Object.assign(matrix, (devServerMatrix as Record<string, GitHubMatrixGroup>)[client]);
+                }
+              }
+            }
+            break;
+          }
+          case 'angular':
+          case 'react':
+          case 'vue': {
+            const hasClientFrameworkChanges = changes[this.workflow];
+            const hasSonarPrChanges = changes.sonarPr && this.workflow === 'angular';
+            const enableAllTests = base || common || hasWorkflowChanges || devBlueprint;
+            const enableBackendTests = enableAllTests || java;
+            const enableFrontendTests = enableAllTests || client || hasClientFrameworkChanges;
+            const enableE2eTests = enableBackendTests || enableFrontendTests || e2e || workspaces;
+            const enableAnyTest = enableE2eTests;
+
+            randomEnvironment = true;
+            if (enableAnyTest || hasSonarPrChanges) {
+              const content = await readFile(join(testIntegrationFolder, `workflow-samples/${this.workflow}.json`));
+              const parsed: WorkflowSamples = JSON.parse(content.toString());
+              matrix = Object.fromEntries(
+                parsed.include
+                  .filter(sample => enableAnyTest || sample['sonar-analyse'])
+                  .map((sample): [string, JHipsterGitHubInputMatrix] => {
+                    const { 'job-name': jobName = sample.name, 'sonar-analyse': sonarAnalyse, generatorOptions } = sample;
+                    const enableSonar = sonarAnalyse === 'true';
+                    const workspaces = generatorOptions?.workspaces ? 'true' : 'false';
+                    if (enableSonar && workspaces === 'true') {
+                      throw new Error('Sonar is not supported with workspaces');
+                    }
+                    return [
+                      jobName,
+                      {
+                        'skip-compare': `${changes.sonarPr && enableSonar}`,
+                        // Force tests if sonar is enabled
+                        'skip-backend-tests': `${!(enableBackendTests || enableSonar)}`,
+                        // Force tests if sonar is enabled
+                        'skip-frontend-tests': `${!(enableFrontendTests || enableSonar)}`,
+                        'gradle-cache': generatorOptions?.workspaces || jobName.includes('gradle') ? true : undefined,
+                        ...sample,
+                        sample: sample.name ?? jobName,
+                        workspaces,
+                      },
+                    ];
+                  }),
+              );
+            }
+            break;
+          }
+        }
+
+        Object.values(matrix).forEach(job => {
+          Object.assign(job, {
+            'build-jhipster-bom': BUILD_JHIPSTER_BOM,
+            'jhipster-bom-branch': BUILD_JHIPSTER_BOM ? JHIPSTER_BOM_BRANCH : undefined,
+            'jhipster-bom-cicd-version': BUILD_JHIPSTER_BOM ? JHIPSTER_BOM_CICD_VERSION : undefined,
+          });
+        });
+
+        const { useVersionPlaceholders } = this;
+        this.matrix = JSON.stringify(
+          convertToGitHubMatrixInclude ? convertToGitHubMatrix(matrix, { randomEnvironment, useVersionPlaceholders }) : matrix,
+          null,
+          2,
+        );
+        const githubOutputFile = getGithubOutputFile();
+        this.log.info('matrix', this.matrix);
+        if (githubOutputFile) {
+          setGithubTaskOutput('matrix', this.matrix);
+        }
+      },
+    });
+  }
+}

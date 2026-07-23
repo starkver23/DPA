@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`application mutation test expects mutateApplication to match snapshot 1`] = `
+{
+  "useNpmWrapper": false,
+}
+`;
+
+exports[`application mutation test expects mutateField to match snapshot 1`] = `
+{
+  "fieldInJavaBeanMethod": "FieldName",
+  "fieldJavaValueGenerator": "UUID.randomUUID().toString()",
+  "fieldJavadoc": "    /**
+     * documentation
+     */",
+  "fieldValidateRulesPatternJava": "fieldValidateRulesPattern",
+  "javaFieldType": "String",
+  "javaFieldTypeInteger": false,
+  "javaFieldTypeLong": false,
+  "javaFieldTypeString": true,
+  "javaFieldTypeUUID": false,
+  "javaValueGenerator": "UUID.randomUUID().toString()",
+  "javaValueSample1": ""fieldName1"",
+  "javaValueSample2": ""fieldName2"",
+  "propertyConsumerName": "setPropertyName",
+  "propertyJavaBeanName": "PropertyName",
+  "propertySupplierName": "getPropertyName",
+}
+`;
+
+exports[`application mutation test expects mutateRelationship to match snapshot 1`] = `
+{
+  "propertyConsumerName": "setPropertyName",
+  "propertyJavaBeanName": "PropertyName",
+  "propertySupplierName": "getPropertyName",
+}
+`;
+
+exports[`application mutation test expects mutateValidatedField to match snapshot 1`] = `
+{
+  "javaFieldValidatorsPartial": "@Size(min = fieldValidateRulesMinlength, max = fieldValidateRulesMaxlength)
+    @DecimalMin(value = "fieldValidateRulesMin")
+    @DecimalMax(value = "fieldValidateRulesMax")
+    @Pattern(regexp = "fieldValidateRulesPatternJava")
+",
+}
+`;

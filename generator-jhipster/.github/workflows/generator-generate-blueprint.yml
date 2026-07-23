@@ -1,0 +1,124 @@
+#
+# Copyright the original author or authors from the JHipster project.
+#
+# This file is part of the JHipster project, see https://www.jhipster.tech/
+# for more information.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Blueprint Generator
+on: [workflow_call]
+permissions:
+  contents: read
+env:
+  FORCE_COLOR: 2
+jobs:
+  check-generator-generate-blueprint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/app
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: ['javascript', 'typescript']
+    if: >-
+      !contains(github.event.head_commit.message, '[ci skip]') &&
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[ci skip]') &&
+      github.event.action != 'closed' &&
+      !contains(github.event.pull_request.labels.*.name, 'pr: skip-ci')
+    timeout-minutes: 40
+    steps:
+      #----------------------------------------------------------------------
+      # Install all tools and check configuration
+      #----------------------------------------------------------------------
+      - name: 'SETUP: Checkout generator-jhipster'
+        uses: actions/checkout@v7
+        with:
+          path: generator-jhipster
+          fetch-depth: 2
+      - uses: ./generator-jhipster/.github/actions/setup-default-node-java
+      - uses: jhipster/actions/setup-runner@v1
+        with:
+          maven-cache: true
+          binary-dir: ${{ github.workspace }}/generator-jhipster/bin
+      - run: npm ci --ignore-scripts
+        working-directory: ${{ github.workspace }}/generator-jhipster
+      - run: npm link
+        working-directory: ${{ github.workspace }}/generator-jhipster
+      #----------------------------------------------------------------------
+      # Install JHipster and generate project+entities
+      #----------------------------------------------------------------------
+      - run: jhipster.cjs ci-utils --export-github-output
+        id: jhipster-output
+      - uses: jhipster/actions/build-jhipster-bom@v1
+        with:
+          jhipster-bom-ref: ${{ steps.jhipster-output.outputs.jhipster-bom-branch }}
+      - run: mkdir generator-jhipster-foo
+        working-directory: ${{ github.workspace }}
+      - name: 'GENERATION: generate blueprint'
+        run: |
+          jhipster.cjs generate-sample generate-blueprint-samples/${{ matrix.sample }} --sample-yorc-folder --entities-sample none --link-jhipster-dependency --generate-snapshots
+          npm link
+          cat package.json
+        working-directory: ${{ github.workspace }}/generator-jhipster-foo
+        env:
+          JHI_FOLDER_APP: ${{ github.workspace }}/generator-jhipster-foo
+      - uses: jhipster/actions/compare-sample@v1
+        id: compare
+        if: >-
+          github.event.pull_request &&
+          !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare')
+        with:
+          generator-path: generator-jhipster
+          application-folder: generator-jhipster-foo
+          compare-folder: generator-jhipster-foo
+          cmd: jhipster.cjs generate-sample generate-blueprint-samples/${{ matrix.sample }} --sample-yorc-folder --entities-sample none --link-jhipster-dependency --skip-checks --skip-install --no-insight
+        env:
+          # generate-sample uses JHI_FOLDER_APP to generate the application.
+          JHI_FOLDER_APP: ${{ github.workspace }}/base/generator-jhipster-foo
+      - name: 'GENERATION: project'
+        run: jhipster-foo --defaults --client-test-frameworks cypress --skip-jhipster-dependencies
+        env:
+          JHI_CLI: jhipster.cjs
+          JHIPSTER_DEPENDENCIES_VERSION: ${{ steps.jhipster-output.outputs.jhipster-dependencies-version }}
+      - name: 'GENERATION: jhipster info'
+        run: jhipster info
+      #----------------------------------------------------------------------
+      # Launch tests
+      #----------------------------------------------------------------------
+      - name: 'TESTS: blueprint files should be written'
+        run: |
+          ls template-file-client
+          ls template-file-common
+          ls template-file-cypress
+          ls template-file-server
+      - name: 'TESTS: backend'
+        id: backend
+        if: steps.compare.outputs.equals != 'true' && matrix.skip-backend-tests != 'true'
+        run: npm run ci:backend:test
+      - name: 'BACKEND: Store failure logs'
+        uses: actions/upload-artifact@v7
+        if: always() && steps.backend.outcome == 'failure'
+        with:
+          name: log-${{ matrix.app-sample }}
+          path: ${{ steps.setup.outputs.application-path }}/*/test-results/**/*.xml
+      - name: 'E2E: Store failure screenshots'
+        uses: actions/upload-artifact@v7
+        if: always() && steps.e2e.outcome == 'failure'
+        with:
+          name: screenshots-${{ matrix.app-sample }}
+          path: ${{ steps.setup.outputs.application-path }}/*/cypress/screenshots

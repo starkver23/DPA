@@ -1,0 +1,360 @@
+#
+# Copyright the original author or authors from the JHipster project.
+#
+# This file is part of the JHipster project, see https://www.jhipster.tech/
+# for more information.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      # Before cache workflow
+      time: '23:00'
+    open-pull-requests-limit: 10
+    labels:
+      - 'theme: jhipster-internals'
+      - 'theme: dependencies'
+      - 'skip-changelog'
+    ignore:
+      # Should match supported node major version.
+      - dependency-name: '@types/node'
+        versions: ['>=23']
+    groups:
+      eslint:
+        patterns:
+          - '@eslint/*'
+          - 'eslint'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/generate-blueprint/resources/'
+    schedule:
+      interval: 'daily'
+      time: '12:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'blueprint :paw_prints:'
+      - 'theme: dependencies'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/angular/resources/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      # Angular workflow is quite big. Give at least 2h interval.
+      time: '03:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'theme: angular'
+      - 'theme: dependencies'
+      - 'skip-changelog'
+    ignore:
+      # Should match generated project node major version.
+      - dependency-name: '@types/node'
+        versions: ['>=23']
+    groups:
+      angular:
+        patterns:
+          - '@angular/*'
+          - '@angular-builders/*'
+          - '@angular-devkit/*'
+          - '@fortawesome/angular-fontawesome'
+          - '@ng-bootstrap/*'
+          - 'angular-eslint'
+          - 'ngx-cookie-service'
+          - 'ngx-infinite-scroll'
+          - 'typescript'
+          - 'zone.js'
+      fortawesome:
+        patterns:
+          - '@fortawesome/fontawesome-svg-core'
+          - '@fortawesome/free-solid-svg-icons'
+      eslint:
+        patterns:
+          - '@eslint/*'
+          - 'eslint'
+      ngx-translate:
+        patterns:
+          - '@ngx-translate/*'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/common/resources/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'theme: dependencies'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/client/resources/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      time: '07:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'theme: front'
+      - 'theme: dependencies'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/cypress/resources/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      time: '07:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'theme: front'
+      - 'theme: dependencies'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/javascript-simple-application/resources/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'theme: dependencies'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/react/resources/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      time: '01:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'theme: react'
+      - 'theme: dependencies'
+      - 'skip-changelog'
+    ignore:
+      # Should match generated project node major version.
+      - dependency-name: '@types/node'
+        versions: ['>=23']
+      # https://github.com/jhipster/generator-jhipster/issues/27464#issuecomment-2400505558, https://github.com/twbs/bootstrap/issues/40849
+      - dependency-name: 'sass'
+        versions: ['*']
+    groups:
+      eslint:
+        patterns:
+          - '@eslint/*'
+          - 'eslint'
+      fortawesome:
+        patterns:
+          - '@fortawesome/*'
+      react:
+        patterns:
+          - '@types/react'
+          - '@types/react-dom'
+          - 'react'
+          - 'react-dom'
+      redux:
+        patterns:
+          - '@reduxjs/*'
+          - '*-redux'
+          - 'redux'
+          - 'redux-*'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/vue/resources/'
+    rebase-strategy: 'auto'
+    schedule:
+      interval: 'daily'
+      time: '02:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - 'theme: vue'
+      - 'theme: dependencies'
+      - 'skip-changelog'
+    ignore:
+      # https://github.com/bootstrap-vue/bootstrap-vue/issues/5507
+      - dependency-name: 'bootstrap'
+        versions: ['>=5']
+      # Bootstrap v4 issue https://github.com/jhipster/generator-jhipster/issues/23770, https://github.com/twbs/bootstrap/issues/39028, https://github.com/jhipster/generator-jhipster/issues/27464#issuecomment-2400505558, https://github.com/twbs/bootstrap/issues/40849
+      - dependency-name: 'sass'
+        versions: ['*']
+      # Should match generated project node major version.
+      - dependency-name: '@types/node'
+        versions: ['>=23']
+    groups:
+      eslint:
+        patterns:
+          - '@eslint/*'
+          - 'eslint'
+      fortawesome:
+        patterns:
+          - '@fortawesome/*'
+
+  - package-ecosystem: 'docker'
+    directory: '/generators/server/resources/'
+    schedule:
+      interval: 'daily'
+      time: '00:20'
+    open-pull-requests-limit: 5
+    labels:
+      - 'theme: dependencies'
+      - 'theme: docker :whale:'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'docker'
+    directory: '/.github/actions/sonar/'
+    schedule:
+      interval: 'daily'
+      time: '00:30'
+    open-pull-requests-limit: 5
+    labels:
+      - 'theme: dependencies'
+      - 'theme: docker :whale:'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'maven'
+    directory: '/generators/server/resources/'
+    schedule:
+      interval: 'daily'
+      # Maven doesn't have many PRs, but it triggers every client workflow. Let 2h of interval.
+      time: '05:00'
+    open-pull-requests-limit: 5
+    labels:
+      - 'theme: dependencies'
+      - 'theme: java'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'gradle'
+    directory: '/generators/server/resources/'
+    schedule:
+      interval: 'daily'
+      time: '08:00'
+    open-pull-requests-limit: 5
+    labels:
+      - 'theme: dependencies'
+      - 'theme: java'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'gradle'
+    directory: '/generators/spring-cloud/resources/'
+    schedule:
+      interval: 'daily'
+      time: '08:00'
+    open-pull-requests-limit: 5
+    labels:
+      - 'theme: dependencies'
+      - 'theme: java'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'gradle'
+    directory: '/generators/spring-boot/generators/cache/resources/'
+    schedule:
+      interval: 'daily'
+      time: '08:30'
+    open-pull-requests-limit: 5
+    labels:
+      - 'theme: dependencies'
+      - 'theme: cache'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      time: '00:30'
+    open-pull-requests-limit: 10
+    labels:
+      - 'theme: github_actions'
+      - 'theme: CI builds'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/.github/actions/build-cache/'
+    schedule:
+      interval: 'weekly'
+      time: '00:30'
+    open-pull-requests-limit: 10
+    labels:
+      - 'theme: github_actions'
+      - 'theme: CI builds'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/.github/actions/cache-java-dependencies/'
+    schedule:
+      interval: 'weekly'
+      time: '00:30'
+    open-pull-requests-limit: 10
+    labels:
+      - 'theme: github_actions'
+      - 'theme: CI builds'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/.github/actions/setup-default-node-java/'
+    schedule:
+      interval: 'weekly'
+      time: '00:30'
+    open-pull-requests-limit: 10
+    labels:
+      - 'theme: github_actions'
+      - 'theme: CI builds'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/.github/actions/sonar/'
+    schedule:
+      interval: 'weekly'
+      time: '00:30'
+    open-pull-requests-limit: 10
+    labels:
+      - 'theme: github_actions'
+      - 'theme: CI builds'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/generators/ci-cd/generators/bootstrap/resources/dependabot/'
+    schedule:
+      interval: 'weekly'
+      time: '00:30'
+    open-pull-requests-limit: 10
+    labels:
+      - 'theme: github_actions'
+      - 'theme: CI builds'
+      - 'skip-changelog'
+
+  - package-ecosystem: 'gradle'
+    directory: '/generators/java-simple-application/generators/graalvm/resources/'
+    schedule:
+      interval: 'daily'
+      time: '08:30'
+    open-pull-requests-limit: 5
+    labels:
+      - 'theme: dependencies'
+      - 'skip-changelog'

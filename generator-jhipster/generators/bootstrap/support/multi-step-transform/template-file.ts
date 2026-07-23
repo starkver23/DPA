@@ -1,0 +1,118 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import assert from 'node:assert';
+import path from 'node:path';
+
+import debugBuilder from 'debug';
+import ejs from 'ejs';
+import type { MemFsEditorFile } from 'mem-fs-editor';
+
+import TemplateData from './template-data.ts';
+
+export default class TemplateFile {
+  file?: MemFsEditorFile;
+  rootTemplate: boolean;
+  basePath?: string;
+  parentPath?: string;
+  filePath?: string;
+
+  private readonly _filename: string;
+  private readonly _extension: string;
+  private _compiled: ejs.TemplateFunction;
+
+  private readonly _fragments: TemplateFile[];
+  private readonly _fragmentName: string;
+  private readonly _debug: { enabled: boolean } & ((msg: string) => void);
+
+  constructor(filename: string, extension: string) {
+    this._filename = filename;
+    this._extension = extension;
+    this._compiled = () => '';
+    this._fragments = [];
+    this._fragmentName = filename.split(`.${this._extension}.`)[1] || '';
+    this._debug = debugBuilder(`jhipster.templates.${this._filename}`);
+
+    this.rootTemplate = !this._fragmentName;
+  }
+
+  compile(filePath: string, contents: string, options: ejs.Options) {
+    assert(filePath, 'filePath is required');
+    assert(contents, 'contents is required');
+    assert(options, 'options is required');
+
+    this.filePath = filePath;
+    if (this.rootTemplate) {
+      this.basePath = filePath.slice(0, -path.extname(filePath).length);
+    } else {
+      this.parentPath = filePath.slice(0, -path.extname(filePath).length);
+    }
+
+    if (this._debug.enabled) {
+      this._debug(filePath);
+      this._debug('======');
+      this._debug(contents);
+    }
+
+    try {
+      this._compiled = ejs.compile(contents, { ...options, async: false }) as unknown as ejs.TemplateFunction;
+    } catch (error) {
+      throw new Error(`Error compiling ${this._filename}, with contents:\n${contents}`, { cause: error });
+    }
+  }
+
+  addFragment(templateFile: TemplateFile) {
+    assert(templateFile, 'templateFile is required');
+
+    this._fragments.push(templateFile);
+  }
+
+  renderFragments(data: any) {
+    return this._fragments.map(templateFile => templateFile.render(data));
+  }
+
+  render(data: any = {}) {
+    const fragments = new TemplateData(this, data);
+    try {
+      const rendered = this._compiled({
+        fragment: false,
+        fragmentName: this._fragmentName,
+        fragments,
+        ...data,
+      })
+        .trimEnd()
+        .replace(/^(\r\n|\n|\r)+/, '');
+      if (this._debug.enabled) {
+        this._debug(`${this.filePath}`);
+        this._debug(JSON.stringify(data));
+        this._debug('======');
+        this._debug(rendered);
+        this._debug('======');
+      }
+      return rendered;
+    } catch (error) {
+      /* eslint-disable no-console */
+      console.log(`Error rendering ${this._filename}`);
+      console.log(`Available sessions ${data.sections}`);
+      console.log(error);
+      /* eslint-enable no-console */
+      throw error;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "include": [
+    {
+      "app-sample": "react-default",
+      "cache": "react",
+      "entity": "sqllight"
+    }
+  ]
+}
