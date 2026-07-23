@@ -1,0 +1,61 @@
+# Dependencies
+node_modules
+node_modules_container
+generators/**/package-lock.json
+
+# Build output
+/dist
+build/
+generators/**/.gradle
+
+# Test output
+coverage
+test/temp/
+/test/templates/import-jdl/*.png
+test/**/*.png
+jdl/**/*.png
+test-integration/**/*.png
+
+# Generator artifacts
+/.jhipster
+lib/**/app.jdl
+
+# Logs
+*debug.log*
+
+# OS files
+.DS_Store
+
+# Editor / IDE — VS Code
+.vscode
+.vscode-test
+
+# Editor / IDE — IntelliJ / JetBrains
+/.idea/*
+!/.idea/runConfigurations
+*.iml
+*.ipr
+*.iws
+atlassian-ide-plugin.xml
+
+# Editor / IDE — Eclipse / JDT
+.project
+.classpath
+.factorypath
+.settings
+.jdtls-workspace/
+
+# Editor / IDE — NetBeans
+nbproject/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# Editor / IDE — Vim
+*.sw?
+
+# Documentation
+/docs
+
+# Allow customizations without having a dirty tree
+.devcontainer

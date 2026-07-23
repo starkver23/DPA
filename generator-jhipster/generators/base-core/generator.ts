@@ -1,0 +1,1501 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import assert from 'node:assert';
+import { existsSync, rmSync, statSync } from 'node:fs';
+import { basename, extname, isAbsolute, join, join as joinPath, relative } from 'node:path';
+import { relative as posixRelative } from 'node:path/posix';
+
+import { requireNamespace } from '@yeoman/namespace';
+import type { GeneratorMeta } from '@yeoman/types';
+import chalk from 'chalk';
+import latestVersion from 'latest-version';
+import { get, kebabCase, merge, mergeWith, set, snakeCase } from 'lodash-es';
+import semver, { lt as semverLessThan } from 'semver';
+import { simpleGit } from 'simple-git';
+import type { PackageJson, SetRequired } from 'type-fest';
+import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
+import type Environment from 'yeoman-environment';
+import YeomanGenerator, { type ComposeOptions, type Storage } from 'yeoman-generator';
+
+import {
+  type ExportGeneratorOptionsFromCommand,
+  type ExportStoragePropertiesFromCommand,
+  type JHipsterArguments,
+  type JHipsterCommandDefinition,
+  type JHipsterConfigs,
+  type ParsableCommand,
+  convertConfigToOption,
+  extractArgumentsFromConfigs,
+} from '../../lib/command/index.ts';
+import {
+  getCommandBlueprintLoadingMutations,
+  getCommandDefaultMutations,
+  getCommandDerivedPropertyMutations,
+} from '../../lib/command/mutations.ts';
+import { packageJson } from '../../lib/index.ts';
+import { CRLF, LF, type Logger, hasCrlf, mutateData, normalizeLineEndings, removeFieldsWithNullishValues } from '../../lib/utils/index.ts';
+import baseCommand from '../base/command.ts';
+import type BaseGenerator from '../base/generator.ts';
+import { dockerPlaceholderGenerator } from '../docker/utils.ts';
+import { GENERATOR_JHIPSTER } from '../generator-constants.ts';
+import { getGradleLibsVersionsProperties } from '../java-simple-application/generators/gradle/support/dependabot-gradle.ts';
+import type GeneratorsByNamespace from '../types.ts';
+import type { GeneratorsWithBootstrap } from '../types.ts';
+
+import type {
+  CascadedEditFileCallback,
+  EditFileCallback,
+  EditFileOptions,
+  ValidationResult,
+  WriteContext,
+  WriteFileOptions,
+} from './api.ts';
+import { convertWriteFileSectionsToBlocks, loadConfig } from './internal/index.ts';
+import { createJHipster7Context } from './internal/jhipster7-context.ts';
+import { CUSTOM_PRIORITIES, PRIORITY_NAMES, PRIORITY_PREFIX, QUEUES } from './priorities.ts';
+import { type NeedleInsertion, createNeedleCallback, joinCallbacks } from './support/index.ts';
+import type { Config as CoreConfig, Features as CoreFeatures, GenericTask, Options as CoreOptions } from './types.ts';
+
+const {
+  INITIALIZING,
+  PROMPTING,
+  CONFIGURING,
+  COMPOSING,
+  COMPOSING_COMPONENT,
+  LOADING,
+  COMPOSING_BOOTSTRAP,
+  PREPARING,
+  POST_PREPARING,
+  DEFAULT,
+  WRITING,
+  POST_WRITING,
+  INSTALL,
+  POST_INSTALL,
+  END,
+} = PRIORITY_NAMES;
+
+const asPriority = (priorityName: string) => `${PRIORITY_PREFIX}${priorityName}`;
+
+const relativeDir = (from: string, to: string) => {
+  const rel = posixRelative(from, to);
+  return rel ? `${rel}/` : '';
+};
+
+const deepMerge = (source1: any, source2: any) =>
+  mergeWith({}, source1, source2, (a, b) => (Array.isArray(a) ? [...a, ...(Array.isArray(b) ? b : [b])] : undefined));
+
+/**
+ * This is the base class for a generator for every generator.
+ */
+export default class CoreGenerator<
+  Config extends CoreConfig = CoreConfig,
+  Options extends CoreOptions = CoreOptions,
+  Features extends CoreFeatures = CoreFeatures,
+> extends YeomanGenerator<Config, Options, Features> {
+  static readonly asPriority = asPriority;
+
+  static readonly INITIALIZING = asPriority(INITIALIZING);
+
+  static readonly PROMPTING = asPriority(PROMPTING);
+
+  static readonly CONFIGURING = asPriority(CONFIGURING);
+
+  static readonly COMPOSING = asPriority(COMPOSING);
+
+  static readonly COMPOSING_COMPONENT = asPriority(COMPOSING_COMPONENT);
+
+  static readonly LOADING = asPriority(LOADING);
+
+  static readonly COMPOSING_BOOTSTRAP = asPriority(COMPOSING_BOOTSTRAP);
+
+  static readonly PREPARING = asPriority(PREPARING);
+
+  static readonly POST_PREPARING = asPriority(POST_PREPARING);
+
+  static readonly DEFAULT = asPriority(DEFAULT);
+
+  static readonly WRITING = asPriority(WRITING);
+
+  static readonly POST_WRITING = asPriority(POST_WRITING);
+
+  static readonly INSTALL = asPriority(INSTALL);
+
+  static readonly POST_INSTALL = asPriority(POST_INSTALL);
+
+  static readonly END = asPriority(END);
+
+  useVersionPlaceholders?: boolean;
+  skipChecks?: boolean;
+  ignoreNeedlesError?: boolean;
+  experimental?: boolean;
+  debugEnabled?: boolean;
+  relativeDir = relativeDir;
+  relative = posixRelative;
+
+  readonly logger: Logger;
+  jhipsterConfig!: Config;
+  /**
+   * @deprecated
+   */
+  jhipsterTemplatesFolders!: string[];
+
+  blueprintStorage?: Storage;
+  /** Allow to use a specific definition at current command operations */
+  generatorCommand?: JHipsterCommandDefinition;
+  /**
+   * @experimental
+   * Additional commands to be considered
+   */
+  generatorsToCompose: string[] = [];
+
+  #jhipsterGeneratorRelativePath_?: string;
+
+  // Override the type of `env` to be a full Environment
+  declare env: Environment;
+  declare log: Logger;
+  declare _meta?: GeneratorMeta;
+
+  constructor(args?: string[], options?: Options, features?: Features) {
+    super(args, options, {
+      skipParseOptions: true,
+      tasksMatchingPriority: true,
+      taskPrefix: PRIORITY_PREFIX,
+      unique: 'namespace',
+      disableInGeneratorOptionsSupport: true,
+      ...features,
+    });
+
+    if (!this.options.help) {
+      /* Force config to use 'generator-jhipster' namespace. */
+      this._config = this._getStorage('generator-jhipster', { transform: this.features.configTransform });
+
+      /* JHipster config using proxy mode used as a plain object instead of using get/set. */
+      this.jhipsterConfig = this.config.createProxy();
+
+      /* Options parsing must be executed after forcing jhipster storage namespace and after sharedData have been populated */
+      this.#parseJHipsterConfigs(baseCommand.configs);
+    }
+
+    this.logger = this.log;
+
+    if (this.options.help) {
+      return;
+    }
+
+    this.registerPriorities(CUSTOM_PRIORITIES);
+
+    const { blueprintSupport = false, queueCommandTasks = true } = this.features;
+
+    // Add base template folder.
+    this.jhipsterTemplatesFolders = [this.templatePath()];
+
+    if (!blueprintSupport && queueCommandTasks) {
+      this.on('before:queueOwnTasks', () => {
+        this._queueCurrentJHipsterCommandTasks();
+      });
+    }
+  }
+
+  get #commandsToLoad(): Set<string> {
+    return this.getContextData('jhipster:loadedNamespaces', {
+      factory: () => new Set<string>(),
+    });
+  }
+
+  get context(): any {
+    return undefined;
+  }
+
+  /**
+   * Override yeoman generator's usage function to fine tune --help message.
+   */
+  usage(): string {
+    return super.usage().replace('yo jhipster:', 'jhipster ');
+  }
+
+  /**
+   * JHipster config with default values fallback
+   */
+  get jhipsterConfigWithDefaults(): Readonly<Config> {
+    return removeFieldsWithNullishValues(this.config.getAll());
+  }
+
+  /**
+   * Utility method to get typed objects for autocomplete.
+   */
+  asAnyTaskGroup<const T extends Record<string, GenericTask<this, any>>>(taskGroup: T): Record<keyof T, GenericTask<any, any>> {
+    return taskGroup;
+  }
+
+  /**
+   * Warn or throws check failure based on current skipChecks option.
+   * @param message
+   */
+  handleCheckFailure(message: string) {
+    if (this.skipChecks) {
+      this.log.warn(message);
+    } else {
+      throw new Error(`${message}
+You can ignore this error by passing '--skip-checks' to jhipster command.`);
+    }
+  }
+
+  /**
+   * Wrapper for `semver.lt` to check if the oldVersion exists and is less than the newVersion.
+   * Can be used by blueprints.
+   */
+  isVersionLessThan(oldVersion: string | null, newVersion: string): boolean {
+    return oldVersion ? semverLessThan(oldVersion, newVersion) : false;
+  }
+
+  /**
+   * Get arguments for the priority
+   */
+  getArgsForPriority(_priorityName: string) {
+    return [{}];
+  }
+
+  /**
+   * Check if the generator should ask for prompts.
+   */
+  shouldAskForPrompts(_firstArg: any): boolean {
+    return true;
+  }
+
+  /**
+   * Override yeoman-generator method that gets methods to be queued, filtering the result.
+   */
+  getTaskNames(): string[] {
+    let priorities = super.getTaskNames();
+    if (!this.features.disableSkipPriorities && this.options.skipPriorities) {
+      // Make sure yeoman-generator will not throw on empty tasks due to filtered priorities.
+      this.customLifecycle = this.customLifecycle || priorities.length > 0;
+      priorities = priorities.filter(priorityName => !this.options.skipPriorities!.includes(priorityName));
+    }
+    return priorities;
+  }
+
+  _queueCurrentJHipsterCommandTasks() {
+    this.queueTask({
+      queueName: QUEUES.INITIALIZING_QUEUE,
+      taskName: 'parseCurrentCommand',
+      cancellable: true,
+      async method() {
+        try {
+          await this.#getCurrentJHipsterCommand();
+        } catch {
+          return;
+        }
+        await this.#parseCurrentJHipsterCommand();
+      },
+    });
+
+    this.queueTask({
+      queueName: QUEUES.PROMPTING_QUEUE,
+      taskName: 'promptCurrentCommand',
+      cancellable: true,
+      async method() {
+        try {
+          const command = await this.#getCurrentJHipsterCommand();
+          if (!command.configs) return;
+        } catch {
+          return;
+        }
+        const [firstArg] = this.getArgsForPriority(PRIORITY_NAMES.INITIALIZING);
+        if (!this.shouldAskForPrompts(firstArg)) return;
+        await this.#promptCurrentJHipsterCommand();
+      },
+    });
+
+    this.queueTask({
+      queueName: QUEUES.CONFIGURING_QUEUE,
+      taskName: 'configureCurrentCommand',
+      cancellable: true,
+      async method() {
+        try {
+          const command = await this.#getCurrentJHipsterCommand();
+          if (!command.configs) return;
+        } catch {
+          return;
+        }
+        await this.#configureCurrentJHipsterCommandConfig();
+      },
+    });
+
+    this.queueTask({
+      queueName: QUEUES.COMPOSING_QUEUE,
+      taskName: 'composeCurrentCommand',
+      cancellable: true,
+      async method() {
+        try {
+          await this.#getCurrentJHipsterCommand();
+        } catch {
+          return;
+        }
+        await this.#composeCurrentJHipsterCommand();
+      },
+    });
+
+    const { loadCommand = [], skipLoadCommand = true } = this.features;
+    if (skipLoadCommand) {
+      return;
+    }
+
+    const commandWithConfigs = (command: JHipsterCommandDefinition): command is SetRequired<JHipsterCommandDefinition, 'configs'> =>
+      !!command.configs;
+
+    const mergeCommandsConfigs = (commands: JHipsterCommandDefinition[]): JHipsterConfigs => {
+      const mergedConfigs: JHipsterConfigs = {};
+      for (const command of commands.filter(commandWithConfigs)) {
+        Object.assign(mergedConfigs, command.configs);
+      }
+      return mergedConfigs;
+    };
+
+    const collectNamespaceCommands = async (
+      { loadImports }: { loadImports: boolean },
+      ...namespaces: string[]
+    ): Promise<JHipsterCommandDefinition[]> => {
+      const result: JHipsterCommandDefinition[] = [];
+      for (let namespace of namespaces) {
+        namespace = namespace.includes(':') ? namespace : `jhipster:${namespace}`;
+        const commandsToLoad = this.#commandsToLoad;
+        if (!commandsToLoad.has(namespace)) {
+          commandsToLoad.add(namespace);
+          const commandMeta = this.env.getGeneratorMeta(namespace);
+          const commandModule: any = await commandMeta?.importModule?.();
+          const command = commandModule?.command as JHipsterCommandDefinition | undefined;
+          if (command) {
+            result.push(command);
+            if (loadImports) {
+              result.push(...(await collectNamespaceCommands({ loadImports: true }, ...(command.import ?? []))));
+            }
+          }
+        }
+      }
+      return result;
+    };
+
+    const directCommands: JHipsterCommandDefinition[] = [];
+    let directCommandsMergedConfigs: JHipsterConfigs = {};
+    this.queueTask({
+      queueName: QUEUES.LOADING_QUEUE,
+      taskName: 'loadingCommand',
+      cancellable: true,
+      async method() {
+        try {
+          const commandsToLoad = this.#commandsToLoad;
+          if (!commandsToLoad.has(this.options.namespace)) {
+            const command = await this.#getCurrentJHipsterCommand();
+            if (command.configs) {
+              commandsToLoad.add(this.options.namespace);
+              directCommands.push(command);
+            } else {
+              directCommands.push(...(await collectNamespaceCommands({ loadImports: false }, this.options.namespace)));
+            }
+          }
+        } catch {
+          // Ignore non-existing command
+        }
+
+        const split = this.options.namespace.split(':');
+        if (split.length === 3 && split[2] === 'bootstrap') {
+          const mainNamespace = this.options.namespace.replace(':bootstrap', '');
+          directCommands.push(...(await collectNamespaceCommands({ loadImports: false }, mainNamespace)));
+        }
+
+        directCommandsMergedConfigs = mergeCommandsConfigs(directCommands);
+
+        if (this.blueprintStorage) {
+          mutateData(this.context, getCommandBlueprintLoadingMutations(this as unknown as BaseGenerator, directCommandsMergedConfigs));
+        }
+      },
+    });
+
+    this.queueTask({
+      queueName: QUEUES.PREPARING_QUEUE,
+      taskName: 'preparingCurrentCommand',
+      cancellable: true,
+      async method() {
+        mutateData(
+          this.context,
+          getCommandDefaultMutations(directCommandsMergedConfigs),
+          getCommandDerivedPropertyMutations(directCommandsMergedConfigs),
+        );
+
+        const imports = directCommands.flatMap(command => command.import ?? []);
+        if (imports.length > 0 || loadCommand.length > 0) {
+          // Populate imported commands and loadCommand, to allow the generator itself to load them.
+          this.queueTask({
+            queueName: QUEUES.PREPARING_QUEUE,
+            taskName: 'preparingImportedCommand',
+            cancellable: true,
+            async method() {
+              const importedCommandNamespaces = [
+                ...loadCommand.filter(l => typeof l === 'string'),
+                ...loadCommand.filter(l => typeof l === 'object').flatMap(l => l.import ?? []),
+                ...imports,
+              ];
+              const importedCommands = [
+                ...loadCommand.filter(l => typeof l === 'object'),
+                ...(await collectNamespaceCommands({ loadImports: true }, ...importedCommandNamespaces)),
+              ];
+              const mergedImportedConfigs = mergeCommandsConfigs(importedCommands);
+              mutateData(
+                this.context,
+                getCommandDefaultMutations(mergedImportedConfigs),
+                getCommandDerivedPropertyMutations(mergedImportedConfigs),
+              );
+            },
+          });
+        }
+      },
+    });
+  }
+
+  /**
+   * Get the current Command Definition for the generator.
+   * `generatorCommand` takes precedence.
+   */
+  async #getCurrentJHipsterCommand(): Promise<JHipsterCommandDefinition> {
+    if (!this.generatorCommand) {
+      const { command } = ((await this._meta?.importModule?.()) ?? {}) as any;
+      if (!command) {
+        throw new Error(`Command not found for generator ${this.options.namespace}`);
+      }
+      this.generatorCommand = command;
+      return command;
+    }
+    return this.generatorCommand;
+  }
+
+  /**
+   * Parse command definition arguments, options and configs.
+   * Blueprints with command override takes precedence.
+   */
+  async #parseCurrentJHipsterCommand() {
+    const generatorCommand = await this.#getCurrentJHipsterCommand();
+    this.#parseJHipsterCommand(generatorCommand);
+  }
+
+  /**
+   * Prompts for command definition configs.
+   * Blueprints with command override takes precedence.
+   */
+  async #promptCurrentJHipsterCommand() {
+    const generatorCommand = await this.#getCurrentJHipsterCommand();
+    if (!generatorCommand.configs) {
+      throw new Error(`Configs not found for generator ${this.options.namespace}`);
+    }
+    return this.prompt(this.#prepareQuestions(generatorCommand.configs));
+  }
+
+  /**
+   * Configure the current JHipster command.
+   * Blueprints with command override takes precedence.
+   */
+  async #configureCurrentJHipsterCommandConfig() {
+    const generatorCommand = await this.#getCurrentJHipsterCommand();
+    if (!generatorCommand.configs) {
+      throw new Error(`Configs not found for generator ${this.options.namespace}`);
+    }
+
+    for (const [name, def] of Object.entries(generatorCommand.configs)) {
+      def.configure?.(this, (this.options as any)[name]);
+    }
+  }
+
+  /**
+   * Load the current JHipster command storage configuration into the context.
+   * Blueprints with command override takes precedence.
+   */
+  async loadCurrentJHipsterCommandConfig(context: any) {
+    const generatorCommand = await this.#getCurrentJHipsterCommand();
+    if (!generatorCommand.configs) {
+      throw new Error(`Configs not found for generator ${this.options.namespace}`);
+    }
+
+    loadConfig.call(this, generatorCommand.configs, { application: context });
+  }
+
+  /**
+   * @experimental
+   * Compose the current JHipster command compose.
+   * Blueprints commands compose without generators will be composed.
+   */
+  async #composeCurrentJHipsterCommand() {
+    const generatorCommand = await this.#getCurrentJHipsterCommand();
+    for (const compose of generatorCommand.compose ?? []) {
+      await this.composeWithJHipster(compose);
+    }
+
+    for (const compose of this.generatorsToCompose) {
+      await this.composeWithJHipster(compose);
+    }
+  }
+
+  #parseJHipsterCommand(commandDef: JHipsterCommandDefinition) {
+    // @ts-expect-error removed property.
+    if (!this.skipChecks && commandDef.options) {
+      throw new Error('Options are not supported anymore in JHipster commands, please use configs instead');
+    }
+    if (commandDef.arguments) {
+      this._parseJHipsterArguments(commandDef.arguments);
+    } else if (commandDef.configs) {
+      this._parseJHipsterArguments(extractArgumentsFromConfigs(commandDef.configs));
+    }
+    if (commandDef.configs) {
+      this.#parseJHipsterConfigs(commandDef.configs);
+    }
+  }
+
+  #parseJHipsterConfigs(configs: JHipsterConfigs = {}) {
+    Object.entries(configs).forEach(([optionName, configDesc]) => {
+      const optionsDesc = convertConfigToOption(optionName, configDesc);
+      if (!optionsDesc?.type) return;
+
+      let optionValue;
+      const { name, type } = optionsDesc;
+      const envName = configDesc.cli?.env;
+      // Hidden options are test options, which doesn't rely on commander for options parsing.
+      // We must parse environment variables manually
+      if ((this.options as Record<string, any>)[name!] === undefined && envName && process.env[envName]) {
+        optionValue = process.env[envName];
+      } else {
+        optionValue = (this.options as Record<string, any>)[name!];
+      }
+      if (optionValue !== undefined) {
+        optionValue = type !== Array && type !== Function ? type(optionValue) : optionValue;
+        switch (optionsDesc.scope) {
+          case 'storage': {
+            this.config.set(optionName as keyof Config, optionValue);
+            break;
+          }
+          case 'blueprint': {
+            if (!this.blueprintStorage) {
+              throw new Error('Blueprint storage is not initialized');
+            }
+            this.blueprintStorage.set(optionName, optionValue);
+            break;
+          }
+          case 'generator': {
+            (this as Record<string, any>)[optionName] = optionValue;
+            break;
+          }
+          case 'context': {
+            this.context[optionName] = optionValue;
+            break;
+          }
+          default: {
+            if (optionsDesc.scope !== 'none') {
+              throw new Error(`Scope ${optionsDesc.scope} not supported`);
+            }
+          }
+        }
+      } else if (
+        optionsDesc.default !== undefined &&
+        optionsDesc.scope === 'generator' &&
+        (this as Record<string, any>)[optionName] === undefined
+      ) {
+        (this as Record<string, any>)[optionName] = optionsDesc.default;
+      }
+    });
+  }
+
+  _parseJHipsterArguments(jhipsterArguments: JHipsterArguments = {}) {
+    const hasPositionalArguments = Boolean(this.options.positionalArguments);
+    let positionalArguments: unknown[] = hasPositionalArguments ? this.options.positionalArguments! : this._args;
+    const argumentEntries = Object.entries(jhipsterArguments);
+    if (hasPositionalArguments && positionalArguments.length > argumentEntries.length) {
+      throw new Error('More arguments than allowed');
+    }
+
+    argumentEntries.find(([argumentName, argumentDef]) => {
+      if (positionalArguments.length > 0) {
+        let argument: any;
+        if (hasPositionalArguments || argumentDef.type !== Array) {
+          // Positional arguments already parsed or a single argument.
+          argument = Array.isArray(positionalArguments) ? positionalArguments.shift() : positionalArguments;
+        } else {
+          // Varargs argument.
+          argument = positionalArguments;
+          positionalArguments = [];
+        }
+        // Replace varargs empty array with undefined.
+        argument = Array.isArray(argument) && argument.length === 0 ? undefined : argument;
+        if (argument !== undefined) {
+          const convertedValue = !argumentDef.type || argumentDef.type === Array ? argument : argumentDef.type(argument);
+          switch (argumentDef.scope) {
+            case undefined:
+            case 'generator': {
+              (this as Record<string, any>)[argumentName] = convertedValue;
+              break;
+            }
+            case 'context': {
+              this.context[argumentName] = convertedValue;
+              break;
+            }
+            case 'storage': {
+              this.config.set(argumentName as keyof Config, convertedValue);
+              break;
+            }
+            case 'blueprint': {
+              if (!this.blueprintStorage) {
+                throw new Error('Blueprint storage is not initialized');
+              }
+              this.blueprintStorage.set(argumentName, convertedValue);
+              break;
+            }
+          }
+        }
+      } else {
+        if (argumentDef.required) {
+          throw new Error(`Missing required argument ${argumentName}`);
+        }
+        return true;
+      }
+      return false;
+    });
+
+    // Arguments should only be parsed by the root generator, cleanup to don't be forwarded.
+    this.options.positionalArguments = [];
+  }
+
+  #prepareQuestions(configs: JHipsterConfigs = {}): Parameters<CoreGenerator['prompt']>[0] {
+    return Object.entries(configs)
+      .filter(([_name, def]) => def?.prompt)
+      .map(([name, def]) => {
+        let promptSpec = typeof def.prompt === 'function' ? def.prompt(this, def) : { ...def.prompt };
+        let storage: any;
+        switch (def.scope) {
+          case 'storage':
+          case undefined: {
+            storage = this.config;
+            if (promptSpec.default === undefined) {
+              promptSpec = { ...promptSpec, default: () => (this.jhipsterConfigWithDefaults as Record<string, any>)[name] };
+            }
+            break;
+          }
+          case 'blueprint': {
+            if (!this.blueprintStorage) {
+              throw new Error('Blueprint storage is not initialized');
+            }
+            storage = this.blueprintStorage;
+            break;
+          }
+          case 'generator': {
+            storage = {
+              getPath: (path: string) => get(this, path),
+              setPath: (path: string, value: any) => set(this, path, value),
+            };
+            break;
+          }
+          case 'context': {
+            storage = {
+              getPath: (path: string) => get(this.context, path),
+              setPath: (path: string, value: any) => set(this.context, path, value),
+            };
+            break;
+          }
+        }
+        return {
+          name,
+          choices: def.choices,
+          ...promptSpec,
+          storage,
+        };
+      }) as Parameters<CoreGenerator['prompt']>[0];
+  }
+
+  get #jhipsterGeneratorRelativePath(): string {
+    if (!this.#jhipsterGeneratorRelativePath_) {
+      try {
+        this.#jhipsterGeneratorRelativePath_ = requireNamespace(this.options.namespace, {
+          allowPackageOnlyNamespace: false,
+        }).generator.replace(':', '/generators/');
+      } catch {
+        throw new Error('Could not determine the generator name');
+      }
+    }
+    return this.#jhipsterGeneratorRelativePath_;
+  }
+
+  /**
+   * Alternative templatePath that fetches from the blueprinted generator, instead of the blueprint.
+   */
+  jhipsterTemplatePath(...path: string[]): string {
+    return this.fetchFromInstalledJHipster(this.#jhipsterGeneratorRelativePath, 'templates', ...path);
+  }
+
+  /**
+   * Returns the resources path in the blueprinted jhipster generator
+   */
+  jhipsterResourcesPath(...path: string[]): string {
+    return this.fetchFromInstalledJHipster(this.#jhipsterGeneratorRelativePath, 'resources', ...path);
+  }
+
+  /**
+   * Reads a resource file from the generator
+   */
+  readResource(path: string): string | null {
+    return this.fs.read(this.resourcesPath(path));
+  }
+
+  /**
+   * Join a path to the source root.
+   * @param dest - path parts
+   * @return joined path
+   */
+  resourcesPath(...dest: string[]): string {
+    const filepath = join(...dest);
+
+    if (isAbsolute(filepath)) {
+      return filepath;
+    }
+
+    return this.templatePath('../resources', filepath);
+  }
+
+  /**
+   * Reads a resource file from the blueprinted jhipster generator
+   */
+  readJHipsterResource(path: string): string | null {
+    return this.fs.read(this.jhipsterResourcesPath(path));
+  }
+
+  /**
+   * Compose with a jhipster generator using default jhipster config, but queue it immediately.
+   */
+  async dependsOnJHipster<const G extends keyof GeneratorsByNamespace>(
+    gen: G,
+    options?: ComposeOptions<GeneratorsByNamespace[G]>,
+  ): Promise<GeneratorsByNamespace[G]>;
+  async dependsOnJHipster(gen: string, options?: ComposeOptions<CoreGenerator>): Promise<CoreGenerator>;
+  async dependsOnJHipster(generator: string, options?: ComposeOptions<CoreGenerator>): Promise<CoreGenerator> {
+    return this.composeWithJHipster(generator, {
+      ...options,
+      schedule: false,
+    });
+  }
+
+  /**
+   * Compose with a jhipster bootstrap generator using default jhipster config, but queue it immediately.
+   */
+  dependsOnBootstrap<const G extends GeneratorsWithBootstrap>(
+    gen: G,
+    options?: ComposeOptions<GeneratorsByNamespace[`jhipster:${G}:bootstrap`]>,
+  ) {
+    return this.dependsOnJHipster(`jhipster:${gen}:bootstrap`, options);
+  }
+
+  /**
+   * Compose with a jhipster generator using default jhipster config.
+   * @return {object} the composed generator
+   */
+  async composeWithJHipster<const G extends keyof GeneratorsByNamespace>(
+    gen: G,
+    options?: ComposeOptions<GeneratorsByNamespace[G]>,
+  ): Promise<GeneratorsByNamespace[G]>;
+  async composeWithJHipster(gen: string, options?: ComposeOptions<CoreGenerator>): Promise<CoreGenerator>;
+  async composeWithJHipster(gen: string, options?: ComposeOptions<CoreGenerator>): Promise<CoreGenerator> {
+    assert(typeof gen === 'string', 'generator should be a string');
+    let generator: string = gen;
+    if (!isAbsolute(generator)) {
+      const namespace = generator.includes(':') ? generator : `jhipster:${generator}`;
+      if (await this.env.get(namespace)) {
+        generator = namespace;
+      } else {
+        throw new Error(`Generator ${generator} was not found`);
+      }
+    }
+
+    return this.composeWith(generator, {
+      forwardOptions: false,
+      ...options,
+      generatorOptions: {
+        ...this.options,
+        positionalArguments: undefined,
+        ...options?.generatorOptions,
+      },
+    });
+  }
+
+  /**
+   * Remove File
+   */
+  removeFile(...path: string[]): string {
+    const destinationFile = this.destinationPath(...path);
+    const relativePath = relative(this.env.logCwd, destinationFile);
+    // Delete from memory fs to keep updated.
+    this.fs.delete(destinationFile);
+    try {
+      if (destinationFile && statSync(destinationFile).isFile()) {
+        this.log.info(`Removing legacy file ${relativePath}`);
+        rmSync(destinationFile, { force: true });
+      }
+    } catch {
+      this.log.info(`Could not remove legacy file ${relativePath}`);
+    }
+    return destinationFile;
+  }
+
+  /**
+   * Remove Folder
+   * @param path
+   */
+  removeFolder(...path: string[]): void {
+    const destinationFolder = this.destinationPath(...path);
+    const relativePath = relative(this.env.logCwd, destinationFolder);
+    // Delete from memory fs to keep updated.
+    this.fs.delete(`${destinationFolder}/**`);
+    try {
+      if (statSync(destinationFolder).isDirectory()) {
+        this.log.info(`Removing legacy folder ${relativePath}`);
+        rmSync(destinationFolder, { recursive: true });
+      }
+    } catch {
+      this.log.log(`Could not remove folder ${destinationFolder}`);
+    }
+  }
+
+  /**
+   * Fetch files from the generator-jhipster instance installed
+   */
+  fetchFromInstalledJHipster(...path: string[]): string {
+    if (path) {
+      return joinPath(import.meta.dirname, '..', ...path);
+    }
+    return path;
+  }
+
+  /**
+   * Utility function to write file.
+   *
+   * @param source
+   * @param destination - destination
+   * @param data - template data
+   * @param copyOptions
+   */
+  writeFile(
+    source: string,
+    destination: string,
+    data: Parameters<CoreGenerator['renderTemplate']>[2] = this,
+    copyOptions: Parameters<CoreGenerator['renderTemplate']>[3] = {},
+  ) {
+    // Convert to any because ejs types doesn't support string[] https://github.com/DefinitelyTyped/DefinitelyTyped/pull/63315
+
+    const root: any = this.jhipsterTemplatesFolders ?? this.templatePath();
+    try {
+      return this.renderTemplate(source, destination, data, {
+        noGlob: true,
+        ...copyOptions,
+        transformOptions: { root, ...copyOptions.transformOptions },
+      });
+    } catch (error) {
+      throw new Error(`Error writing file ${source} to ${destination}: ${error}`, { cause: error });
+    }
+  }
+
+  /**
+   * write the given files using provided options.
+   */
+  async writeFiles<DataType>(options: WriteFileOptions<DataType, this>): Promise<string[]> {
+    const paramCount = Object.keys(options).filter(key => ['sections', 'blocks', 'templates'].includes(key)).length;
+    assert(paramCount > 0, 'One of sections, blocks or templates is required');
+    assert(paramCount === 1, 'Only one of sections, blocks or templates must be provided');
+
+    let templateData: DataType = options.context ?? ({} as DataType);
+    const { rootTemplatesPath, customizeTemplatePath = file => file, transform: methodTransform = [] } = options;
+    const startTime = new Date().getMilliseconds();
+    const { customizeTemplatePaths: contextCustomizeTemplatePaths = [] } = templateData as WriteContext;
+
+    const { jhipster7Migration } = this.features;
+    if (jhipster7Migration) {
+      templateData = createJHipster7Context(this, templateData as any, {
+        log: jhipster7Migration === 'verbose' ? (msg: string) => this.log.info(msg) : () => {},
+      }) as DataType;
+    }
+
+    /* Build lookup order first has preference.
+     * Example
+     * rootTemplatesPath = ['reactive', 'common']
+     * jhipsterTemplatesFolders = ['/.../generator-jhipster-blueprint/server/templates', '/.../generator-jhipster/server/templates']
+     *
+     * /.../generator-jhipster-blueprint/server/templates/reactive/templatePath
+     * /.../generator-jhipster-blueprint/server/templates/common/templatePath
+     * /.../generator-jhipster/server/templates/reactive/templatePath
+     * /.../generator-jhipster/server/templates/common/templatePath
+     */
+    let rootTemplatesAbsolutePath: string | string[];
+    if (!rootTemplatesPath) {
+      rootTemplatesAbsolutePath = this.jhipsterTemplatesFolders;
+    } else if (typeof rootTemplatesPath === 'string' && isAbsolute(rootTemplatesPath)) {
+      rootTemplatesAbsolutePath = rootTemplatesPath;
+    } else {
+      rootTemplatesAbsolutePath = this.jhipsterTemplatesFolders.flatMap(templateFolder =>
+        (Array.isArray(rootTemplatesPath) ? rootTemplatesPath : [rootTemplatesPath]).map(relativePath =>
+          join(templateFolder, relativePath),
+        ),
+      );
+    }
+
+    const normalizeEjs = (file: string) => file.replace('.ejs', '');
+    const resolveCallback = <ReturnType extends boolean | string | undefined>(
+      maybeCallback: ReturnType | ((data: any) => ReturnType),
+    ): ReturnType => {
+      if (typeof maybeCallback === 'function') {
+        return resolveCallback(maybeCallback.call(this, templateData));
+      }
+      return maybeCallback;
+    };
+
+    type RenderTemplateParam = {
+      condition?: boolean;
+      sourceFile: string | ((data: any) => string);
+      destinationFile: string | ((data: any) => string);
+      options?: { renderOptions?: any };
+      noEjs?: boolean;
+      transform?: any[];
+      binary?: boolean;
+    };
+
+    const renderTemplate = async ({
+      condition,
+      sourceFile,
+      destinationFile,
+      options,
+      noEjs,
+      transform,
+      binary,
+    }: RenderTemplateParam): Promise<undefined | string> => {
+      if (condition !== undefined && !resolveCallback(condition)) {
+        return undefined;
+      }
+      sourceFile = resolveCallback(sourceFile);
+      const extension = extname(sourceFile);
+      const isBinary = binary || ['.png', '.jpg', '.gif', '.svg', '.ico'].includes(extension);
+      const appendEjs = noEjs === undefined ? !isBinary && extension !== '.ejs' : !noEjs;
+      let targetFile: string;
+      if (typeof destinationFile === 'function') {
+        targetFile = resolveCallback(destinationFile);
+      } else {
+        targetFile = appendEjs ? normalizeEjs(destinationFile) : destinationFile;
+      }
+
+      let sourceFileFrom: string;
+      if (Array.isArray(rootTemplatesAbsolutePath)) {
+        // Look for existing templates
+        let existingTemplates = rootTemplatesAbsolutePath
+          .map(rootPath => this.templatePath(rootPath, sourceFile))
+          .filter(templateFile => existsSync(appendEjs ? `${templateFile}.ejs` : templateFile));
+
+        if (existingTemplates.length === 0 && jhipster7Migration) {
+          existingTemplates = rootTemplatesAbsolutePath
+            .map(rootPath => this.templatePath(rootPath, appendEjs ? sourceFile : `${sourceFile}.ejs`))
+            .filter(templateFile => existsSync(templateFile));
+        }
+
+        if (existingTemplates.length > 1) {
+          const moreThanOneMessage = `Multiples templates were found for file ${sourceFile}, using the first
+templates: ${JSON.stringify(existingTemplates, null, 2)}`;
+          if (existingTemplates.length > 2) {
+            this.log.warn(`Possible blueprint conflict detected: ${moreThanOneMessage}`);
+          } else {
+            this.log.debug(moreThanOneMessage);
+          }
+        }
+        sourceFileFrom = existingTemplates.shift()!;
+      } else if (typeof rootTemplatesAbsolutePath === 'string') {
+        sourceFileFrom = this.templatePath(rootTemplatesAbsolutePath, sourceFile);
+      } else {
+        sourceFileFrom = this.templatePath(sourceFile);
+      }
+
+      const file = customizeTemplatePath.call(this, { sourceFile, resolvedSourceFile: sourceFileFrom, destinationFile: targetFile });
+      if (!file) {
+        return undefined;
+      }
+      sourceFileFrom = file.resolvedSourceFile;
+      targetFile = file.destinationFile;
+
+      let templatesRoots = Array.isArray(rootTemplatesAbsolutePath) ? [...rootTemplatesAbsolutePath] : [rootTemplatesAbsolutePath];
+      for (const contextCustomizeTemplatePath of contextCustomizeTemplatePaths) {
+        const file: undefined | { sourceFile: string; resolvedSourceFile: string; destinationFile: string; templatesRoots: string[] } =
+          contextCustomizeTemplatePath.call(
+            this,
+            {
+              namespace: this.options.namespace,
+              sourceFile,
+              resolvedSourceFile: sourceFileFrom,
+              destinationFile: targetFile,
+              templatesRoots,
+            },
+            templateData,
+          );
+        if (!file) {
+          return undefined;
+        }
+        sourceFileFrom = file.resolvedSourceFile;
+        targetFile = file.destinationFile;
+        ({ templatesRoots } = file);
+      }
+
+      if (sourceFileFrom === undefined) {
+        throw new Error(`Template file ${sourceFile} was not found at ${rootTemplatesAbsolutePath}`);
+      }
+
+      try {
+        if (!appendEjs && extname(sourceFileFrom) !== '.ejs') {
+          await this.copyTemplateAsync(sourceFileFrom, targetFile);
+        } else {
+          let useAsync = true;
+          if ((templateData as any).entityClass) {
+            if (!(templateData as any).baseName) {
+              throw new Error('baseName is required at templates context');
+            }
+            const sourceBasename = basename(sourceFileFrom);
+            this.emit('before:render', sourceBasename, templateData);
+            // Async calls will make the render method to be scheduled, allowing the faker key to change in the meantime.
+            useAsync = false;
+          }
+
+          const transformOptions = {
+            ...options?.renderOptions,
+            // Set root for ejs to lookup for partials.
+            root: templatesRoots,
+            // multiple roots causes ejs caching issues due to cache key issues.
+            cache: templatesRoots.length === 1,
+          };
+          const copyOptions = { noGlob: true, transformOptions };
+          if (appendEjs) {
+            sourceFileFrom = `${sourceFileFrom}.ejs`;
+          }
+          if (noEjs && useAsync) {
+            await this.copyTemplateAsync(sourceFileFrom, targetFile, copyOptions);
+          } else if (noEjs) {
+            this.copyTemplate(sourceFileFrom, targetFile, copyOptions);
+          } else if (useAsync) {
+            await this.renderTemplateAsync(sourceFileFrom, targetFile, templateData as any, copyOptions);
+          } else {
+            this.renderTemplate(sourceFileFrom, targetFile, templateData as any, copyOptions);
+          }
+        }
+      } catch (error) {
+        throw new Error(`Error rendering template ${sourceFileFrom} to ${targetFile}: ${error}`, { cause: error });
+      }
+      if (!isBinary && transform?.length) {
+        this.editFile(targetFile, ...transform);
+      }
+      return targetFile;
+    };
+
+    let parsedTemplates: RenderTemplateParam[];
+    if ('sections' in options || 'blocks' in options) {
+      const sectionTransform = 'sections' in options ? (options.sections._?.transform ?? []) : [];
+
+      parsedTemplates = ('sections' in options ? convertWriteFileSectionsToBlocks<DataType, this>(options.sections) : options.blocks)
+        .flatMap((block, blockIdx) => {
+          const {
+            path: blockPathValue = './',
+            from: blockFromCallback,
+            to: blockToCallback,
+            condition: blockConditionCallback,
+            transform: blockTransform = [],
+            renameTo: blockRenameTo,
+          } = block;
+
+          // Temporary variable added to identify section/block
+          const blockSpecPath: string = 'blockSpecPath' in block ? (block.blockSpecPath as string) : `${blockIdx}`;
+
+          assert(typeof block === 'object', `Block must be an object for ${blockSpecPath}`);
+          assert(Array.isArray(block.templates), `Block templates must be an array for ${blockSpecPath}`);
+          if (blockConditionCallback !== undefined && !resolveCallback(blockConditionCallback)) {
+            return undefined;
+          }
+          if (typeof blockPathValue === 'function') {
+            throw new TypeError(`Block path should be static for ${blockSpecPath}`);
+          }
+          const blockPath = resolveCallback(blockFromCallback) ?? resolveCallback(blockPathValue);
+          const blockTo = resolveCallback(blockToCallback) ?? resolveCallback(blockPath);
+          return block.templates.map((fileSpec, fileIdx) => {
+            const fileSpecPath = `${blockSpecPath}[${fileIdx}]`;
+            assert(
+              typeof fileSpec === 'object' || typeof fileSpec === 'string' || typeof fileSpec === 'function',
+              `File must be an object, a string or a function for ${fileSpecPath}`,
+            );
+            if (typeof fileSpec === 'function') {
+              fileSpec = fileSpec.call(this, templateData);
+            }
+            let noEjs: boolean | undefined;
+            let derivedTransform;
+            if (typeof blockTransform === 'boolean') {
+              noEjs = !blockTransform;
+              derivedTransform = [...methodTransform, ...sectionTransform];
+            } else {
+              derivedTransform = [...methodTransform, ...sectionTransform, ...blockTransform];
+            }
+            if (typeof fileSpec === 'string') {
+              const sourceFile = join(blockPath, fileSpec);
+              let destinationFile;
+              if (blockRenameTo) {
+                destinationFile = this.destinationPath(blockRenameTo.call(this, templateData, fileSpec));
+              } else {
+                destinationFile = this.destinationPath(blockTo, fileSpec);
+              }
+              return { sourceFile, destinationFile, noEjs, transform: derivedTransform };
+            }
+
+            const { condition, options, file, renameTo, transform: fileTransform = [], binary } = fileSpec;
+            let { sourceFile, destinationFile } = fileSpec;
+
+            if (typeof fileTransform === 'boolean') {
+              noEjs = !fileTransform;
+            } else if (Array.isArray(fileTransform)) {
+              derivedTransform = [...derivedTransform, ...fileTransform];
+            } else if (fileTransform !== undefined) {
+              throw new Error(`Transform ${fileTransform} value is not supported`);
+            }
+
+            const normalizedFile = resolveCallback(sourceFile) ?? resolveCallback(file);
+            if (normalizedFile === undefined) {
+              throw new Error(`sourceFile is required for ${fileSpecPath}`);
+            }
+            sourceFile = join(blockPath, normalizedFile);
+            destinationFile = resolveCallback(destinationFile) ?? resolveCallback(renameTo) ?? normalizedFile;
+            if (blockRenameTo) {
+              destinationFile = this.destinationPath(blockRenameTo.call(this, templateData, destinationFile));
+            } else {
+              destinationFile = this.destinationPath(blockTo, destinationFile);
+            }
+
+            if (
+              fileSpec.override !== undefined &&
+              !resolveCallback(fileSpec.override) &&
+              this.fs.exists(destinationFile.replace(/\.jhi$/, ''))
+            ) {
+              this.log.debug(`skipping file ${destinationFile}`);
+              return undefined;
+            }
+
+            return {
+              condition,
+              sourceFile,
+              destinationFile,
+              options,
+              transform: derivedTransform,
+              noEjs,
+              binary,
+            };
+          });
+        })
+        .filter(Boolean) as RenderTemplateParam[];
+    } else {
+      parsedTemplates = options.templates.map(template => {
+        if (typeof template === 'string') {
+          return { sourceFile: template, destinationFile: template };
+        }
+        return template;
+      }) as RenderTemplateParam[];
+    }
+
+    const files = (await Promise.all(parsedTemplates.map(template => renderTemplate(template)).filter(Boolean))) as string[];
+    this.log.debug(`Time taken to write files: ${new Date().getMilliseconds() - startTime}ms`);
+    return files.filter(Boolean);
+  }
+
+  /**
+   * Edit file content.
+   * Edits an empty file if `options.create` is truthy or no callback is passed.
+   * @example
+   * // Throws if `foo.txt` doesn't exist or append the content.
+   * editFile('foo.txt', content => content + 'foo.txt content');
+   * @example
+   * // Appends `foo.txt` content whether it exists or not.
+   * editFile('foo.txt', { create: true }, content => content + 'foo.txt content');
+   * @example
+   * // Appends `foo.txt` content whether it exists or not using the returned cascaded callback.
+   * editFile('foo.txt')(content => content + 'foo.txt content');
+   */
+  editFile(file: string, ...transformCallbacks: EditFileCallback<this>[]): CascadedEditFileCallback<this>;
+  editFile(
+    file: string,
+    options: EditFileOptions | NeedleInsertion,
+    ...transformCallbacks: EditFileCallback<this>[]
+  ): CascadedEditFileCallback<this>;
+
+  editFile(
+    file: string,
+    options?: EditFileOptions | EditFileCallback<this> | NeedleInsertion,
+    ...transformCallbacks: EditFileCallback<this>[]
+  ): CascadedEditFileCallback<this> {
+    let actualOptions: EditFileOptions;
+    if (typeof options === 'function') {
+      transformCallbacks = [options, ...transformCallbacks];
+      actualOptions = {};
+    } else if (options === undefined) {
+      actualOptions = {};
+    } else if ('needle' in options && 'contentToAdd' in options) {
+      transformCallbacks = [createNeedleCallback(options), ...transformCallbacks];
+      actualOptions = {};
+    } else {
+      actualOptions = options;
+    }
+    let filePath = this.destinationPath(file);
+    if (!this.env.sharedFs.existsInMemory(filePath) && this.env.sharedFs.existsInMemory(`${filePath}.jhi`)) {
+      filePath = `${filePath}.jhi`;
+    }
+
+    let originalContent: string | undefined | null;
+    try {
+      originalContent = this.readDestination(filePath);
+    } catch {
+      // null return should be treated like an error.
+    }
+
+    if (typeof originalContent !== 'string') {
+      const { ignoreNonExisting, create } = actualOptions;
+      const errorMessage = typeof ignoreNonExisting === 'string' ? ` ${ignoreNonExisting}.` : '';
+      if (!create || transformCallbacks.length === 0) {
+        if (ignoreNonExisting || this.ignoreNeedlesError) {
+          this.log(`${chalk.yellow('\nUnable to find ')}${filePath}.${chalk.yellow(errorMessage)}\n`);
+          // return a noop.
+          const noop = () => noop;
+          return noop;
+        }
+        throw new Error(`Unable to find ${filePath}. ${errorMessage}`);
+      }
+      // allow editing non-existing files
+      originalContent = '';
+    }
+
+    let newContent = originalContent;
+    const writeCallback = (...callbacks: EditFileCallback<this>[]): CascadedEditFileCallback<this> => {
+      const { autoCrlf = this.jhipsterConfigWithDefaults.autoCrlf, assertModified } = actualOptions;
+      try {
+        const fileHasCrlf = autoCrlf && hasCrlf(newContent);
+        newContent = joinCallbacks(...callbacks).call(this, fileHasCrlf ? normalizeLineEndings(newContent, LF) : newContent, filePath);
+        if (assertModified && originalContent === newContent) {
+          const errorMessage = `${chalk.yellow('Fail to modify ')}${filePath}.`;
+          if (!this.ignoreNeedlesError) {
+            throw new Error(errorMessage);
+          }
+          this.log(errorMessage);
+        }
+        this.writeDestination(filePath, fileHasCrlf ? normalizeLineEndings(newContent, CRLF) : newContent);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          throw new Error(`Error editing file ${filePath}: ${error.message} at ${error.stack}`, { cause: error });
+        }
+        throw new Error(`Unknown Error ${error}`, { cause: error });
+      }
+      return writeCallback;
+    };
+
+    return writeCallback(...transformCallbacks);
+  }
+
+  /**
+   * Convert value to a yaml and write to destination
+   */
+  writeDestinationYaml(filepath: string, value: Record<string | number, any>) {
+    this.writeDestination(filepath, stringifyYaml(value));
+  }
+
+  /**
+   * Merge value to an existing yaml and write to destination
+   * Removes every comment (due to parsing/merging process) except the at the top of the file.
+   */
+  mergeDestinationYaml(filepath: string, value: Record<string | number, any>) {
+    this.editFile(filepath, content => {
+      const lines = content.split('\n');
+      const headerComments: string[] = [];
+      lines.find(line => {
+        if (line.startsWith('#')) {
+          headerComments.push(line);
+          return false;
+        }
+        return true;
+      });
+
+      const mergedContent = stringifyYaml(deepMerge(parseYaml(content), value));
+      const header = headerComments.length > 0 ? headerComments.join('\n').concat('\n') : '';
+      return `${header}${mergedContent}`;
+    });
+  }
+
+  /**
+   * Merge value to an existing json and write to destination
+   */
+  mergeDestinationJson(filepath: string, value: Record<string | number, any>) {
+    this.editFile(filepath, { create: true }, content => JSON.stringify(merge(content ? JSON.parse(content) : {}, value), null, 2));
+  }
+
+  /**
+   * Shallow clone or convert dependencies to placeholder if needed.
+   */
+  prepareDependencies(
+    map: Record<string, string>,
+    valuePlaceholder?: 'java' | 'docker' | ((value: string) => string),
+  ): Record<string, string> {
+    let placeholder: (value: string) => string;
+    if (valuePlaceholder === 'java') {
+      placeholder = value => `'${kebabCase(value).toUpperCase()}-VERSION'`;
+    } else if (valuePlaceholder === 'docker') {
+      placeholder = dockerPlaceholderGenerator;
+    } else {
+      placeholder = valuePlaceholder ?? (value => `${snakeCase(value).toUpperCase()}_VERSION`);
+    }
+    if (this.useVersionPlaceholders) {
+      return Object.fromEntries(Object.keys(map).map(dep => [dep, placeholder(dep)]));
+    }
+    return {
+      ...map,
+    };
+  }
+
+  loadNodeDependencies(destination: Record<string, string>, source: Record<string, string>): void {
+    mutateData(destination, this.prepareDependencies(source));
+  }
+
+  /**
+   * Load Java dependencies from a gradle catalog file.
+   * @param javaDependencies
+   * @param gradleCatalog Gradle catalog file path, true for generator-jhipster's generator catalog of falsy for blueprint catalog
+   */
+  loadJavaDependenciesFromGradleCatalog(javaDependencies: Record<string, string>, gradleCatalogFile?: string): void;
+  loadJavaDependenciesFromGradleCatalog(javaDependencies: Record<string, string>, mainGenerator: boolean): void;
+  loadJavaDependenciesFromGradleCatalog(javaDependencies: Record<string, string>, gradleCatalog?: string | boolean): void {
+    if (typeof gradleCatalog !== 'string') {
+      const tomlFile = '../resources/gradle/libs.versions.toml';
+      gradleCatalog = gradleCatalog ? this.jhipsterTemplatePath(tomlFile) : this.templatePath(tomlFile);
+    }
+
+    const gradleLibsVersions = this.readTemplate(gradleCatalog);
+    if (gradleLibsVersions) {
+      Object.assign(javaDependencies, this.prepareDependencies(getGradleLibsVersionsProperties(gradleLibsVersions), 'java'));
+    }
+  }
+
+  readResourcesPackageJson(
+    packageJsonFile: string = 'package.json',
+  ): Omit<PackageJson.PackageJsonStandard, 'dependencies' | 'devDependencies'> &
+    Record<'dependencies' | 'devDependencies', Record<string, string>> {
+    packageJsonFile = this.resourcesPath(packageJsonFile);
+    const packageJson = this.fs.readJSON(packageJsonFile, {}) as any;
+    return { ...packageJson, devDependencies: { ...packageJson.devDependencies }, dependencies: { ...packageJson.dependencies } };
+  }
+
+  loadNodeDependenciesFromPackageJson(destination: Record<string, string>, packageJsonFile?: string): void {
+    const { devDependencies, dependencies } = this.readResourcesPackageJson(packageJsonFile);
+    this.loadNodeDependencies(destination, { ...devDependencies, ...dependencies });
+  }
+
+  /**
+   * Print ValidationResult info/warnings or throw result Error.
+   */
+  validateResult(result: ValidationResult, { throwOnError = true } = {}) {
+    // Don't print check info by default for cleaner outputs.
+    if (result.debug) {
+      if (Array.isArray(result.debug)) {
+        for (const debug of result.debug) {
+          this.log.debug(debug);
+        }
+      } else {
+        this.log.debug(result.debug);
+      }
+    }
+    if (result.info) {
+      if (Array.isArray(result.info)) {
+        for (const info of result.info) {
+          this.log.info(info);
+        }
+      } else {
+        this.log.info(result.info);
+      }
+    }
+    if (result.warning) {
+      if (Array.isArray(result.warning)) {
+        for (const warning of result.warning) {
+          this.log.warn(warning);
+        }
+      } else {
+        this.log.warn(result.warning);
+      }
+    }
+    if (result.error) {
+      if (Array.isArray(result.error)) {
+        if (throwOnError && result.error.length > 0) {
+          throw new Error(result.error[0]);
+        }
+        for (const error of result.error) {
+          this.log.warn(error);
+        }
+      } else if (throwOnError) {
+        throw new Error(result.error);
+      } else {
+        this.log.warn(result.error);
+      }
+    }
+  }
+
+  /**
+   * Checks if there is a newer JHipster version available.
+   */
+  protected async checkForNewVersion() {
+    try {
+      const latestJhipster = await latestVersion(GENERATOR_JHIPSTER);
+      if (semver.lt(packageJson.version, latestJhipster)) {
+        this.log.warn(
+          `${
+            chalk.yellow(' ______________________________________________________________________________\n\n') +
+            chalk.yellow('  JHipster update available: ') +
+            chalk.green.bold(latestJhipster) +
+            chalk.gray(` (current: ${packageJson.version})`)
+          }\n`,
+        );
+        this.log.log(chalk.yellow(`  Run ${chalk.magenta(`npm install -g ${GENERATOR_JHIPSTER}`)} to update.\n`));
+        this.log.log(chalk.yellow(' ______________________________________________________________________________\n'));
+      }
+    } catch {
+      // Ignore error
+    }
+  }
+
+  /**
+   * Create a simple-git instance using current destinationPath as baseDir.
+   */
+  createGit(options?: Parameters<typeof simpleGit>[0]) {
+    return simpleGit({ baseDir: this.destinationPath(), ...options }).env({
+      HOME: process.env.HOME,
+      PATH: process.env.PATH,
+      LANG: 'C',
+      LC_ALL: 'C',
+    });
+  }
+}
+
+export class CommandCoreGenerator<
+  Command extends ParsableCommand,
+  AdditionalOptions = unknown,
+  AdditionalFeatures = unknown,
+> extends CoreGenerator<
+  CoreConfig & ExportStoragePropertiesFromCommand<Command>,
+  CoreOptions & ExportGeneratorOptionsFromCommand<Command> & AdditionalOptions,
+  CoreFeatures & AdditionalFeatures
+> {}

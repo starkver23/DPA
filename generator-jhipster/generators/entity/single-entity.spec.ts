@@ -1,0 +1,92 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { before, describe, expect, it } from 'esmocha';
+
+import { CLIENT_MAIN_SRC_DIR, SERVER_MAIN_RES_DIR, SERVER_MAIN_SRC_DIR } from '../generator-constants.ts';
+
+import { defaultHelpers as helpers, result as runResult } from '#testing';
+
+const GENERATOR_ENTITY = 'entity';
+
+const entityFoo = { name: 'Foo', changelogDate: '20160926101210' };
+const entityBar = { name: 'Bar', changelogDate: '20160926101211' };
+
+describe('generator - entity --single-entity', () => {
+  describe('when regenerating', () => {
+    describe('with default configuration', () => {
+      before(async () => {
+        await helpers
+          .runJHipster(GENERATOR_ENTITY)
+          .withMockedGenerators(['jhipster:languages'])
+          .withJHipsterConfig({}, [entityFoo, entityBar])
+          .withSharedApplication({ getWebappTranslation: () => 'translations' })
+          .withArguments(['Foo'])
+          .withOptions({ ignoreNeedlesError: true, regenerate: true, force: true, singleEntity: true })
+          .withMockedSource();
+      });
+
+      it('should match source calls', () => {
+        expect(runResult.sourceCallsArg).toMatchSnapshot();
+      });
+
+      it('should create files for entity Foo', () => {
+        runResult.assertFile([
+          `${SERVER_MAIN_RES_DIR}config/liquibase/changelog/20160926101210_added_entity_Foo.xml`,
+          `${SERVER_MAIN_SRC_DIR}com/mycompany/myapp/domain/Foo.java`,
+          `${CLIENT_MAIN_SRC_DIR}app/entities/foo/foo.model.ts`,
+        ]);
+      });
+
+      it('should not create files for the entity Bar', () => {
+        runResult.assertNoFile([
+          `${SERVER_MAIN_RES_DIR}config/liquibase/changelog/20160926101211_added_entity_Bar.xml`,
+          `${SERVER_MAIN_SRC_DIR}com/mycompany/myapp/domain/Bar.java`,
+          `${CLIENT_MAIN_SRC_DIR}app/entities/bar/bar.model.ts`,
+        ]);
+      });
+    });
+
+    describe('with cassandra database', () => {
+      before(async () => {
+        await helpers
+          .runJHipster(GENERATOR_ENTITY)
+          .withMockedGenerators(['jhipster:languages'])
+          .withJHipsterConfig({ databaseType: 'cassandra' }, [entityFoo, entityBar])
+          .withSharedApplication({ getWebappTranslation: () => 'translations' })
+          .withArguments(['Foo'])
+          .withOptions({ ignoreNeedlesError: true, regenerate: true, force: true, singleEntity: true });
+      });
+
+      it('should create files for entity Foo', () => {
+        runResult.assertFile([
+          `${SERVER_MAIN_RES_DIR}config/cql/changelog/20160926101210_added_entity_Foo.cql`,
+          `${SERVER_MAIN_SRC_DIR}com/mycompany/myapp/domain/Foo.java`,
+        ]);
+      });
+
+      it('should not create files for the entity Bar', () => {
+        runResult.assertNoFile([
+          `${SERVER_MAIN_RES_DIR}config/cql/changelog/20160926101211_added_entity_Bar.cql`,
+          `${SERVER_MAIN_SRC_DIR}com/mycompany/myapp/domain/Bar.java`,
+        ]);
+      });
+    });
+  });
+});

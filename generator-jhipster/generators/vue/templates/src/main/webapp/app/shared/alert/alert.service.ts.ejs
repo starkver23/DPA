@@ -1,0 +1,116 @@
+import { type BToastProps, useToast } from 'bootstrap-vue-next';
+<%_ if (enableTranslation) { _%>
+import { type Composer, useI18n } from 'vue-i18n';
+<%_ } _%>
+import { getMessageFromHeaders } from '@/shared/jhipster/headers';
+
+export const useAlertService = () => {
+  const toast = useToast();
+  if (!toast) {
+    throw new Error('BootstrapVue toast component was not found');
+  }
+<%_ if (enableTranslation) { _%>
+  const i18n = useI18n();
+<%_ } _%>
+  return new AlertService({
+    toast,
+<%_ if (enableTranslation) { _%>
+    i18n,
+<%_ } _%>
+  });
+};
+
+export default class AlertService {
+  private readonly toast: ReturnType<typeof useToast>;
+<%_ if (enableTranslation) { _%>
+  private readonly i18n: Composer;
+<%_ } _%>
+
+  constructor({
+    toast,
+<%_ if (enableTranslation) { _%>
+    i18n,
+<%_ } _%>
+  }: {
+    toast: ReturnType<typeof useToast>;
+<%_ if (enableTranslation) { _%>
+    i18n: Composer,
+<%_ } _%>
+  }) {
+    this.toast = toast;
+<%_ if (enableTranslation) { _%>
+    this.i18n = i18n;
+<%_ } _%>
+  }
+
+  showInfo(toastMessage: string, props: BToastProps = {}) {
+    this.toast.show!({
+      props: {
+        pos: 'top-center',
+        title: 'Info',
+        variant: 'info',
+        solid: true,
+        body: toastMessage,
+        ...props,
+      },
+    });
+  }
+
+  showSuccess(toastMessage: string) {
+    this.showInfo(toastMessage, {
+      title: 'Success',
+      variant: 'success',
+    });
+  }
+
+  showError(toastMessage: string) {
+    this.showInfo(toastMessage, {
+      title: 'Error',
+      variant: 'danger',
+    });
+  }
+
+  showHttpError({ data, status, headers }: any) {
+    let errorMessage: string | null = null;
+    switch (status) {
+      case 0:
+        errorMessage = this.i18n.t('error.server.not.reachable').toString();
+        break;
+
+      case 400: {
+        const message = getMessageFromHeaders(headers);
+<%_ if (enableTranslation) { _%>
+        if (message.errorKey && message.param) {
+          errorMessage = this.i18n.t(message.errorKey!, { entityName: this.i18n.t(`global.menu.entities.${message.param!}`) }).toString();
+        } else if (message.errorKey) {
+          errorMessage = this.i18n.t(message.errorKey!).toString();
+        } else
+<%_ } _%>
+        if (message.errorMessage) {
+          errorMessage = message.errorMessage;
+        } else if (data.message) {
+<%_ if (enableTranslation) { _%>
+          errorMessage = this.i18n.t(data.message).toString();
+<%_ } else { _%>
+          errorMessage = data.message;
+<%_ } _%>
+        } else if (data?.fieldErrors) {
+          errorMessage = 'Validation error';
+        }
+        break;
+      }
+
+      case 404:
+        errorMessage = this.i18n.t('error.http.404').toString();
+        break;
+
+      default:
+<%_ if (enableTranslation) { _%>
+        errorMessage = this.i18n.t(data.message).toString();
+<%_ } else { _%>
+        errorMessage = data.message;
+<%_ } _%>
+    }
+    this.showError(errorMessage!);
+  }
+}

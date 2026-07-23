@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`generator - spring-cloud:gateway with defaults options should call source snapshot 1`] = `
+{
+  "addJavaDefinitions": [
+    [
+      {
+        "dependencies": [
+          {
+            "artifactId": "spring-cloud-starter-gateway-server-webflux",
+            "groupId": "org.springframework.cloud",
+          },
+        ],
+      },
+      {
+        "condition": false,
+        "dependencies": [
+          {
+            "artifactId": "spring-cloud-starter-loadbalancer",
+            "groupId": "org.springframework.cloud",
+          },
+        ],
+      },
+    ],
+  ],
+}
+`;
+
+exports[`generator - spring-cloud:gateway with defaults options should match files snapshot 1`] = `
+{
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/security/jwt/JWTRelayGatewayFilterFactory.java": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - spring-cloud:gateway with imperative option should call source snapshot 1`] = `
+{
+  "addJavaDefinitions": [
+    [
+      {
+        "dependencies": [
+          {
+            "artifactId": "spring-cloud-starter-gateway-server-webmvc",
+            "groupId": "org.springframework.cloud",
+          },
+        ],
+      },
+      {
+        "condition": true,
+        "dependencies": [
+          {
+            "artifactId": "spring-cloud-starter-loadbalancer",
+            "groupId": "org.springframework.cloud",
+          },
+        ],
+      },
+    ],
+  ],
+}
+`;
+
+exports[`generator - spring-cloud:gateway with imperative option should match files snapshot 1`] = `
+{
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/GatewayResource.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/vm/RouteVM.java": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`generator - spring-cloud:gateway with serviceDiscovery option should call source snapshot 1`] = `
+{
+  "addJavaDefinitions": [
+    [
+      {
+        "dependencies": [
+          {
+            "artifactId": "spring-cloud-starter-gateway-server-webflux",
+            "groupId": "org.springframework.cloud",
+          },
+        ],
+      },
+      {
+        "condition": false,
+        "dependencies": [
+          {
+            "artifactId": "spring-cloud-starter-loadbalancer",
+            "groupId": "org.springframework.cloud",
+          },
+        ],
+      },
+    ],
+  ],
+}
+`;
+
+exports[`generator - spring-cloud:gateway with serviceDiscovery option should match files snapshot 1`] = `
+{
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/security/jwt/JWTRelayGatewayFilterFactory.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/GatewayResource.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/vm/RouteVM.java": {
+    "stateCleared": "modified",
+  },
+}
+`;

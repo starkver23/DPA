@@ -1,0 +1,45 @@
+<%#
+ Copyright 2013-2026 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+package <%- packageName %>.config;
+
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.slf4j.LoggerFactory;
+import org.testcontainers.containers.output.Slf4jLogConsumer;
+import org.testcontainers.couchbase.BucketDefinition;
+import org.testcontainers.couchbase.CouchbaseContainer;
+import org.testcontainers.junit.jupiter.Container;
+
+public interface CouchbaseTestContainer {
+    String BUCKET_NAME = "testBucket";
+
+    @Container
+    CouchbaseContainer couchbaseContainer = new CouchbaseContainer("<%- dockerContainers.couchbase %>")
+        .withBucket(new BucketDefinition(BUCKET_NAME))
+        .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger(CouchbaseTestContainer.class)));
+
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.couchbase.connection-string", couchbaseContainer::getConnectionString);
+        registry.add("spring.couchbase.username", couchbaseContainer::getUsername);
+        registry.add("spring.couchbase.password", couchbaseContainer::getPassword);
+        registry.add("jhipster.database.couchbase.bucket-name", () -> BUCKET_NAME);
+        registry.add("jhipster.database.couchbase.scope-name", () -> "testScope");
+    }
+}

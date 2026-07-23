@@ -1,0 +1,128 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { createNeedleCallback } from '../../../base-core/support/needles.ts';
+import { JavascriptSimpleApplicationGenerator } from '../../generator.ts';
+
+export default class EslintGenerator extends JavascriptSimpleApplicationGenerator {
+  fromInit?: boolean;
+
+  async beforeQueue() {
+    if (!this.fromBlueprint) {
+      await this.composeWithBlueprints();
+    }
+
+    if (!this.delegateToBlueprint) {
+      await this.dependsOnJHipster('jhipster:javascript-simple-application:bootstrap');
+    }
+  }
+
+  get preparing() {
+    return this.asPreparingTaskGroup({
+      loadNodeDependencies({ application }) {
+        if (!this.fromInit) return;
+
+        this.loadNodeDependencies(application.nodeDependencies, {
+          jiti: application.jhipsterPackageJson.devDependencies.jiti,
+        });
+
+        this.loadNodeDependenciesFromPackageJson(
+          application.nodeDependencies,
+          this.fetchFromInstalledJHipster('javascript-simple-application', 'resources', 'package.json'),
+        );
+      },
+      source({ application, source }) {
+        source.addEslintConfig = ({ import: importToAdd, config }) =>
+          this.editFile(
+            `${this.fromInit ? '' : application.clientRootDir}eslint.config.ts`,
+            config ? createNeedleCallback({ needle: 'eslint-add-config', contentToAdd: config }) : content => content,
+            importToAdd ? createNeedleCallback({ needle: 'eslint-add-import', contentToAdd: importToAdd }) : content => content,
+          );
+        source.addEslintIgnore = ({ ignorePattern }) =>
+          source.addEslintConfig!({ config: `{ ignores: ['${ignorePattern.replaceAll("'", String.raw`\')}`)}'] },` });
+      },
+    });
+  }
+
+  get [JavascriptSimpleApplicationGenerator.PREPARING]() {
+    return this.delegateTasksToBlueprint(() => this.preparing);
+  }
+
+  get writing() {
+    return this.asWritingTaskGroup({
+      async cleanup({ control }) {
+        await control.cleanupFiles({
+          '9.0.0-alpha.0': [
+            [
+              this.fromInit!,
+              // Try to remove possibles old eslint config files
+              'eslint.config.js',
+              'eslint.config.mjs',
+            ],
+          ],
+        });
+      },
+      async writing({ application }) {
+        await this.writeFiles({
+          blocks: [
+            {
+              templates: ['eslint.config.ts.jhi'],
+              renameTo: data => `${this.fromInit ? '' : data.clientRootDir}eslint.config.ts.jhi`,
+            },
+          ],
+          context: application,
+        });
+      },
+    });
+  }
+
+  get [JavascriptSimpleApplicationGenerator.WRITING]() {
+    return this.delegateTasksToBlueprint(() => this.writing);
+  }
+
+  get postWriting() {
+    return this.asPostWritingTaskGroup({
+      addDependencies({ application, source }) {
+        if (!application.nodeDependencies.globals) {
+          this.log.warn('globals dependency is not defined in the nodeDependencies, the client generator must define it');
+        }
+        if (!application.nodeDependencies.jiti) {
+          this.log.warn('jiti dependency is not defined in the nodeDependencies, the client generator must define it');
+        }
+
+        const packageJson = {
+          devDependencies: {
+            'eslint-config-prettier': application.nodeDependencies['eslint-config-prettier'],
+            'eslint-plugin-prettier': application.nodeDependencies['eslint-plugin-prettier'],
+            globals: application.nodeDependencies.globals,
+            jiti: application.nodeDependencies.jiti,
+          },
+        };
+        if (this.fromInit) {
+          this.packageJson.merge(packageJson);
+        } else {
+          source.mergeClientPackageJson!(packageJson);
+        }
+      },
+    });
+  }
+
+  get [JavascriptSimpleApplicationGenerator.POST_WRITING]() {
+    return this.delegateTasksToBlueprint(() => this.postWriting);
+  }
+}

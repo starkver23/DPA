@@ -1,0 +1,83 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { shallowMount } from '@vue/test-utils';
+import axios from 'axios';
+
+import { createTestingPinia } from '@pinia/testing';
+import { useStore } from '@/store';
+import Sessions from './sessions.vue';
+import router from '@/router';
+<%_ if (enableTranslation) { _%>
+import TranslationService from '@/locale/translation.service';
+<%_ } _%>
+
+type SessionsComponentType = InstanceType<typeof Sessions>;
+
+const pinia = createTestingPinia({ stubActions: false });
+
+const store = useStore();
+
+const axiosStub = {
+  get: vi.spyOn(axios, 'get'),
+  delete: vi.spyOn(axios, 'delete'),
+};
+
+describe('Sessions Component', () => {
+  let sessions: SessionsComponentType;
+
+  beforeEach(() => {
+    axiosStub.get.mockReset();
+    axiosStub.get.mockResolvedValue({ data: [] });
+    axiosStub.delete.mockReset();
+
+    store.setAuthentication({
+      login: 'username',
+    });
+
+    const wrapper = shallowMount(Sessions, {
+      global: {
+        plugins: [pinia],
+      },
+    });
+    sessions = wrapper.vm;
+  });
+
+  it('should call remote service on init', () => {
+    expect(axiosStub.get).toHaveBeenCalledOnce();
+  });
+
+  it('should have good username', () => {
+    expect(sessions.username).toEqual('username');
+  });
+
+  it('should invalidate a session', async () => {
+    // Given
+    axiosStub.get.mockReset();
+    axiosStub.get.mockResolvedValue({ data: [] });
+    axiosStub.delete.mockResolvedValue(undefined);
+
+    // When
+    await sessions.invalidate('session');
+    await sessions.$nextTick();
+
+    // Then
+    expect(sessions.error).toBeNull();
+    expect(sessions.success).toEqual('OK');
+    expect(axiosStub.get).toHaveBeenCalledOnce();
+  });
+
+  it('should fail to invalidate session', async () => {
+    // Given
+    axiosStub.get.mockReset();
+    axiosStub.get.mockResolvedValue({ data: [] });
+    axiosStub.delete.mockRejectedValue(new Error());
+
+    // When
+    await sessions.invalidate('session');
+    await sessions.$nextTick();
+
+    // Then
+    expect(sessions.success).toBeNull();
+    expect(sessions.error).toEqual('ERROR');
+    expect(axiosStub.get).not.toHaveBeenCalled();
+  });
+});

@@ -1,0 +1,96 @@
+<%#
+ Copyright 2013-2026 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+import { MESSAGE_ALERT_HEADER_NAME, MESSAGE_ERROR_HEADER_NAME, MESSAGE_PARAM_HEADER_NAME } from './constants';
+
+export type HeaderMessage = {
+  /** Success translation key or message */
+  alert?: string;
+<%_ if (enableTranslation) { _%>
+  /** Success translation key */
+  alertKey?: string;
+<%_ } _%>
+  /** Success message */
+  alertMessage?: string;
+
+  /** Error translation key or message */
+  error?: string;
+<%_ if (enableTranslation) { _%>
+  /** Error translation key */
+  errorKey?: string;
+<%_ } _%>
+  /** Error message */
+  errorMessage?: string;
+  /** Entity id for success messages. Entity name for error messages. */
+  param?: string;
+};
+
+const headerToString = (headerValue: any): string | undefined => {
+  if (headerValue === undefined) {
+    return undefined;
+  }
+  if (Array.isArray(headerValue)) {
+    if (headerValue.length > 1) {
+      throw new TypeError('Multiple header values found');
+    }
+    headerValue = headerValue[0];
+  }
+  if (typeof headerValue !== 'string') {
+    throw new TypeError('Header value is not a string');
+  }
+  return headerValue;
+};
+
+const decodeHeaderValue = (headerValue?: string): string | undefined =>
+  headerValue ? decodeURIComponent(headerValue.replaceAll('+', ' ')) : headerValue;
+
+export const getMessageFromHeaders = (headers: Record<string, any>): HeaderMessage => {
+  const alertHeader = headerToString(headers[<%- microfrontend || applicationTypeGateway ? 'Object.keys(headers).find(key => /^x-(.*)-alert$/.test(key)) ?? ' : '' %>MESSAGE_ALERT_HEADER_NAME]);
+<%_ if (enableTranslation) { _%>
+  // Try to determine if the alertHeader is a key or a message
+  const alertIsKey = /^[A-Za-z0-9](?:[A-Za-z0-9.]*[A-Za-z0-9])?$/.test(alertHeader ?? '');
+  const alertKey = alertIsKey ? alertHeader : undefined;
+  const alertMessage = alertIsKey ? undefined : alertHeader;
+
+<%_ } _%>
+  const errorHeader = headerToString(headers[<%- microfrontend || applicationTypeGateway ? 'Object.keys(headers).find(key => /^x-(.*)-error$/.test(key)) ?? ' : '' %>MESSAGE_ERROR_HEADER_NAME]);
+<%_ if (enableTranslation) { _%>
+  // Try to determine if the errorHeader is a key or a message
+  const errorIsKey = /^[A-Za-z0-9](?:[A-Za-z0-9.]*[A-Za-z0-9])?$/.test(errorHeader ?? '');
+  const errorKey = errorIsKey ? errorHeader : undefined;
+  const errorMessage = errorIsKey ? undefined : errorHeader;
+<%_ } _%>
+
+  return {
+    alert: alertHeader,
+<%_ if (enableTranslation) { _%>
+    alertKey,
+    alertMessage,
+<%_ } else { _%>
+    alertMessage: alertHeader,
+<%_ } _%>
+    error: errorHeader,
+<%_ if (enableTranslation) { _%>
+    errorKey,
+    errorMessage,
+<%_ } else { _%>
+    errorMessage: errorHeader,
+<%_ } _%>
+    param: decodeHeaderValue(headerToString(headers[<%- microfrontend || applicationTypeGateway ? 'Object.keys(headers).find(key => /^x-(.*)-params$/.test(key)) ?? ' : '' %>MESSAGE_PARAM_HEADER_NAME])),
+  };
+};

@@ -1,0 +1,225 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { MESSAGE_ERROR_HEADER_NAME, MESSAGE_PARAM_HEADER_NAME } from '@/shared/jhipster/constants';
+
+import AlertService from './alert.service';
+
+describe('Alert Service test suite', () => {
+<%_ if (enableTranslation) { _%>
+  let translationStub: vitest.Mock;
+<%_ } _%>
+  let toastStub: vitest.Mock;
+  let alertService: AlertService;
+
+  beforeEach(() => {
+<%_ if (enableTranslation) { _%>
+    translationStub = vitest.fn();
+<%_ } _%>
+    toastStub = vitest.fn();
+    alertService = new AlertService({
+<%_ if (enableTranslation) { _%>
+      i18n: { t: translationStub } as any,
+<%_ } _%>
+      toast: {
+        show: toastStub,
+      } as any,
+    });
+  });
+
+  it('should show error toast with translation/message', () => {
+    const message = 'translatedMessage';
+
+    // WHEN
+    alertService.showError(message);
+
+    // THEN
+    expect(toastStub).toHaveBeenCalledExactlyOnceWith({
+      props: {
+        body: message,
+        pos: 'top-center',
+        title: 'Error',
+        variant: 'danger',
+        solid: true,
+      },
+    });
+  });
+
+  it('should show not reachable toast when http status = 0', () => {
+<%_ if (enableTranslation) { _%>
+    const translationKey = 'error.server.not.reachable';
+<%_ } _%>
+    const message = 'Server not reachable';
+    const httpErrorResponse = {
+      status: 0,
+    };
+<%_ if (enableTranslation) { _%>
+    // GIVEN
+    translationStub.mockReturnValueOnce(message);
+<%_ } _%>
+
+    // WHEN
+    alertService.showHttpError(httpErrorResponse);
+
+    // THEN
+<%_ if (enableTranslation) { _%>
+    expect(translationStub).toHaveBeenCalledExactlyOnceWith(translationKey);
+<%_ } _%>
+    expect(toastStub).toHaveBeenCalledExactlyOnceWith({
+      props: {
+        body: expect.any(String),
+        pos: 'top-center',
+        solid: true,
+        title: 'Error',
+        variant: 'danger',
+      },
+    });
+  });
+
+  it('should show parameterized error toast when http status = 400 and entity headers', () => {
+<%_ if (enableTranslation) { _%>
+    const translationKey = 'error.update';
+<%_ } _%>
+    const message = 'Updation Error';
+    const httpErrorResponse = {
+      status: 400,
+      headers: {
+        [MESSAGE_ERROR_HEADER_NAME]: <%- enableTranslation ? 'translationKey' : 'message' %>,
+        [MESSAGE_PARAM_HEADER_NAME]: 'dummyEntity',
+      },
+    };
+<%_ if (enableTranslation) { _%>
+    // GIVEN
+    translationStub.mockImplementation(key => {
+      if (key === translationKey) {
+        return message;
+      }
+      if (key === 'global.menu.entities.dummyEntity') {
+        return 'DummyEntity';
+      }
+      throw new Error();
+    });
+<%_ } _%>
+
+    // WHEN
+    alertService.showHttpError(httpErrorResponse);
+
+    // THEN
+<%_ if (enableTranslation) { _%>
+    expect(translationStub).toHaveBeenCalledTimes(2);
+    expect(translationStub).toHaveBeenCalledWith(translationKey, { entityName: 'DummyEntity' });
+    expect(translationStub).toHaveBeenCalledWith('global.menu.entities.dummyEntity');
+<%_ } _%>
+    expect(toastStub).toHaveBeenCalledWith({
+      props: {
+        body: expect.any(String),
+        pos: 'top-center',
+        solid: true,
+        title: 'Error',
+        variant: 'danger',
+      },
+    });
+  });
+
+  it('should show error toast with data.message when http status = 400 and entity headers', () => {
+    const message = 'Validation error';
+    const httpErrorResponse = {
+      status: 400,
+      headers: {
+        [`${MESSAGE_ERROR_HEADER_NAME}400`]: 'error',
+        [`${MESSAGE_PARAM_HEADER_NAME}400`]: 'dummyEntity',
+      },
+      data: {
+        message,
+        fieldErrors: {
+          field1: 'error1',
+        },
+      },
+    };
+
+<%_ if (enableTranslation) { _%>
+    // GIVEN
+    translationStub.mockReturnValueOnce('DummyEntity');
+    translationStub.mockReturnValueOnce(message);
+<%_ } _%>
+
+    // WHEN
+    alertService.showHttpError(httpErrorResponse);
+
+    // THEN
+<%_ if (enableTranslation) { _%>
+    expect(translationStub).toHaveBeenCalledExactlyOnceWith(message);
+<%_ } _%>
+    expect(toastStub).toHaveBeenCalledExactlyOnceWith({
+      props: {
+        body: expect.any(String),
+        pos: 'top-center',
+        solid: true,
+        title: 'Error',
+        variant: 'danger',
+      },
+    });
+  });
+
+  it('should show error toast when http status = 404', () => {
+<%_ if (enableTranslation) { _%>
+    const translationKey = 'error.http.404';
+<%_ } _%>
+    const message = 'The page does not exist.';
+    const httpErrorResponse = {
+      status: 404,
+    };
+
+<%_ if (enableTranslation) { _%>
+    // GIVEN
+    translationStub.mockReturnValueOnce(message);
+<%_ } _%>
+
+    // WHEN
+    alertService.showHttpError(httpErrorResponse);
+
+    // THEN
+<%_ if (enableTranslation) { _%>
+    expect(translationStub).toHaveBeenCalledExactlyOnceWith(translationKey);
+<%_ } _%>
+    expect(toastStub).toHaveBeenCalledExactlyOnceWith({
+      props: {
+        body: expect.any(String),
+        pos: 'top-center',
+        solid: true,
+        title: 'Error',
+        variant: 'danger',
+      },
+    });
+  });
+
+  it('should show error toast when http status != 400,404', () => {
+    const message = 'Error 500';
+    const httpErrorResponse = {
+      status: 500,
+      data: {
+        message,
+      },
+    };
+
+<%_ if (enableTranslation) { _%>
+    // GIVEN
+    translationStub.mockReturnValueOnce(message);
+<%_ } _%>
+
+    // WHEN
+    alertService.showHttpError(httpErrorResponse);
+
+    // THEN
+<%_ if (enableTranslation) { _%>
+    expect(translationStub).toHaveBeenCalledExactlyOnceWith(message);
+<%_ } _%>
+    expect(toastStub).toHaveBeenCalledExactlyOnceWith({
+      props: {
+        body: expect.any(String),
+        pos: 'top-center',
+        solid: true,
+        title: 'Error',
+        variant: 'danger',
+      },
+    });
+  });
+});

@@ -1,0 +1,83 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import type TemplateFile from './template-file.ts';
+
+export default class TemplateData {
+  private readonly _templateFile: TemplateFile;
+  private readonly _defaultData: { fragment?: any; section?: string };
+  private _sections: Record<string, number>;
+
+  constructor(templateFile: TemplateFile, defaultData = {}) {
+    this._templateFile = templateFile;
+    this._defaultData = defaultData;
+    this._sections = {};
+  }
+
+  registerSections(sections: Record<string, number>) {
+    this._sections = sections;
+    Object.keys(this._sections).forEach(section => {
+      (this as Record<string, unknown>)[section] = (fragmentData: any, suffix?: string) =>
+        this.renderSection(section, fragmentData, suffix);
+    });
+  }
+
+  renderSection(section: string, fragmentData: any, suffix?: string) {
+    if (typeof fragmentData === 'string') {
+      suffix = fragmentData;
+      fragmentData = {};
+    }
+    if (!(this as Record<string, unknown>)[`_${section}`]) {
+      (this as Record<string, unknown>)[`_${section}`] = this.render(
+        { ...fragmentData, fragment: { [section]: true }, section, sections: Object.keys(this._sections) },
+        suffix,
+      );
+    }
+    return (this as Record<string, unknown>)[`_${section}`];
+  }
+
+  /**
+   * Render fragments using default join and suffix.
+   */
+  render(fragmentData: { join?: string; section?: string } = {}, suffix = '\n') {
+    const { join = '\n' } = fragmentData;
+    const renderedFragments = this.renderFragments(fragmentData).filter(Boolean);
+    const section = fragmentData.section || this._defaultData.section;
+    if (section) {
+      const limit = this._sections[section];
+      if (limit && renderedFragments.length > limit) {
+        throw new Error(`${section} must have at most ${limit} fragments`);
+      }
+    }
+    const rendered = renderedFragments.join(join);
+    return rendered && suffix ? `${rendered}${suffix}` : rendered;
+  }
+
+  /**
+   * Proxy to renderFragments for templates.
+   */
+  renderFragments(fragmentData: { fragment?: any; section?: string } = {}) {
+    const fragment = { ...this._defaultData.fragment, ...fragmentData.fragment };
+    if (this._defaultData.section && fragmentData.section) {
+      // Disable section passed by the parent.
+      fragment[this._defaultData.section] = false;
+    }
+    return this._templateFile.renderFragments({ ...this._defaultData, ...fragmentData, fragment });
+  }
+}

@@ -1,0 +1,152 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { GRADLE_BUILD_SRC_MAIN_DIR } from '../../../generator-constants.ts';
+import {
+  javaMainPackageTemplatesBlock,
+  javaMainResourceTemplatesBlock,
+  javaTestPackageTemplatesBlock,
+} from '../../../java/support/files.ts';
+import { SpringBootApplicationGenerator } from '../../../spring-boot/generator.ts';
+
+import cleanupKafkaFilesTask from './cleanup.ts';
+
+export default class KafkaGenerator extends SpringBootApplicationGenerator {
+  async beforeQueue() {
+    if (!this.fromBlueprint) {
+      await this.composeWithBlueprints();
+    }
+
+    if (!this.delegateToBlueprint) {
+      await this.dependsOnBootstrap('java');
+    }
+  }
+
+  get preparing() {
+    return this.asPreparingTaskGroup({
+      preparing({ application }) {
+        application.devActiveProfiles.push('kafka');
+        application.prodActiveProfiles.push('kafka');
+      },
+    });
+  }
+
+  get [SpringBootApplicationGenerator.PREPARING]() {
+    return this.delegateTasksToBlueprint(() => this.preparing);
+  }
+
+  get writing() {
+    return this.asWritingTaskGroup({
+      async cleanup({ application, control }) {
+        await control.cleanupFiles({
+          '9.0.0-beta.1': [
+            [application.buildToolGradle, `${GRADLE_BUILD_SRC_MAIN_DIR}jhipster.kafka-conventions.gradle`],
+            `${application.javaPackageSrcDir}config/KafkaTestContainersSpringContextCustomizerFactory.java`,
+            `${application.javaPackageSrcDir}config/EmbeddedKafka.java`,
+            `${application.srcTestResources}META-INF/spring.factories`,
+          ],
+        });
+      },
+      cleanupKafkaFilesTask,
+      async writing({ application }) {
+        await this.writeFiles({
+          sections: {
+            base: [
+              javaMainPackageTemplatesBlock({
+                templates: [
+                  data => `broker/KafkaConsumer_${data.imperativeOrReactive}.java`,
+                  'broker/KafkaProducer.java',
+                  {
+                    sourceFile: data => `web/rest/KafkaResource_${data.imperativeOrReactive}.java`,
+                    destinationFile: data => `web/rest/${data.upperFirstCamelCaseBaseName}KafkaResource.java`,
+                  },
+                ],
+              }),
+              javaMainResourceTemplatesBlock({
+                templates: ['config/application-kafka.yml'],
+              }),
+            ],
+            test: [
+              javaTestPackageTemplatesBlock({
+                templates: [
+                  'config/KafkaTestContainer.java',
+                  {
+                    sourceFile: data => `web/rest/KafkaResourceIT_${data.imperativeOrReactive}.java`,
+                    destinationFile: data => `web/rest/${data.upperFirstCamelCaseBaseName}KafkaResourceIT.java`,
+                  },
+                ],
+              }),
+            ],
+          },
+          context: application,
+        });
+      },
+    });
+  }
+
+  get [SpringBootApplicationGenerator.WRITING]() {
+    return this.delegateTasksToBlueprint(() => this.writing);
+  }
+
+  get postWriting() {
+    return this.asPostWritingTaskGroup({
+      customizeLog({ source }) {
+        source.addMainLog?.({ name: 'org.apache.kafka', level: 'WARN' });
+        source.addTestLog?.({ name: 'kafka', level: 'WARN' });
+        source.addTestLog?.({ name: 'org.I0Itec', level: 'WARN' });
+      },
+      addDependencies({ source }) {
+        source.addJavaDependencies?.([
+          {
+            groupId: 'org.springframework.cloud',
+            artifactId: 'spring-cloud-stream',
+          },
+          {
+            groupId: 'org.springframework.cloud',
+            artifactId: 'spring-cloud-starter-stream-kafka',
+          },
+          {
+            groupId: 'org.springframework.cloud',
+            artifactId: 'spring-cloud-stream-test-binder',
+            scope: 'test',
+          },
+          {
+            groupId: 'org.testcontainers',
+            artifactId: 'testcontainers-junit-jupiter',
+            scope: 'test',
+          },
+          {
+            groupId: 'org.testcontainers',
+            artifactId: 'testcontainers',
+            scope: 'test',
+          },
+          {
+            groupId: 'org.testcontainers',
+            artifactId: 'testcontainers-kafka',
+            scope: 'test',
+          },
+        ]);
+      },
+    });
+  }
+
+  get [SpringBootApplicationGenerator.POST_WRITING]() {
+    return this.delegateTasksToBlueprint(() => this.postWriting);
+  }
+}

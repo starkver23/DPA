@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`generator - javascript-simple-application:bootstrap bootstrapping default config should prepare application 1`] = `
+{
+  "applicationType": "monolith",
+  "authenticationType": "jwt",
+  "backendType": "Java",
+  "backendTypeJavaAny": true,
+  "backendTypeSpringBoot": true,
+  "baseName": "jhipster",
+  "buildTool": "maven",
+  "cacheProvider": "ehcache",
+  "camelizedBaseName": "jhipster",
+  "capitalizedBaseName": "Jhipster",
+  "clientDistDir": "dist/",
+  "clientFramework": "angular",
+  "clientPackageJsonScripts": Any<Object>,
+  "clientRootDir": "",
+  "clientSrcDir": "src/main/webapp/",
+  "clientTestDir": "src/test/javascript/",
+  "clientTheme": "none",
+  "commandName": "javascript-simple-application:bootstrap",
+  "creationTimestamp": 1577836800000,
+  "customizeTemplatePaths": Any<Array>,
+  "dasherizedBaseName": "jhipster",
+  "databaseMigration": "liquibase",
+  "databaseType": "sql",
+  "devDatabaseType": "postgresql",
+  "documentationArchiveUrl": "https://www.jhipster.tech/documentation-archive/vJHIPSTER_VERSION",
+  "dtoSuffix": "DTO",
+  "enableHibernateCache": true,
+  "enableSwaggerCodegen": false,
+  "enableTranslation": true,
+  "entitySuffix": "",
+  "hipster": "jhipster_family_member_3",
+  "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster/issues?state=open",
+  "hipsterBugTrackerProductName": "JHipster",
+  "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
+  "hipsterChatProductName": "JHipster",
+  "hipsterDocumentationLink": "https://www.jhipster.tech/",
+  "hipsterHomePageProductName": "JHipster",
+  "hipsterName": "Java Hipster",
+  "hipsterProductName": "JHipster",
+  "hipsterProjectLink": "https://github.com/jhipster/generator-jhipster",
+  "hipsterStackOverflowProductName": "JHipster",
+  "hipsterStackoverflowLink": "https://stackoverflow.com/tags/jhipster/info",
+  "hipsterTwitterLink": "https://twitter.com/jhipster",
+  "hipsterTwitterUsername": "@jhipster",
+  "humanizedBaseName": "JHipster",
+  "jhiPrefix": "jhi",
+  "jhiPrefixCapitalized": "Jhi",
+  "jhiPrefixDashed": "jhi",
+  "jhipsterPackageJson": Any<Object>,
+  "jhipsterVersion": "JHIPSTER_VERSION",
+  "languages": Any<Array>,
+  "lowercaseBaseName": "jhipster",
+  "messageBroker": "no",
+  "nativeLanguage": "en",
+  "nodeDependencies": Any<Object>,
+  "nodePackageManager": "npm",
+  "nodePackageManagerCommand": "npm",
+  "nodeVersion": "NODE_VERSION",
+  "nodeWebappBuildTarget": "webapp:build",
+  "packageJsonNodeEngine": undefined,
+  "packageJsonScripts": Any<Object>,
+  "packageName": "com.mycompany.myapp",
+  "prettierExtensions": Any<Array>,
+  "prettierFolders": Any<Array>,
+  "prodDatabaseType": "postgresql",
+  "projectDescription": "Description for JHipster",
+  "reactive": false,
+  "searchEngine": "no",
+  "serverPort": 8080,
+  "serviceDiscoveryType": "no",
+  "skipJhipsterDependencies": undefined,
+  "skipUserManagement": false,
+  "temporaryDir": "temp/",
+  "typescriptEslint": true,
+  "upperFirstCamelCaseBaseName": "Jhipster",
+  "websocket": "no",
+  "withAdminUi": true,
+}
+`;
+
+exports[`generator - javascript-simple-application:bootstrap customVersion should call source snapshot 1`] = `{}`;
+
+exports[`generator - javascript-simple-application:bootstrap customVersion should match files snapshot 1`] = `
+{
+  ".yo-rc.json": ObjectContaining {
+    "contents": Any<String>,
+  },
+}
+`;
+
+exports[`generator - javascript-simple-application:bootstrap packageJsonNodeEngine(false) should call source snapshot 1`] = `{}`;
+
+exports[`generator - javascript-simple-application:bootstrap packageJsonNodeEngine(false) should match files snapshot 1`] = `
+{
+  ".yo-rc.json": ObjectContaining {
+    "contents": Any<String>,
+  },
+}
+`;
+
+exports[`generator - javascript-simple-application:bootstrap packageJsonNodeEngine(true) should call source snapshot 1`] = `{}`;
+
+exports[`generator - javascript-simple-application:bootstrap packageJsonNodeEngine(true) should match files snapshot 1`] = `
+{
+  ".yo-rc.json": ObjectContaining {
+    "contents": Any<String>,
+  },
+}
+`;

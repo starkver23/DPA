@@ -1,0 +1,136 @@
+/**
+ * Copyright 2013-2026 the original author or authors from the JHipster project.
+ *
+ * This file is part of the JHipster project, see https://www.jhipster.tech/
+ * for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { describe, expect, it } from 'esmocha';
+
+import { lookupGeneratorsNamespaces } from './lookup-namespaces.ts';
+
+describe('lookupGeneratorsNamespaces', () => {
+  it('should return the correct generator namespaces', () => {
+    expect(lookupGeneratorsNamespaces()).toMatchInlineSnapshot(`
+[
+  "angular",
+  "angular:bootstrap",
+  "app",
+  "app:bootstrap",
+  "base",
+  "base-application",
+  "base-application:bootstrap",
+  "base-core",
+  "base-entity-changes",
+  "base-simple-application",
+  "base-simple-application:bootstrap",
+  "base-workspaces",
+  "base-workspaces:bootstrap",
+  "bootstrap",
+  "ci-cd",
+  "ci-cd:azure",
+  "ci-cd:bootstrap",
+  "ci-cd:circle",
+  "ci-cd:common",
+  "ci-cd:github",
+  "ci-cd:gitlab",
+  "ci-cd:jenkins",
+  "ci-cd:travis",
+  "client",
+  "client:bootstrap",
+  "client:common",
+  "client:encode-csrf-token",
+  "client:i18n",
+  "common",
+  "common:bootstrap",
+  "cypress",
+  "docker",
+  "docker-compose",
+  "docker:bootstrap",
+  "entities",
+  "entity",
+  "export-jdl",
+  "generate-blueprint",
+  "generate-blueprint:bootstrap",
+  "generate-blueprint:local",
+  "generate-blueprint:standalone",
+  "git",
+  "heroku",
+  "info",
+  "init",
+  "java",
+  "java-simple-application",
+  "java-simple-application:bootstrap",
+  "java-simple-application:build-tool",
+  "java-simple-application:code-quality",
+  "java-simple-application:graalvm",
+  "java-simple-application:gradle",
+  "java-simple-application:jib",
+  "java-simple-application:maven",
+  "java-simple-application:openapi-generator",
+  "java-simple-application:prettier",
+  "java:bootstrap",
+  "java:domain",
+  "java:gatling",
+  "java:i18n",
+  "java:node",
+  "java:server",
+  "javascript-simple-application",
+  "javascript-simple-application:bootstrap",
+  "javascript-simple-application:eslint",
+  "javascript-simple-application:husky",
+  "javascript-simple-application:prettier",
+  "jdl",
+  "jdl:bootstrap",
+  "kubernetes",
+  "kubernetes:bootstrap",
+  "kubernetes:helm",
+  "kubernetes:knative",
+  "languages",
+  "languages:bootstrap",
+  "liquibase",
+  "project-name",
+  "project-name:bootstrap",
+  "react",
+  "react:bootstrap",
+  "server",
+  "server:bootstrap",
+  "spring-boot",
+  "spring-boot:bootstrap",
+  "spring-boot:cache",
+  "spring-boot:cucumber",
+  "spring-boot:data-cassandra",
+  "spring-boot:data-couchbase",
+  "spring-boot:data-elasticsearch",
+  "spring-boot:data-mongodb",
+  "spring-boot:data-neo4j",
+  "spring-boot:data-relational",
+  "spring-boot:graalvm",
+  "spring-boot:jwt",
+  "spring-boot:liquibase",
+  "spring-boot:oauth2",
+  "spring-boot:websocket",
+  "spring-cloud",
+  "spring-cloud:feign-client",
+  "spring-cloud:gateway",
+  "spring-cloud:kafka",
+  "spring-cloud:pulsar",
+  "upgrade",
+  "vue",
+  "vue:bootstrap",
+  "workspaces",
+]
+`);
+  });
+});
