@@ -1,0 +1,72 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { shallowMount } from '@vue/test-utils';
+import axios from 'axios';
+import Logs from './logs.vue';
+import LogsService from './logs.service';
+
+type LogsComponentType = InstanceType<typeof Logs>;
+
+const axiosStub = {
+  get: vi.spyOn(axios, 'get'),
+  post: vi.spyOn(axios, 'post'),
+};
+
+describe('Logs Component', () => {
+  let logs: LogsComponentType;
+
+  beforeEach(() => {
+    axiosStub.get.mockResolvedValue({});
+    const wrapper = shallowMount(Logs, {
+      global: {
+        stubs: {
+          'jhi-sort-indicator': true,
+          BButton: true,
+          BButtonGroup: true,
+        },
+      },
+    });
+    logs = wrapper.vm;
+  });
+
+  describe('OnInit', () => {
+    it('should set all default values correctly', () => {
+      expect(logs.filtered).toBe('');
+      expect(logs.orderProp).toBe('name');
+      expect(logs.reverse).toBe(false);
+    });
+
+    it('Should call load all on init', async () => {
+      // WHEN
+      logs.init();
+      await logs.$nextTick();
+
+      // THEN
+      expect(axiosStub.get).toHaveBeenCalledWith('management/loggers');
+    });
+  });
+
+  describe('change log level', () => {
+    it('should change log level correctly', async () => {
+      axiosStub.post.mockResolvedValue({});
+
+      // WHEN
+      logs.updateLevel('main', 'ERROR');
+      await logs.$nextTick();
+
+      // THEN
+      expect(axiosStub.post).toHaveBeenCalledWith('management/loggers/main', { configuredLevel: 'ERROR' });
+      expect(axiosStub.get).toHaveBeenCalledWith('management/loggers');
+    });
+  });
+
+  describe('change order', () => {
+    it('should change order and invert reverse', () => {
+      // WHEN
+      logs.changeOrder('dummy-order');
+
+      // THEN
+      expect(logs.orderProp).toEqual('dummy-order');
+      expect(logs.reverse).toBe(true);
+    });
+  });
+});

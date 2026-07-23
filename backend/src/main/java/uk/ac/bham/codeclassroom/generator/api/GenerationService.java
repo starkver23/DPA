@@ -1,10 +1,18 @@
 package uk.ac.bham.codeclassroom.generator.api;
 
-import jakarta.annotation.PostConstruct;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import jakarta.annotation.PostConstruct;
 import uk.ac.bham.codeclassroom.generator.ast.CompilationUnit;
 import uk.ac.bham.codeclassroom.generator.jdl.ExtendedJDLDocument;
 import uk.ac.bham.codeclassroom.generator.jdl.ExtendedJDLGenerator;
@@ -17,13 +25,6 @@ import uk.ac.bham.codeclassroom.generator.parser.Parser;
 import uk.ac.bham.codeclassroom.generator.semantic.SemanticValidator;
 import uk.ac.bham.codeclassroom.generator.token.Token;
 import uk.ac.bham.codeclassroom.generator.zip.ZipGenerator;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Service that orchestrates the entire compilation and generation pipeline from CDL to a ZIP file.
