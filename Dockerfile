@@ -56,9 +56,10 @@ RUN cd /app/generator-jhipster && \
 
 # Set environment variables for the generator fork
 ENV JHIPSTER_FORK_PATH=/app/generator-jhipster
+ENV NODE_OPTIONS="--max-old-space-size=192"
 
 # Expose the standard port
 EXPOSE 8080
 
 # Start the unified Spring Boot and React application
-ENTRYPOINT ["java", "-XX:MaxRAMPercentage=70.0", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xms64m", "-Xmx192m", "-jar", "app.jar"]
