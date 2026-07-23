@@ -1,5 +1,12 @@
 package uk.ac.bham.codeclassroom.generator.api;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.stream.Stream;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -11,12 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Comparator;
-import java.util.stream.Stream;
 
 /**
  * Controller exposing the REST endpoint to compile CDL to Spring Boot standalone packages.
@@ -39,6 +40,7 @@ public class GenerationController {
      */
     @PostMapping(value = "/api/generate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/zip")
     public ResponseEntity<Resource> generate(@Valid @RequestBody GenerationRequest request) {
+         System.out.println("========== GENERATE ENDPOINT HIT ==========");
         Path zipFile = generationService.generateStandaloneProject(request.cdl());
 
         Resource resource = new DeleteOnCloseFileSystemResource(zipFile);

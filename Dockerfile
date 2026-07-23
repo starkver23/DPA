@@ -50,8 +50,9 @@ COPY --from=backend-build /app/target/*.jar app.jar
 COPY generator-jhipster /app/generator-jhipster
 
 # Install JHipster dependencies, build the TypeScript distribution, and prune devDependencies
+# Install dependencies without rebuilding the already-compiled generator
 RUN cd /app/generator-jhipster && \
-    npm ci && \
+    npm ci --ignore-scripts && \
     npm prune --production
 
 # Set environment variables for the generator fork

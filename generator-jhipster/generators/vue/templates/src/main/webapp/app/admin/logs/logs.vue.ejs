@@ -1,0 +1,74 @@
+<%#
+ Copyright 2013-2026 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+<template>
+  <div class="table-responsive">
+    <h2 id="logs-page-heading" data-cy="logsPageHeading">{{ t$('logs.title') }}</h2>
+
+    <div v-if="loggers">
+      <p>{{ t$('logs.nbloggers', { total: loggers.length }) }}</p>
+
+      <span>{{ t$('logs.filter') }}</span> <input type="text" v-model="filtered" class="form-control" />
+
+      <table class="table table-sm table-striped table-bordered" aria-describedby="Logs">
+        <thead>
+          <tr title="click to order">
+            <th @click="changeOrder('name')" scope="col">
+              <span>{{ t$('logs.table.name') }}</span>
+              <jhi-sort-indicator :current-order="orderProp" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
+            </th>
+            <th @click="changeOrder('level')" scope="col">
+              <span>{{ t$('logs.table.level') }}</span>
+              <jhi-sort-indicator :current-order="orderProp" :reverse="reverse" :field-name="'level'"></jhi-sort-indicator>
+            </th>
+          </tr>
+        </thead>
+
+        <tr v-for="logger in filteredLoggers" :key="logger.name">
+          <td>
+            <small>{{ logger.name }}</small>
+          </td>
+          <td>
+            <BButtonGroup role="group" aria-label="Log level" size="sm" class="flex-nowrap">
+              <BButton @click="updateLevel(logger.name, 'TRACE')" :variant="logger.level === 'TRACE' ? 'primary' : 'light'" size="sm">
+                TRACE
+              </BButton>
+              <BButton @click="updateLevel(logger.name, 'DEBUG')" :variant="logger.level === 'DEBUG' ? 'success' : 'light'" size="sm">
+                DEBUG
+              </BButton>
+              <BButton @click="updateLevel(logger.name, 'INFO')" :variant="logger.level === 'INFO' ? 'info' : 'light'" size="sm">
+                INFO
+              </BButton>
+              <BButton @click="updateLevel(logger.name, 'WARN')" :variant="logger.level === 'WARN' ? 'warning' : 'light'" size="sm">
+                WARN
+              </BButton>
+              <BButton @click="updateLevel(logger.name, 'ERROR')" :variant="logger.level === 'ERROR' ? 'danger' : 'light'" size="sm">
+                ERROR
+              </BButton>
+              <BButton @click="updateLevel(logger.name, 'OFF')" :variant="logger.level === 'OFF' ? 'secondary' : 'light'" size="sm">
+                OFF
+              </BButton>
+            </BButtonGroup>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" src="./logs.component.ts"></script>
