@@ -2,7 +2,7 @@
  * API client layer for interaction with the CodeClassroom compiler backend.
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? '' : 'http://localhost:8080');
 
 /**
  * Sends CDL source code to the backend and retrieves the generated project ZIP file as a Blob.
