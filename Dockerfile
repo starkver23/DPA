@@ -34,10 +34,12 @@ WORKDIR /app
 
 # Install Node.js 22 LTS and npm (required for JHipster generator invocation)
 RUN apt-get update && \
-    apt-get install -y curl && \
+    apt-get install -y curl git && \
     curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
     apt-get install -y nodejs && \
-    node -v && npm -v && \
+    git --version && \
+    node -v && \
+    npm -v && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
