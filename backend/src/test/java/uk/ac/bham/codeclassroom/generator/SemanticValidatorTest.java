@@ -238,4 +238,61 @@ class SemanticValidatorTest {
         CompilationUnit cu = parseCDL(source);
         assertDoesNotThrow(() -> validator.validate(cu));
     }
+
+    @Test
+    void testRelationshipFieldConflictOnSourceSideThrows() {
+        String source = """
+            entity Professor {
+                department String
+                name String
+            }
+            entity Department {
+                title String
+            }
+            relationship OneToOne {
+                Department to Professor
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Relationship field 'department' conflicts with existing attribute 'department' in entity Professor."));
+    }
+
+    @Test
+    void testRelationshipFieldConflictOnTargetSideThrows() {
+        String source = """
+            entity Professor {
+                name String
+            }
+            entity Department {
+                title String
+                professor String
+            }
+            relationship OneToOne {
+                Department to Professor
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Relationship field 'professor' conflicts with existing attribute 'professor' in entity Department."));
+    }
+
+    @Test
+    void testExplicitRelationshipFieldConflictThrows() {
+        String source = """
+            entity Professor {
+                name String
+                managedDepartment String
+            }
+            entity Department {
+                title String
+            }
+            relationship OneToOne {
+                Department{headProfessor} to Professor{managedDepartment}
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Relationship field 'managedDepartment' conflicts with existing attribute 'managedDepartment' in entity Professor."));
+    }
 }

@@ -161,7 +161,8 @@ export default function ModellingEditor() {
     if (!finalCDL) {
       setNotification({
         type: 'error',
-        message: 'Project generation failed. Please check your model and try again.'
+        // ponytail: explicit warning when canvas is empty instead of generic failure message
+        message: 'Project generation failed. No entities or structures are configured on the canvas.'
       });
       return;
     }
@@ -187,9 +188,11 @@ export default function ModellingEditor() {
       });
     } catch (error) {
       console.error(error);
+      // ponytail: read and display the specific descriptive error message propagated from the server
+      const errorMessage = error instanceof Error ? error.message : 'Project generation failed. Please check your model and try again.';
       setNotification({
         type: 'error',
-        message: 'Project generation failed. Please check your model and try again.'
+        message: errorMessage
       });
     } finally {
       setIsGenerating(false);

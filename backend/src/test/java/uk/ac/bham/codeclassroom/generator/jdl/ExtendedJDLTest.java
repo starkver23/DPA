@@ -95,10 +95,10 @@ class ExtendedJDLTest {
 
         String serialized = serializer.serialize(jdlDoc);
 
-        // Verify relationship serialization
+        // Verify relationship serialization and proper deduplication
         assertTrue(serialized.contains("relationship OneToOne {"));
         assertTrue(serialized.contains("relationship OneToMany {"));
-        assertTrue(serialized.contains("relationship ManyToOne {"));
+        assertFalse(serialized.contains("relationship ManyToOne {")); // Properly deduplicated inverse
         assertTrue(serialized.contains("relationship ManyToMany {"));
 
         // Verify navigation property preservation
@@ -316,5 +316,34 @@ class ExtendedJDLTest {
         String standardSerialized = serializer.serialize(result.standardJDLDocument());
         assertFalse(standardSerialized.contains("inheritance {"));
         assertFalse(standardSerialized.contains("// CodeClassroom Extension"));
+    }
+
+    @Test
+    void testRelationshipsDeduplication() {
+        String source = """
+            entity Course {}
+            entity StudentTer {}
+            relationship ManyToMany {
+                Course{studentters} to StudentTer{courses}
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        JHipsterProjectConfiguration config = JHipsterProjectConfiguration.createDefault("DeduplicateApp");
+        JHipsterProject jhipsterProject = adapter.adapt(cu, config);
+        ExtendedJDLDocument jdlDoc = generator.generate(jhipsterProject);
+
+        assertNotNull(jdlDoc);
+        // Each ManyToMany has direct and inverse (total of 2 in adapter), but should deduplicate to exactly 1 JDLRelationship
+        assertEquals(1, jdlDoc.relationships().size());
+
+        String serialized = serializer.serialize(jdlDoc);
+        // Verify only ONE ManyToMany relationship block is emitted
+        int occurrences = 0;
+        int index = 0;
+        while ((index = serialized.indexOf("relationship ManyToMany", index)) != -1) {
+            occurrences++;
+            index += "relationship ManyToMany".length();
+        }
+        assertEquals(1, occurrences, "Should only emit exactly one relationship ManyToMany block");
     }
 }

@@ -136,4 +136,35 @@ class JHipsterForkIntegrationTest {
             System.out.println("====== COMPLETED REAL GENERATION TEST ======");
         }
     }
+
+    @Test
+    void testRealGenerationWithRelationship() throws Exception {
+        Path realFork = Path.of("/Users/theverma/Developer/experiments/jj");
+        if (Files.exists(realFork)) {
+            System.out.println("====== STARTING REAL GENERATION WITH RELATIONSHIP TEST ======");
+            uk.ac.bham.codeclassroom.generator.api.GenerationService service = new uk.ac.bham.codeclassroom.generator.api.GenerationService();
+            java.lang.reflect.Field field = service.getClass().getDeclaredField("jhipsterForkPath");
+            field.setAccessible(true);
+            field.set(service, realFork.toAbsolutePath().toString());
+            service.init();
+
+            String cdl = """
+                entity Professor {
+                    name String
+                }
+                entity GraduateProject {
+                    title String
+                }
+                relationship OneToOne {
+                    Professor to GraduateProject
+                }
+                """;
+
+            Path zipResult = service.generateStandaloneProject(cdl);
+            assertNotNull(zipResult);
+            assertTrue(Files.exists(zipResult));
+            Files.deleteIfExists(zipResult);
+            System.out.println("====== COMPLETED REAL GENERATION WITH RELATIONSHIP TEST ======");
+        }
+    }
 }

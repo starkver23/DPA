@@ -33,6 +33,7 @@ public class SemanticValidator {
         validateInheritance(compilationUnit.entities(), knownEntities);
         validateEntityMembers(compilationUnit.entities(), knownEntities);
         validateRelationships(compilationUnit.relationships(), knownEntities);
+        validateRelationshipFieldConflicts(compilationUnit.relationships(), compilationUnit.entities());
     }
 
     private Set<String> validateEntityNamesAndDuplicates(List<EntityNode> entities) {
@@ -203,5 +204,50 @@ public class SemanticValidator {
                 rel.targetEntity(),
                 rel.targetProperty().orElse("")
         );
+    }
+
+    private void validateRelationshipFieldConflicts(List<RelationshipNode> relationships, List<EntityNode> entities) {
+        Map<String, Set<String>> entityFields = new HashMap<>();
+        for (EntityNode entity : entities) {
+            Set<String> fields = new HashSet<>();
+            for (FieldNode field : entity.fields()) {
+                fields.add(field.name());
+            }
+            entityFields.put(entity.name(), fields);
+        }
+
+        // ponytail: perform a simple O(R * F) check for field and relationship property conflicts, where R is relationship nodes and F is fields. Extremely fast for visual canvas models.
+        for (RelationshipNode rel : relationships) {
+            String source = rel.sourceEntity();
+            String target = rel.targetEntity();
+
+            String sourceProp = rel.sourceProperty().orElse(lowercaseFirst(target));
+            String targetProp = rel.targetProperty().orElse(lowercaseFirst(source));
+
+            // Check source side
+            Set<String> sourceFields = entityFields.get(source);
+            if (sourceFields != null && sourceFields.contains(sourceProp)) {
+                throw new SemanticException(String.format(
+                    "Relationship field '%s' conflicts with existing attribute '%s' in entity %s.",
+                    sourceProp, sourceProp, source
+                ));
+            }
+
+            // Check target side
+            Set<String> targetFields = entityFields.get(target);
+            if (targetFields != null && targetFields.contains(targetProp)) {
+                throw new SemanticException(String.format(
+                    "Relationship field '%s' conflicts with existing attribute '%s' in entity %s.",
+                    targetProp, targetProp, target
+                ));
+            }
+        }
+    }
+
+    private String lowercaseFirst(String s) {
+        if (s == null || s.isEmpty()) {
+            return s;
+        }
+        return s.substring(0, 1).toLowerCase() + s.substring(1);
     }
 }

@@ -127,7 +127,7 @@ describe('ModellingEditor ZIP Generation', () => {
     });
 
     // Verify error banner is shown and loading finishes
-    expect(screen.getByText(/Project generation failed\. Please check your model and try again\./i)).toBeDefined();
+    expect(screen.getByText(/Network error/i)).toBeDefined();
     expect(generateBtn.disabled).toBe(false);
     expect(generateBtn.textContent).toContain('Generate');
     expect(linkClickMock).not.toHaveBeenCalled();
