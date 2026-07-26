@@ -145,40 +145,7 @@ public class JHipsterCLIInvoker {
 
         ProcessResult result = executeCommand(command, workspace);
 
-        System.out.println("Debugging [CLIInvoker]: Starting 30-second polling for file generation race conditions...");
-        java.util.Set<String> seenFiles = new java.util.HashSet<>();
-        long endTime = System.currentTimeMillis() + 30000;
-        int pollCount = 0;
-        
-        while (System.currentTimeMillis() < endTime) {
-            System.out.println("Debugging [CLIInvoker]: Polling #" + (++pollCount) + " at " + java.time.LocalTime.now());
-            boolean hasNewFiles = false;
-            try (java.util.stream.Stream<Path> paths = java.nio.file.Files.walk(workspace)) {
-                java.util.List<Path> allPaths = paths.collect(java.util.stream.Collectors.toList());
-                for (Path p : allPaths) {
-                    String relPath = workspace.relativize(p).toString();
-                    if (!relPath.isEmpty() && !seenFiles.contains(relPath)) {
-                        seenFiles.add(relPath);
-                        System.out.println("  [New File/Dir]: " + relPath);
-                        hasNewFiles = true;
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println("Debugging [CLIInvoker]: Error polling workspace: " + e.getMessage());
-            }
-            if (!hasNewFiles) {
-                System.out.println("  No new files detected in this poll.");
-            }
-            
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
-            }
-        }
-        System.out.println("Debugging [CLIInvoker]: Polling finished.");
-
+        // ponytail: removed the redundant and slow 30-second polling directory loop because executeCommand is fully synchronous (awaits process exit).
         return result;
     }
 
