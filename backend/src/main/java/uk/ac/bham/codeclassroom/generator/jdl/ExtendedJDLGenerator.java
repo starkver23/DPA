@@ -28,13 +28,18 @@ public class ExtendedJDLGenerator {
             throw new IllegalArgumentException("JHipsterProject cannot be null");
         }
 
-        // 1. Map relationships globally and sort them alphabetically
-        List<JDLRelationship> jdlRelationships = project.relationships().stream()
+        // 1. Map relationships globally
+        List<JDLRelationship> rawRelationships = project.relationships().stream()
             .map(this::mapRelationship)
-            .sorted(Comparator.comparing((JDLRelationship r) -> r.type().name())
-                .thenComparing(JDLRelationship::sourceEntity)
-                .thenComparing(JDLRelationship::targetEntity))
             .collect(Collectors.toList());
+
+        // Deduplicate
+        List<JDLRelationship> jdlRelationships = deduplicateRelationships(rawRelationships);
+
+        // Sort alphabetically to ensure deterministic formatting
+        jdlRelationships.sort(Comparator.comparing((JDLRelationship r) -> r.type().name())
+            .thenComparing(JDLRelationship::sourceEntity)
+            .thenComparing(JDLRelationship::targetEntity));
 
         // 2. Map entities and collect inheritance declarations
         List<JDLEntity> jdlEntities = new ArrayList<>();
@@ -104,5 +109,56 @@ public class ExtendedJDLGenerator {
             relationship.targetEntity(),
             relationship.targetProperty()
         );
+    }
+
+    private List<JDLRelationship> deduplicateRelationships(List<JDLRelationship> relationships) {
+        // ponytail: deduplicate bidirectional/inverse representations with a simple O(N^2) list scan. Highly performant for normal model schema sizes.
+        List<JDLRelationship> unique = new ArrayList<>();
+        for (JDLRelationship r : relationships) {
+            boolean isDup = false;
+            for (JDLRelationship existing : unique) {
+                if (isSameOrReversed(r, existing)) {
+                    isDup = true;
+                    break;
+                }
+            }
+            if (!isDup) {
+                unique.add(r);
+            }
+        }
+        return unique;
+    }
+
+    private boolean isSameOrReversed(JDLRelationship r1, JDLRelationship r2) {
+        // Exact match
+        if (r1.type() == r2.type() &&
+            r1.sourceEntity().equals(r2.sourceEntity()) &&
+            r1.targetEntity().equals(r2.targetEntity()) &&
+            r1.sourceProperty().equals(r2.sourceProperty()) &&
+            r1.targetProperty().equals(r2.targetProperty())) {
+            return true;
+        }
+
+        // Reversed match
+        boolean isReversedEntitiesAndProps = 
+            r1.sourceEntity().equals(r2.targetEntity()) &&
+            r1.targetEntity().equals(r2.sourceEntity()) &&
+            r1.sourceProperty().equals(r2.targetProperty()) &&
+            r1.targetProperty().equals(r2.sourceProperty());
+
+        if (isReversedEntitiesAndProps) {
+            if (r1.type() == JDLRelationshipType.OneToOne && r2.type() == JDLRelationshipType.OneToOne) {
+                return true;
+            }
+            if (r1.type() == JDLRelationshipType.ManyToMany && r2.type() == JDLRelationshipType.ManyToMany) {
+                return true;
+            }
+            if ((r1.type() == JDLRelationshipType.OneToMany && r2.type() == JDLRelationshipType.ManyToOne) ||
+                (r1.type() == JDLRelationshipType.ManyToOne && r2.type() == JDLRelationshipType.OneToMany)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

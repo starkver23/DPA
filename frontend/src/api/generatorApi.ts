@@ -22,6 +22,21 @@ export async function generateProject(cdl: string): Promise<Blob> {
   });
 
   if (!response.ok) {
+    // ponytail: read and extract descriptive server exception message so users understand why generation failed
+    let serverMessage: string | null = null;
+    if (typeof response.json === 'function') {
+      try {
+        const errorJson = await response.json();
+        if (errorJson && typeof errorJson.message === 'string') {
+          serverMessage = errorJson.message;
+        }
+      } catch (e) {
+        // Ignore JSON parsing/TypeError issues and fallback gracefully
+      }
+    }
+    if (serverMessage) {
+      throw new Error(serverMessage);
+    }
     throw new Error(`Project generation failed with status code ${response.status}`);
   }
 
