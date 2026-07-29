@@ -1,12 +1,13 @@
 package uk.ac.bham.codeclassroom.generator.jhipster.fullstack;
 
+import java.nio.file.Path;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import uk.ac.bham.codeclassroom.generator.jdl.ExtendedJDLDocument;
 import uk.ac.bham.codeclassroom.generator.jhipster.pipeline.JHipsterGenerationPipeline;
 import uk.ac.bham.codeclassroom.generator.jhipster.postprocessor.JHipsterPostProcessor;
-
-import java.nio.file.Path;
 
 /**
  * Coordinates and orchestrates the complete Full Stack JHipster Application Generation pipeline.
@@ -80,23 +81,24 @@ public class FullStackGenerationPipeline {
             try {
                 Path javaSourceDir = outputDirectory.resolve("src/main/java");
                 if (java.nio.file.Files.exists(javaSourceDir)) {
-                    log.info("Debugging [Pipeline]: Listing all .java files under " + javaSourceDir);
-                    boolean studentFound = false;
                     try (java.util.stream.Stream<Path> paths = java.nio.file.Files.walk(javaSourceDir)) {
                         java.util.List<Path> javaFiles = paths.filter(java.nio.file.Files::isRegularFile)
                                 .filter(p -> p.toString().endsWith(".java"))
                                 .collect(java.util.stream.Collectors.toList());
-                        for (Path p : javaFiles) {
-                            log.info("Generated file: {}", javaSourceDir.relativize(p));
-                            if (p.getFileName().toString().equals("Student.java")) {
-                                studentFound = true;
+
+                        // ✅ Check for Student.java without spamming stdout in a loop
+                        boolean studentFound = javaFiles.stream()
+                                .anyMatch(p -> p.getFileName().toString().equals("Student.java"));
+
+                        log.info("Debugging [Pipeline]: Found {} .java files under {}. Student.java present: {}", 
+                                javaFiles.size(), javaSourceDir, studentFound);
+
+                        if (!studentFound) {
+                            log.error("Debugging [Pipeline]: Student.java NOT FOUND. Logging package structure:");
+                            try (java.util.stream.Stream<Path> dirPaths = java.nio.file.Files.walk(javaSourceDir)) {
+                                dirPaths.filter(java.nio.file.Files::isDirectory)
+                                        .forEach(d -> log.error("Directory: {}", javaSourceDir.relativize(d)));
                             }
-                        }
-                    }
-                    if (!studentFound) {
-                        log.error("Debugging [Pipeline]: Student.java NOT FOUND. Logging package structure:");
-                        try (java.util.stream.Stream<Path> paths = java.nio.file.Files.walk(javaSourceDir)) {
-                            paths.filter(java.nio.file.Files::isDirectory).forEach(d -> log.error("Directory: {}", javaSourceDir.relativize(d)));
                         }
                     }
                 }
