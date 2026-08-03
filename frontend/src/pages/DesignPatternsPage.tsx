@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, ArrowLeft, Lightbulb } from 'lucide-react';
+import ThemeToggle from '../components/ThemeToggle';
 
 const DesignPatternsPage: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const DesignPatternsPage: React.FC = () => {
           <ArrowLeft size={16} />
           Return to Hub
         </Link>
+        <ThemeToggle />
       </header>
 
       <main className="patterns-center-panel">

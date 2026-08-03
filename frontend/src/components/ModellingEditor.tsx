@@ -14,6 +14,7 @@ import {
 } from '@xyflow/react';
 import { Plus, Trash2, Layers, ArrowLeftRight, Settings, Type, LayoutGrid, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 import '@xyflow/react/dist/style.css';
 
 import { type Field, type EntityNode, type RelationshipType } from '../types/modeling';
@@ -377,10 +378,11 @@ export default function ModellingEditor() {
             <button onClick={clearAllNodesAndEdges} className="btn-action-red">
               <Trash2 size={14} /> Clear Canvas
             </button>
+            <ThemeToggle />
           </div>
         </div>
 
-        <div style={{ flexGrow: 1, width: '100%', height: '100%', position: 'relative', backgroundColor: '#0a0e17' }}>
+        <div style={{ flexGrow: 1, width: '100%', height: '100%', position: 'relative', backgroundColor: 'var(--bg-canvas)' }}>
           <ReactFlow 
             nodes={nodes} 
             edges={edges} 
@@ -392,9 +394,9 @@ export default function ModellingEditor() {
             selectNodesOnDrag={false}
             fitView
           >
-            <Background color="#1e293b" gap={20} size={1} />
+            <Background color="var(--border-main)" gap={20} size={1} />
             <Controls />
-            <MiniMap nodeColor="#1e1b4b" maskColor="rgba(5, 7, 12, 0.7)" style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b' }} />
+            <MiniMap nodeColor="#1e1b4b" maskColor="var(--shadow-small)" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-main)' }} />
           </ReactFlow>
         </div>
       </div>

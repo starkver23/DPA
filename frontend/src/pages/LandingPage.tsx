@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Workflow, BookOpen, FileCode, GraduationCap, ArrowRight } from 'lucide-react';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function LandingPage() {
   return (
     <div className="landing-container">
+      {/* Theme Toggle Button */}
+      <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10 }}>
+        <ThemeToggle />
+      </div>
+
       {/* Soft Blue Ambient Pulse Orb Overlay */}
       <div className="ambient-glow" />
 
