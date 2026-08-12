@@ -404,7 +404,7 @@ export default function ModellingEditor() {
       <div className="developer-sidebar">
         <div className="sidebar-section-header">
           {activeSelection ? <Settings size={13} /> : <FileText size={13} />}
-          {activeSelection ? `${activeSelection.type.toUpperCase()} PROPERTIES` : 'RAW CDL SCRIPT EDITOR'}
+          {activeSelection ? `${activeSelection.type.toUpperCase()} PROPERTIES` : 'RAW PDL SCRIPT EDITOR'}
         </div>
 
         <div className="sidebar-main-scroller">
@@ -611,7 +611,7 @@ export default function ModellingEditor() {
                   value={inputJDL}
                   onChange={(e) => setInputJDL(e.target.value)}
                   className="code-editor-textarea"
-                  placeholder={`// Write raw CDL schemas here...\nentity Customer {\n  name String\n}`}
+                  placeholder={`// Write raw PDL schemas here...\nentity Customer {\n  name String\n}`}
                 />
               </div>
             </div>
