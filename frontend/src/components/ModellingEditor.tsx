@@ -12,13 +12,13 @@ import {
   type Edge,
   type Node,
 } from '@xyflow/react';
-import { Plus, Trash2, Layers, ArrowLeftRight, Settings, Type, LayoutGrid, FileText } from 'lucide-react';
+import { Plus, Trash2, Layers, ArrowLeftRight, Settings, Type, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import '@xyflow/react/dist/style.css';
 
 import { type Field, type EntityNode, type RelationshipType } from '../types/modeling';
-import { DESIGN_PATTERN_TEMPLATES } from '../constants/patterns';
+// import { DESIGN_PATTERN_TEMPLATES } from '../constants/patterns';
 import { EntityNodeComponent } from './EntityNodeComponent';
 import { generateProject } from '../api/generatorApi';
 
@@ -47,18 +47,18 @@ export default function ModellingEditor() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-  const handleLoadPatternTemplate = (patternName: string) => {
-    if (!patternName) return;
-    const blueprint = DESIGN_PATTERN_TEMPLATES[patternName];
-    if (blueprint) {
-      setNodes(structuredClone(blueprint.nodes));
-      setEdges(structuredClone(blueprint.edges));
-      setActiveSelection(null);
+  // const handleLoadPatternTemplate = (patternName: string) => {
+  //   if (!patternName) return;
+  //   const blueprint = DESIGN_PATTERN_TEMPLATES[patternName];
+  //   if (blueprint) {
+  //     setNodes(structuredClone(blueprint.nodes));
+  //     setEdges(structuredClone(blueprint.edges));
+  //     setActiveSelection(null);
       
-      const structuralInfo = `// Interactive Template: Loaded ${patternName} Pattern.\n// Modify fields/methods or extend elements on the canvas workspace, then click Generate.`;
-      setInputJDL(structuralInfo);
-    }
-  };
+  //     const structuralInfo = `// Interactive Template: Loaded ${patternName} Pattern.\n// Modify fields/methods or extend elements on the canvas workspace, then click Generate.`;
+  //     setInputJDL(structuralInfo);
+  //   }
+  // };
 
   const onSelectionChange = useCallback(({ nodes: selectedNodes, edges: selectedEdges }: { nodes: Node[]; edges: Edge[] }) => {
     if (selectedNodes.length > 0) {
@@ -525,7 +525,7 @@ export default function ModellingEditor() {
                   </div>
                 ))}
               </div>
-
+              
               <div className="inspector-group border-top-divider" style={{ marginTop: '1.25rem', paddingTop: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                   <label className="inspector-field-label">Operations / Methods</label>
