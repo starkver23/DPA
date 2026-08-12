@@ -16,7 +16,8 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOriginPatterns(
                                     "http://localhost:5173",
-                                    "https://*.up.railway.app"
+                                    "https://*.up.railway.app",
+                                    "https://dpa.shah.fyi"
                                     )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
