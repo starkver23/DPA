@@ -117,7 +117,7 @@ export default function ModellingEditor() {
   }, [setNodes, setEdges]);
 
   const loadComplexJDLScriptSample = useCallback(() => {
-    setInputJDL(`entity Professor {\n  name String\n  department String\n}\n\nentity Department {\n  title String\n  budget BigDecimal\n}\n\nentity GraduateProject {\n  topic String\n  deadline LocalDate\n}\n\nrelationship OneToMany {\n  Department to Professor\n}\n\nrelationship OneToOne {\n  Professor to GraduateProject\n}`);
+    setInputJDL(`entity Professor {\n  name String\n  email String\n}\n\nentity Department {\n  title String\n  budget BigDecimal\n}\n\nentity GraduateProject {\n  topic String\n  deadline LocalDate\n}\n\nrelationship Inheritance {\n  Department to Professor\n}\n\nrelationship OneToOne {\n  Professor to GraduateProject\n}`);
   }, []);
 
   const generateJDLFromCanvas = useCallback(async () => {
@@ -341,7 +341,7 @@ export default function ModellingEditor() {
           </div>
 
           <div className="toolbar-actions">
-            <div className="selector-box custom-pattern-dropdown-wrapper">
+            {/* <div className="selector-box custom-pattern-dropdown-wrapper">
               <LayoutGrid size={13} className="pattern-decorator-icon" />
               <select
                 defaultValue=""
@@ -358,11 +358,11 @@ export default function ModellingEditor() {
                 <option value="Decorator">Decorator</option>
                 <option value="Strategy">Strategy</option>
               </select>
-            </div>
+            </div> */}
 
             <div className="selector-box">
               <Layers size={13} style={{ color: '#475569' }} /> 
-              <span>Link Edge:</span>
+              <span>Add Relation:</span>
               <select value={relationshipType} onChange={(e) => setRelationshipType(e.target.value as RelationshipType)} className="select-dropdown">
                 <option value="ManyToMany">ManyToMany</option>
                 <option value="OneToMany">OneToMany</option>
