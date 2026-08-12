@@ -568,7 +568,7 @@ export default function ModellingEditor() {
 
               <div className="inspector-group border-top-divider" style={{ marginTop: '1.5rem', paddingTop: '1rem' }}>
                 <button onClick={() => deleteSelectedEntity(selectedNode.id)} className="btn-inspector-delete-entity">
-                  <Trash2 size={12} /> Delete Entity Diagram Block
+                  <Trash2 size={12} /> Delete Entity
                 </button>
               </div>
             </div>
