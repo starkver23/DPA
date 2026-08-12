@@ -22,14 +22,14 @@ export const EntityNodeComponent = memo(({ data, selected }: NodeProps<EntityNod
         ))}
       </div>
 
-      <div className="uml-compartment-body uml-border-top">
+      {/* <div className="uml-compartment-body uml-border-top">
         {(!data.methods || data.methods.length === 0) && <p className="uml-empty-text">No operations defined</p>}
         {data.methods?.map((method) => (
           <div key={method.id} className="uml-static-row">
             <span className="uml-static-method">{method.definition}</span>
           </div>
         ))}
-      </div>
+      </div> */}
 
       <Handle type="source" position={Position.Bottom} style={{ width: 10, height: 10, background: '#6366f1' }} />
     </div>
