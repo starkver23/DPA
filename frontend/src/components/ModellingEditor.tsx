@@ -526,7 +526,7 @@ export default function ModellingEditor() {
                 ))}
               </div>
               
-              <div className="inspector-group border-top-divider" style={{ marginTop: '1.25rem', paddingTop: '1rem' }}>
+              {/* <div className="inspector-group border-top-divider" style={{ marginTop: '1.25rem', paddingTop: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                   <label className="inspector-field-label">Operations / Methods</label>
                   <button
@@ -564,7 +564,7 @@ export default function ModellingEditor() {
                     </button>
                   </div>
                 ))}
-              </div>
+              </div> */}
 
               <div className="inspector-group border-top-divider" style={{ marginTop: '1.5rem', paddingTop: '1rem' }}>
                 <button onClick={() => deleteSelectedEntity(selectedNode.id)} className="btn-inspector-delete-entity">
