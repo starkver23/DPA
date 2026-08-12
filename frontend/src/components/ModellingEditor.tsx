@@ -117,7 +117,7 @@ export default function ModellingEditor() {
   }, [setNodes, setEdges]);
 
   const loadComplexJDLScriptSample = useCallback(() => {
-    setInputJDL(`entity Professor {\n  name String\n  department String\n}\n\nentity Department {\n  title String\n  budget BigDecimal\n}\n\nentity GraduateProject {\n  topic String\n  deadline LocalDate\n}\n\nrelationship OneToMany {\n  Department to Professor\n}\n\nrelationship OneToOne {\n  Professor to GraduateProject\n}`);
+    setInputJDL(`entity Professor {\n  name String\n  email String\n}\n\nentity Department {\n  title String\n  budget BigDecimal\n}\n\nentity GraduateProject {\n  topic String\n  deadline LocalDate\n}\n\nrelationship Inheritance {\n  Department to Professor\n}\n\nrelationship OneToOne {\n  Professor to GraduateProject\n}`);
   }, []);
 
   const generateJDLFromCanvas = useCallback(async () => {
