@@ -2,7 +2,13 @@ package uk.ac.bham.codeclassroom.generator.jhipster.postprocessor;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import uk.ac.bham.codeclassroom.generator.ast.EntityKind;
+import uk.ac.bham.codeclassroom.generator.ast.EntityNode;
+import uk.ac.bham.codeclassroom.generator.ast.InheritanceNode;
+import uk.ac.bham.codeclassroom.generator.ast.MethodNode;
+import uk.ac.bham.codeclassroom.generator.ast.TypeReference;
 import uk.ac.bham.codeclassroom.generator.jdl.ExtendedJDLDocument;
+import uk.ac.bham.codeclassroom.generator.jdl.JDLEntity;
 import uk.ac.bham.codeclassroom.generator.jdl.JDLInheritance;
 import uk.ac.bham.codeclassroom.generator.jhipster.JHipsterProjectConfiguration;
 
@@ -10,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,10 +63,11 @@ class JHipsterPostProcessorTest {
         Files.writeString(packagePath.resolve("domain/Student.java"), """
             package com.test.domain;
             import jakarta.persistence.*;
+            import java.io.Serializable;
             import org.hibernate.annotations.Cache;
             import org.hibernate.annotations.CacheConcurrencyStrategy;
             @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-            public class Student {
+            public class Student implements Serializable {
                 private Long id;
                 private Double gpa;
             }
@@ -203,6 +211,101 @@ class JHipsterPostProcessorTest {
         String s1 = Files.readString(proj1.resolve("src/main/java/com/test/domain/Student.java"));
         String s2 = Files.readString(proj2.resolve("src/main/java/com/test/domain/Student.java"));
         assertEquals(s1, s2);
+    }
+
+    @Test
+    void testInterfacePostProcessingWithAbstractInheritanceCombination() throws IOException {
+        createMockProjectFiles(tempDir, "com.test");
+
+        JHipsterProjectConfiguration config = new JHipsterProjectConfiguration(
+            "TestApp", "com.test", "21", "3.2.5", "8.2.1", "postgresql", "jwt", "maven", "react"
+        );
+
+        EntityNode person = new EntityNode(
+            "Person",
+            Optional.empty(),
+            true,
+            List.of(),
+            List.of(),
+            EntityKind.CLASS,
+            List.of(),
+            List.of()
+        );
+        EntityNode payable = new EntityNode(
+            "Payable",
+            Optional.empty(),
+            false,
+            List.of(),
+            List.of(new MethodNode("calculateSalary", List.of(), Optional.of(new TypeReference("Double", Optional.empty())))),
+            EntityKind.INTERFACE,
+            List.of(),
+            List.of()
+        );
+        EntityNode student = new EntityNode(
+            "Student",
+            Optional.of(new InheritanceNode("Person")),
+            false,
+            List.of(),
+            List.of(new MethodNode("calculateSalary", List.of(), Optional.of(new TypeReference("Double", Optional.empty())))),
+            EntityKind.CLASS,
+            List.of("Payable"),
+            List.of()
+        );
+        EntityNode course = new EntityNode(
+            "Course",
+            Optional.empty(),
+            false,
+            List.of(),
+            List.of(),
+            EntityKind.CLASS,
+            List.of(),
+            List.of()
+        );
+
+        Path domainPath = tempDir.resolve("src/main/java/com/test/domain");
+        Files.writeString(domainPath.resolve("Course.java"), """
+            package com.test.domain;
+            import jakarta.persistence.*;
+            public class Course {
+                private Long id;
+                private String title;
+            }
+        """);
+
+        ExtendedJDLDocument doc = new ExtendedJDLDocument(
+            List.of(
+                new JDLEntity("Person", true, List.of(), List.of()),
+                new JDLEntity("Student", false, List.of(), List.of()),
+                new JDLEntity("Course", false, List.of(), List.of())
+            ),
+            List.of(),
+            List.of(new JDLInheritance("Student", "Person")),
+            config,
+            List.of(payable),
+            List.of(person, payable, student, course)
+        );
+
+        JHipsterPostProcessor postProcessor = new JHipsterPostProcessor();
+        postProcessor.transform(tempDir, doc);
+
+        String personContent = Files.readString(domainPath.resolve("Person.java"));
+        assertTrue(personContent.contains("@Inheritance(strategy = InheritanceType.JOINED)"));
+        assertTrue(personContent.contains("public abstract class Person"));
+
+        String payableContent = Files.readString(domainPath.resolve("Payable.java"));
+        assertTrue(payableContent.contains("public interface Payable"));
+        assertTrue(payableContent.contains("Double calculateSalary();"));
+        assertFalse(payableContent.contains("@Entity"));
+
+        String studentContent = Files.readString(domainPath.resolve("Student.java"));
+        assertTrue(studentContent.contains("public class Student extends Person implements Payable, Serializable"));
+        assertTrue(studentContent.contains("@Override"));
+        assertTrue(studentContent.contains("public Double calculateSalary()"));
+
+        String courseContent = Files.readString(domainPath.resolve("Course.java"));
+        assertTrue(courseContent.contains("public class Course"));
+        assertFalse(courseContent.contains("implements Payable"));
+        assertFalse(Files.exists(domainPath.resolve("PayableRepository.java")));
     }
 
     @Test

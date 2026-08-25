@@ -11,6 +11,7 @@ import java.util.List;
  */
 public record JDLEntity(
     String name,
+    boolean abstractClass,
     List<JDLField> fields,
     List<JDLRelationship> relationships
 ) {}

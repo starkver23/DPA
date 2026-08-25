@@ -57,7 +57,7 @@ public class ExtendedJDLGenerator {
                 .filter(r -> r.sourceEntity().equals(entity.entityName()))
                 .collect(Collectors.toList());
 
-            JDLEntity jdlEntity = new JDLEntity(entity.entityName(), jdlFields, entityRels);
+            JDLEntity jdlEntity = new JDLEntity(entity.entityName(), entity.abstractClass(), jdlFields, entityRels);
             jdlEntities.add(jdlEntity);
 
             // Extract inheritance if parent entity is present
@@ -84,7 +84,9 @@ public class ExtendedJDLGenerator {
             List.copyOf(sortedEntities),
             List.copyOf(jdlRelationships),
             List.copyOf(sortedInheritances),
-            project.configuration()
+            project.configuration(),
+            project.interfaces(),
+            project.originalEntities()
         );
     }
 

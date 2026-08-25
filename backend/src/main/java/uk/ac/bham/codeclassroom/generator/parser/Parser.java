@@ -31,8 +31,13 @@ public class Parser {
         List<RelationshipNode> relationships = new ArrayList<>();
 
         while (!isAtEnd()) {
-            if (match(TokenType.ENTITY)) {
-                entities.add(parseEntity());
+            if (match(TokenType.ABSTRACT)) {
+                consume(TokenType.ENTITY, "Expected 'entity' after 'abstract'.");
+                entities.add(parseEntity(true));
+            } else if (match(TokenType.ENTITY)) {
+                entities.add(parseEntity(false));
+            } else if (match(TokenType.INTERFACE)) {
+                entities.add(parseInterface());
             } else if (match(TokenType.RELATIONSHIP)) {
                 relationships.addAll(parseRelationshipBlock());
             } else {
@@ -43,7 +48,7 @@ public class Parser {
         return new CompilationUnit(List.copyOf(entities), List.copyOf(relationships));
     }
 
-    private EntityNode parseEntity() {
+    private EntityNode parseEntity(boolean isAbstract) {
         Token nameToken = consume(TokenType.IDENTIFIER, "Expected entity name identifier.");
         String entityName = nameToken.lexeme();
 
@@ -51,6 +56,14 @@ public class Parser {
         if (match(TokenType.EXTENDS)) {
             Token parentToken = consume(TokenType.IDENTIFIER, "Expected parent entity name after 'extends'.");
             inheritance = Optional.of(new InheritanceNode(parentToken.lexeme()));
+        }
+
+        List<String> implementsInterfaces = new ArrayList<>();
+        if (match(TokenType.IMPLEMENTS)) {
+            do {
+                Token interfaceToken = consume(TokenType.IDENTIFIER, "Expected interface name after 'implements'.");
+                implementsInterfaces.add(interfaceToken.lexeme());
+            } while (match(TokenType.COMMA));
         }
 
         consume(TokenType.LBRACE, "Expected '{' to open entity body.");
@@ -64,7 +77,51 @@ public class Parser {
 
         consume(TokenType.RBRACE, "Expected '}' to close entity body.");
 
-        return new EntityNode(entityName, inheritance, List.copyOf(fields), List.copyOf(methods));
+        return new EntityNode(
+            entityName,
+            inheritance,
+            isAbstract,
+            List.copyOf(fields),
+            List.copyOf(methods),
+            EntityKind.CLASS,
+            List.copyOf(implementsInterfaces),
+            List.of()
+        );
+    }
+
+    private EntityNode parseInterface() {
+        Token nameToken = consume(TokenType.IDENTIFIER, "Expected interface name identifier.");
+        String interfaceName = nameToken.lexeme();
+
+        List<String> extendsInterfaces = new ArrayList<>();
+        if (match(TokenType.EXTENDS)) {
+            do {
+                Token parentToken = consume(TokenType.IDENTIFIER, "Expected parent interface name after 'extends'.");
+                extendsInterfaces.add(parentToken.lexeme());
+            } while (match(TokenType.COMMA));
+        }
+
+        consume(TokenType.LBRACE, "Expected '{' to open interface body.");
+
+        List<FieldNode> fields = new ArrayList<>();
+        List<MethodNode> methods = new ArrayList<>();
+
+        while (!check(TokenType.RBRACE) && !isAtEnd()) {
+            parseEntityMember(fields, methods);
+        }
+
+        consume(TokenType.RBRACE, "Expected '}' to close interface body.");
+
+        return new EntityNode(
+            interfaceName,
+            Optional.empty(),
+            false,
+            List.copyOf(fields),
+            List.copyOf(methods),
+            EntityKind.INTERFACE,
+            List.of(),
+            List.copyOf(extendsInterfaces)
+        );
     }
 
     private void parseEntityMember(List<FieldNode> fields, List<MethodNode> methods) {
@@ -99,11 +156,30 @@ public class Parser {
         consume(TokenType.RPAREN, "Expected ')' to close method parameter list.");
 
         Optional<TypeReference> returnType = Optional.empty();
-        if (match(TokenType.COLON)) {
+        if (isNextTokenReturnType()) {
+            match(TokenType.COLON);
             returnType = Optional.of(parseTypeReference());
         }
 
         return new MethodNode(name, List.copyOf(parameters), returnType);
+    }
+
+    private boolean isNextTokenReturnType() {
+        if (check(TokenType.COLON)) {
+            return true;
+        }
+        if (check(TokenType.PRIMITIVE_TYPE) || check(TokenType.GENERIC_TYPE)) {
+            return true;
+        }
+        if (check(TokenType.IDENTIFIER)) {
+            TokenType afterNext = peekNext().type();
+            return afterNext != TokenType.IDENTIFIER &&
+                   afterNext != TokenType.PRIMITIVE_TYPE &&
+                   afterNext != TokenType.GENERIC_TYPE &&
+                   afterNext != TokenType.LPAREN &&
+                   afterNext != TokenType.LBRACE;
+        }
+        return false;
     }
 
     private TypeReference parseTypeReference() {
@@ -177,6 +253,13 @@ public class Parser {
 
     private Token peek() {
         return tokens.get(current);
+    }
+
+    private Token peekNext() {
+        if (current + 1 >= tokens.size()) {
+            return tokens.get(tokens.size() - 1);
+        }
+        return tokens.get(current + 1);
     }
 
     private Token previous() {

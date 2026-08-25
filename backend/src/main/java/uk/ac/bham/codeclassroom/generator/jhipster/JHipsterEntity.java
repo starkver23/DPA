@@ -13,6 +13,7 @@ import java.util.List;
  */
 public record JHipsterEntity(
     String entityName,
+    boolean abstractClass,
     List<JHipsterField> fields,
     List<JHipsterMethod> methods,
     List<JHipsterRelationship> relationships,

@@ -69,7 +69,12 @@ public class JHipsterAdapter {
 
         // 3. For each entity, generate inheritance and filter/associate relationships, then generate JHipsterEntity
         List<JHipsterEntity> entities = new ArrayList<>();
+        List<EntityNode> interfaces = new ArrayList<>();
         for (EntityNode entityNode : compilationUnit.entities()) {
+            if (entityNode.kind() == uk.ac.bham.codeclassroom.generator.ast.EntityKind.INTERFACE) {
+                interfaces.add(entityNode);
+                continue;
+            }
             String entityName = entityNode.name();
 
             // Resolve inheritance metadata for this entity
@@ -88,7 +93,9 @@ public class JHipsterAdapter {
         return new JHipsterProject(
             List.copyOf(entities),
             allRelationships,
-            configuration
+            configuration,
+            List.copyOf(interfaces),
+            compilationUnit.entities()
         );
     }
 }

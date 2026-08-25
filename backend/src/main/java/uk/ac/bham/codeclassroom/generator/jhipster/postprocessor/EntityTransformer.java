@@ -1,5 +1,6 @@
 package uk.ac.bham.codeclassroom.generator.jhipster.postprocessor;
 
+import uk.ac.bham.codeclassroom.generator.jdl.JDLEntity;
 import uk.ac.bham.codeclassroom.generator.jdl.JDLInheritance;
 
 import java.io.IOException;
@@ -83,6 +84,26 @@ public class EntityTransformer {
                     }
                 } catch (IOException e) {
                     throw new TransformationException("Failed to transform parent entity: " + inh.parentEntity(), e);
+                }
+            }
+        }
+
+        // Apply abstract keyword to abstract entities
+        for (JDLEntity entity : context.extendedJDLDocument().entities()) {
+            if (entity.abstractClass()) {
+                Path entityFile = domainPath.resolve(entity.name() + ".java");
+                if (Files.exists(entityFile)) {
+                    try {
+                        String content = Files.readString(entityFile);
+                        String targetClassDecl = "public class " + entity.name();
+                        if (content.contains(targetClassDecl)) {
+                            content = content.replace(targetClassDecl, "public abstract class " + entity.name());
+                            Files.writeString(entityFile, content);
+                            changedFiles.add(entityFile);
+                        }
+                    } catch (IOException e) {
+                        throw new TransformationException("Failed to transform abstract entity: " + entity.name(), e);
+                    }
                 }
             }
         }

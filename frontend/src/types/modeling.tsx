@@ -13,9 +13,11 @@ export interface Method {
 
 export interface EntityData extends Record<string, unknown> {
   label: string;
+  kind?: 'class' | 'interface';
+  abstract?: boolean;
   fields: Field[];
   methods: Method[];
 }
 
 export type EntityNode = Node<EntityData>;
-export type RelationshipType = 'OneToOne' | 'OneToMany' | 'ManyToMany' | 'Inheritance';
+export type RelationshipType = 'OneToOne' | 'OneToMany' | 'ManyToMany' | 'Inheritance' | 'Implementation';

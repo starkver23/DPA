@@ -295,4 +295,137 @@ class SemanticValidatorTest {
         SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
         assertTrue(ex.getMessage().contains("Relationship field 'managedDepartment' conflicts with existing attribute 'managedDepartment' in entity Professor."));
     }
+
+    @Test
+    void testValidInterfaceAndClassSetup() {
+        String source = """
+            abstract entity Person {
+                name String
+                email String
+            }
+
+            interface Payable {
+                calculateSalary() Double
+            }
+
+            entity Student extends Person implements Payable {
+                studentNumber String
+
+                calculateSalary() Double
+            }
+
+            entity Course {
+                title String
+                code String
+            }
+
+            relationship ManyToMany {
+                Student{courses} to Course{students}
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        assertDoesNotThrow(() -> validator.validate(cu));
+    }
+
+    @Test
+    void testInterfaceExtendsInterface() {
+        String source = """
+            interface Parent {
+                parentMethod() String
+            }
+            interface Child extends Parent {
+                childMethod() Integer
+            }
+            entity Target implements Child {
+                parentMethod() String
+                childMethod() Integer
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        assertDoesNotThrow(() -> validator.validate(cu));
+    }
+
+    @Test
+    void testInterfaceExtendsClassThrows() {
+        String source = """
+            entity BaseClass {
+                name String
+            }
+            interface Child extends BaseClass {
+                doSomething()
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Interface 'Child' cannot extend non-interface 'BaseClass'"));
+    }
+
+    @Test
+    void testClassImplementsClassThrows() {
+        String source = """
+            entity BaseClass {
+                name String
+            }
+            entity Child implements BaseClass {
+                name String
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Entity 'Child' cannot implement non-interface 'BaseClass'"));
+    }
+
+    @Test
+    void testInterfaceSelfInheritanceThrows() {
+        String source = """
+            interface Loop extends Loop {
+                run()
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Interface 'Loop' cannot extend itself"));
+    }
+
+    @Test
+    void testCircularInterfaceInheritanceThrows() {
+        String source = """
+            interface A extends B {
+                foo()
+            }
+            interface B extends A {
+                bar()
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Circular interface inheritance detected"));
+    }
+
+    @Test
+    void testMissingRequiredInterfaceMethodThrows() {
+        String source = """
+            interface Payable {
+                calculateSalary() Double
+            }
+            entity Student implements Payable {
+                studentNumber String
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Concrete class 'Student' implements interface(s) but does not provide required method 'calculateSalary()'"));
+    }
+
+    @Test
+    void testDuplicateImplementedInterfacesThrows() {
+        String source = """
+            interface A {}
+            entity TestEntity implements A, A {}
+        """;
+        CompilationUnit cu = parseCDL(source);
+        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
+        assertTrue(ex.getMessage().contains("Duplicate implemented interface 'A' in entity 'TestEntity'"));
+    }
 }
+

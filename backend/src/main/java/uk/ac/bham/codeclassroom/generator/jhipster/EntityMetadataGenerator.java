@@ -51,6 +51,7 @@ public class EntityMetadataGenerator {
 
         return new JHipsterEntity(
             entityNode.name(),
+            entityNode.abstractClass(),
             List.copyOf(fields),
             List.copyOf(methods),
             List.copyOf(relationships),

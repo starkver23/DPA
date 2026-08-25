@@ -18,6 +18,7 @@ public class JHipsterPostProcessor {
     private final RepositoryTransformer repositoryTransformer;
     private final ServiceTransformer serviceTransformer;
     private final ControllerTransformer controllerTransformer;
+    private final AbstractTestTransformer abstractTestTransformer;
 
     /**
      * Default constructor.
@@ -28,6 +29,7 @@ public class JHipsterPostProcessor {
         this.repositoryTransformer = new RepositoryTransformer();
         this.serviceTransformer = new ServiceTransformer();
         this.controllerTransformer = new ControllerTransformer();
+        this.abstractTestTransformer = new AbstractTestTransformer();
     }
 
     /**
@@ -91,7 +93,10 @@ public class JHipsterPostProcessor {
         }
 
         injector.inject(context, transformedFiles);
+        InterfaceTransformer interfaceTransformer = new InterfaceTransformer();
+        interfaceTransformer.transform(context, transformedFiles);
         testSampleTransformer.transform(context, transformedFiles);
+        abstractTestTransformer.transform(context, transformedFiles);
         repositoryTransformer.transform(context, transformedFiles);
         serviceTransformer.transform(context, transformedFiles);
         controllerTransformer.transform(context, transformedFiles);

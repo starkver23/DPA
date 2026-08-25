@@ -24,14 +24,18 @@ public class Lexer {
     static {
         KEYWORDS = new HashMap<>();
         KEYWORDS.put("entity", TokenType.ENTITY);
+        KEYWORDS.put("abstract", TokenType.ABSTRACT);
         KEYWORDS.put("relationship", TokenType.RELATIONSHIP);
         KEYWORDS.put("extends", TokenType.EXTENDS);
         KEYWORDS.put("to", TokenType.TO);
+        KEYWORDS.put("interface", TokenType.INTERFACE);
+        KEYWORDS.put("implements", TokenType.IMPLEMENTS);
 
         // Primitive Types
         KEYWORDS.put("String", TokenType.PRIMITIVE_TYPE);
         KEYWORDS.put("Integer", TokenType.PRIMITIVE_TYPE);
         KEYWORDS.put("Long", TokenType.PRIMITIVE_TYPE);
+        KEYWORDS.put("Double", TokenType.PRIMITIVE_TYPE);
         KEYWORDS.put("Boolean", TokenType.PRIMITIVE_TYPE);
         KEYWORDS.put("BigDecimal", TokenType.PRIMITIVE_TYPE);
         KEYWORDS.put("LocalDate", TokenType.PRIMITIVE_TYPE);

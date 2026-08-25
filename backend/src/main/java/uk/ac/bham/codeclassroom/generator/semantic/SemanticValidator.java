@@ -10,12 +10,12 @@ import java.util.*;
 public class SemanticValidator {
 
     private static final Set<String> PRIMITIVES = Set.of(
-            "String", "Integer", "Long", "Boolean", "BigDecimal", "LocalDate"
+            "String", "Integer", "Long", "Boolean", "BigDecimal", "LocalDate", "Double"
     );
 
     private static final Set<String> GENERIC_CONTAINERS = Set.of(
             "List", "Set", "Map", "Collection"
-    );
+        );
 
     /**
      * Performs semantic validation on the provided CompilationUnit.
@@ -30,9 +30,16 @@ public class SemanticValidator {
         }
 
         Set<String> knownEntities = validateEntityNamesAndDuplicates(compilationUnit.entities());
+
+        Map<String, EntityNode> entityMap = new HashMap<>();
+        for (EntityNode entity : compilationUnit.entities()) {
+            entityMap.put(entity.name(), entity);
+        }
+
         validateInheritance(compilationUnit.entities(), knownEntities);
+        validateInterfaces(compilationUnit.entities(), knownEntities, entityMap);
         validateEntityMembers(compilationUnit.entities(), knownEntities);
-        validateRelationships(compilationUnit.relationships(), knownEntities);
+        validateRelationships(compilationUnit.relationships(), knownEntities, entityMap);
         validateRelationshipFieldConflicts(compilationUnit.relationships(), compilationUnit.entities());
     }
 
@@ -48,8 +55,16 @@ public class SemanticValidator {
 
     private void validateInheritance(List<EntityNode> entities, Set<String> knownEntities) {
         Map<String, String> inheritanceMap = new HashMap<>();
+        Map<String, EntityNode> entityMap = new HashMap<>();
+        for (EntityNode entity : entities) {
+            entityMap.put(entity.name(), entity);
+        }
 
         for (EntityNode entity : entities) {
+            if (entity.kind() == EntityKind.INTERFACE && entity.inheritance().isPresent()) {
+                throw new SemanticException(String.format("Interface '%s' cannot extend class '%s'.", entity.name(), entity.inheritance().get().parentName()));
+            }
+
             if (entity.inheritance().isPresent()) {
                 String parentName = entity.inheritance().get().parentName();
 
@@ -61,6 +76,11 @@ public class SemanticValidator {
                 // 5. Self inheritance
                 if (parentName.equals(entity.name())) {
                     throw new SemanticException(String.format("Entity '%s' cannot extend itself.", entity.name()));
+                }
+
+                EntityNode parentNode = entityMap.get(parentName);
+                if (parentNode != null && parentNode.kind() == EntityKind.INTERFACE) {
+                    throw new SemanticException(String.format("Entity '%s' cannot extend interface '%s'.", entity.name(), parentName));
                 }
 
                 inheritanceMap.put(entity.name(), parentName);
@@ -90,6 +110,157 @@ public class SemanticValidator {
                 current = inheritanceMap.get(current);
             }
         }
+    }
+
+    private void validateInterfaces(List<EntityNode> entities, Set<String> knownEntities, Map<String, EntityNode> entityMap) {
+        for (EntityNode entity : entities) {
+            if (entity.kind() == EntityKind.INTERFACE) {
+                if (entity.implementsInterfaces() != null && !entity.implementsInterfaces().isEmpty()) {
+                    throw new SemanticException(String.format("Interface '%s' cannot implement anything.", entity.name()));
+                }
+
+                if (entity.extendsInterfaces().contains(entity.name())) {
+                    throw new SemanticException(String.format("Interface '%s' cannot extend itself.", entity.name()));
+                }
+
+                Set<String> uniqueExtends = new HashSet<>();
+                for (String parent : entity.extendsInterfaces()) {
+                    if (!uniqueExtends.add(parent)) {
+                        throw new SemanticException(String.format("Duplicate extended interface '%s' in interface '%s'.", parent, entity.name()));
+                    }
+                    if (!knownEntities.contains(parent)) {
+                        throw new SemanticException(String.format("Unknown extended interface '%s' in interface '%s'.", parent, entity.name()));
+                    }
+                    EntityNode parentNode = entityMap.get(parent);
+                    if (parentNode != null && parentNode.kind() != EntityKind.INTERFACE) {
+                        throw new SemanticException(String.format("Interface '%s' cannot extend non-interface '%s'.", entity.name(), parent));
+                    }
+                }
+            } else { // EntityKind.CLASS
+                if (entity.implementsInterfaces().contains(entity.name())) {
+                    throw new SemanticException(String.format("Entity '%s' cannot implement itself.", entity.name()));
+                }
+
+                Set<String> uniqueImpls = new HashSet<>();
+                for (String impl : entity.implementsInterfaces()) {
+                    if (!uniqueImpls.add(impl)) {
+                        throw new SemanticException(String.format("Duplicate implemented interface '%s' in entity '%s'.", impl, entity.name()));
+                    }
+                    if (!knownEntities.contains(impl)) {
+                        throw new SemanticException(String.format("Unknown implemented interface '%s' in entity '%s'.", impl, entity.name()));
+                    }
+                    EntityNode implNode = entityMap.get(impl);
+                    if (implNode != null && implNode.kind() != EntityKind.INTERFACE) {
+                        throw new SemanticException(String.format("Entity '%s' cannot implement non-interface '%s'.", entity.name(), impl));
+                    }
+                }
+            }
+        }
+
+        // Circular interface inheritance check
+        for (EntityNode entity : entities) {
+            if (entity.kind() == EntityKind.INTERFACE) {
+                Set<String> visited = new LinkedHashSet<>();
+                checkCircularInterfaceInheritance(entity.name(), entityMap, visited);
+            }
+        }
+
+        // Method verification for concrete classes
+        for (EntityNode entity : entities) {
+            if (entity.kind() == EntityKind.CLASS && !entity.abstractClass()) {
+                Set<String> implementedIfaces = collectImplementedInterfaces(entity, entityMap);
+                Set<String> requiredMethods = collectRequiredInterfaceMethods(implementedIfaces, entityMap);
+                Set<String> providedMethods = collectProvidedClassMethods(entity, entityMap);
+
+                for (String reqMethod : requiredMethods) {
+                    if (!providedMethods.contains(reqMethod)) {
+                        throw new SemanticException(String.format(
+                            "Concrete class '%s' implements interface(s) but does not provide required method '%s'.",
+                            entity.name(), reqMethod
+                        ));
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkCircularInterfaceInheritance(String current, Map<String, EntityNode> entityMap, Set<String> visited) {
+        if (visited.contains(current)) {
+            List<String> list = new ArrayList<>(visited);
+            int startIdx = list.indexOf(current);
+            StringBuilder path = new StringBuilder();
+            for (int i = startIdx; i < list.size(); i++) {
+                path.append(list.get(i)).append(" -> ");
+            }
+            path.append(current);
+            throw new SemanticException(String.format("Circular interface inheritance detected: %s.", path));
+        }
+
+        visited.add(current);
+        EntityNode node = entityMap.get(current);
+        if (node != null && node.kind() == EntityKind.INTERFACE) {
+            for (String parent : node.extendsInterfaces()) {
+                Set<String> branchVisited = new LinkedHashSet<>(visited);
+                checkCircularInterfaceInheritance(parent, entityMap, branchVisited);
+            }
+        }
+    }
+
+    private Set<String> collectImplementedInterfaces(EntityNode entity, Map<String, EntityNode> entityMap) {
+        Set<String> interfaces = new HashSet<>();
+        EntityNode current = entity;
+        while (current != null) {
+            for (String impl : current.implementsInterfaces()) {
+                collectAllExtendedInterfaces(impl, entityMap, interfaces);
+            }
+            if (current.inheritance().isPresent()) {
+                current = entityMap.get(current.inheritance().get().parentName());
+            } else {
+                current = null;
+            }
+        }
+        return interfaces;
+    }
+
+    private void collectAllExtendedInterfaces(String interfaceName, Map<String, EntityNode> entityMap, Set<String> result) {
+        if (!result.add(interfaceName)) {
+            return;
+        }
+        EntityNode node = entityMap.get(interfaceName);
+        if (node != null && node.kind() == EntityKind.INTERFACE) {
+            for (String parent : node.extendsInterfaces()) {
+                collectAllExtendedInterfaces(parent, entityMap, result);
+            }
+        }
+    }
+
+    private Set<String> collectRequiredInterfaceMethods(Set<String> interfaces, Map<String, EntityNode> entityMap) {
+        Set<String> requiredSignatures = new HashSet<>();
+        for (String iface : interfaces) {
+            EntityNode node = entityMap.get(iface);
+            if (node != null) {
+                for (MethodNode method : node.methods()) {
+                    requiredSignatures.add(getMethodSignature(method));
+                }
+            }
+        }
+        return requiredSignatures;
+    }
+
+    private Set<String> collectProvidedClassMethods(EntityNode entity, Map<String, EntityNode> entityMap) {
+        Set<String> providedSignatures = new HashSet<>();
+        EntityNode current = entity;
+        while (current != null) {
+            for (MethodNode method : current.methods()) {
+                providedSignatures.add(getMethodSignature(method));
+            }
+            if (current.inheritance().isPresent()) {
+                current = entityMap.get(current.inheritance().get().parentName());
+            } else {
+                current = null;
+            }
+        }
+        return providedSignatures;
     }
 
     private void validateEntityMembers(List<EntityNode> entities, Set<String> knownEntities) {
@@ -164,7 +335,7 @@ public class SemanticValidator {
         return sb.toString();
     }
 
-    private void validateRelationships(List<RelationshipNode> relationships, Set<String> knownEntities) {
+    private void validateRelationships(List<RelationshipNode> relationships, Set<String> knownEntities, Map<String, EntityNode> entityMap) {
         Set<String> relationshipKeys = new HashSet<>();
 
         for (RelationshipNode rel : relationships) {
@@ -178,6 +349,15 @@ public class SemanticValidator {
                 throw new SemanticException(String.format(
                         "Unknown relationship target entity '%s'.", rel.targetEntity()
                 ));
+            }
+
+            EntityNode sourceNode = entityMap.get(rel.sourceEntity());
+            if (sourceNode != null && sourceNode.kind() == EntityKind.INTERFACE) {
+                throw new SemanticException(String.format("Interface '%s' cannot participate in relationships.", rel.sourceEntity()));
+            }
+            EntityNode targetNode = entityMap.get(rel.targetEntity());
+            if (targetNode != null && targetNode.kind() == EntityKind.INTERFACE) {
+                throw new SemanticException(String.format("Interface '%s' cannot participate in relationships.", rel.targetEntity()));
             }
 
             // 9. Relationship self-reference

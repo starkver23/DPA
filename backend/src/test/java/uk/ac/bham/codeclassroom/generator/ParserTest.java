@@ -194,4 +194,48 @@ class ParserTest {
         String source = "String age Integer"; // starts with a type instead of entity/relationship
         assertThrows(ParserException.class, () -> parseCDL(source));
     }
+
+    @Test
+    void testParseInterface() {
+        String source = """
+            interface Payable {
+                calculateSalary() Double
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        assertEquals(1, cu.entities().size());
+        EntityNode iface = cu.entities().get(0);
+        assertEquals("Payable", iface.name());
+        assertEquals(EntityKind.INTERFACE, iface.kind());
+        assertEquals(1, iface.methods().size());
+        assertEquals("calculateSalary", iface.methods().get(0).name());
+        assertTrue(iface.methods().get(0).returnType().isPresent());
+        assertEquals("Double", iface.methods().get(0).returnType().get().baseType());
+    }
+
+    @Test
+    void testParseEntityImplements() {
+        String source = """
+            entity Student implements Payable, Serializer {
+                studentNumber String
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        assertEquals(1, cu.entities().size());
+        EntityNode student = cu.entities().get(0);
+        assertEquals("Student", student.name());
+        assertEquals(EntityKind.CLASS, student.kind());
+        assertEquals(2, student.implementsInterfaces().size());
+        assertEquals("Payable", student.implementsInterfaces().get(0));
+        assertEquals("Serializer", student.implementsInterfaces().get(1));
+    }
+
+    @Test
+    void testInterfaceCannotUseImplementsSyntax() {
+        String source = """
+            interface A implements B {
+            }
+        """;
+        assertThrows(ParserException.class, () -> parseCDL(source));
+    }
 }

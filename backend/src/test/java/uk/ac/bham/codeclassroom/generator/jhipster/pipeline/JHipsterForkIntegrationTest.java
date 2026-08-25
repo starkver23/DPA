@@ -83,8 +83,19 @@ class JHipsterForkIntegrationTest {
         assertEquals("app.jdl", command.get(3));
     }
 
+    private boolean isGlobalJHipsterAvailable() {
+        try {
+            Process p = Runtime.getRuntime().exec(new String[]{"sh", "-c", "jhipster --version"});
+            return p.waitFor() == 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Test
     void testVersionCheckExecutesWithGlobalJHipster() {
+        org.junit.jupiter.api.Assumptions.assumeTrue(isGlobalJHipsterAvailable(), "Global JHipster CLI is not installed.");
+
         JHipsterCLIInvoker invoker = new JHipsterCLIInvoker();
         invoker.setJHipsterForkPath(null);
 
@@ -96,7 +107,7 @@ class JHipsterForkIntegrationTest {
 
     @Test
     void testVersionCheckExecutesWithLocalForkIfPresent() {
-        Path realFork = Path.of("/Users/theverma/Developer/experiments/jj");
+        Path realFork = Path.of("").toAbsolutePath().getParent().resolve("generator-jhipster");
         if (Files.exists(realFork)) {
             JHipsterCLIInvoker invoker = new JHipsterCLIInvoker();
             invoker.setJHipsterForkPath(realFork.toAbsolutePath().toString());
@@ -109,8 +120,21 @@ class JHipsterForkIntegrationTest {
     }
 
     @Test
+    void testDefaultRelativeForkPathResolvesFromBackendDirectoryIfPresent() {
+        Path realFork = Path.of("").toAbsolutePath().getParent().resolve("generator-jhipster");
+        if (Files.exists(realFork)) {
+            JHipsterCLIInvoker invoker = new JHipsterCLIInvoker();
+            invoker.setJHipsterForkPath("generator-jhipster");
+
+            List<String> command = invoker.buildJHipsterCommand(List.of("--version"));
+            assertEquals("node", command.get(0));
+            assertEquals(realFork.resolve("bin/jhipster.cjs").toAbsolutePath().normalize().toString(), Path.of(command.get(1)).normalize().toString());
+        }
+    }
+
+    @Test
     void testRealGenerationOfProfessorAndGraduateProject() throws Exception {
-        Path realFork = Path.of("/Users/theverma/Developer/experiments/jj");
+        Path realFork = Path.of("").toAbsolutePath().getParent().resolve("generator-jhipster");
         if (Files.exists(realFork)) {
             System.out.println("====== STARTING REAL GENERATION TEST ======");
             // Instantiate real GenerationService with local fork path

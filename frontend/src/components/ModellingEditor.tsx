@@ -12,27 +12,34 @@ import {
   type Edge,
   type Node,
 } from '@xyflow/react';
-import { Plus, Trash2, Layers, ArrowLeftRight, Settings, Type, FileText } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import ThemeToggle from './ThemeToggle';
+import { Settings, FileText } from 'lucide-react';
 import '@xyflow/react/dist/style.css';
 
-import { type Field, type EntityNode, type RelationshipType } from '../types/modeling';
-// import { DESIGN_PATTERN_TEMPLATES } from '../constants/patterns';
+import { type Field, type Method, type EntityNode, type RelationshipType } from '../types/modeling';
 import { EntityNodeComponent } from './EntityNodeComponent';
 import { generateProject } from '../api/generatorApi';
+
+// Extracted UI Components
+import ModellingToolbar from './ModellingToolbar';
+import EntityInspector from './EntityInspector';
+import RelationshipInspector from './RelationshipInspector';
+import SidebarControlBelt from './SidebarControlBelt';
 
 const nodeTypes = { entityNode: EntityNodeComponent };
 
 // ponytail: pure helper to avoid duplicate edge styling rules across 4 locations
 const getEdgeStyle = (typeLabel: string) => {
   const isInheritance = typeLabel === 'Inheritance' || typeLabel === 'extends';
+  const isImplementation = typeLabel === 'Implementation' || typeLabel === 'implements';
+  const color = isInheritance ? '#ef4444' : isImplementation ? '#059669' : '#6366f1';
   return {
-    label: isInheritance ? 'extends' : typeLabel,
-    style: isInheritance ? { strokeDasharray: '5,5', strokeWidth: 2, stroke: '#ef4444' } : { strokeWidth: 2, stroke: '#6366f1' },
-    markerEnd: { type: MarkerType.ArrowClosed, color: isInheritance ? '#ef4444' : '#6366f1' }
+    label: isInheritance ? 'extends' : isImplementation ? 'implements' : typeLabel,
+    style: isInheritance || isImplementation ? { strokeDasharray: '5,5', strokeWidth: 2, stroke: color } : { strokeWidth: 2, stroke: color },
+    markerEnd: { type: MarkerType.ArrowClosed, color }
   };
 };
+
+const isMethodLine = (line: string) => line.includes('(') && line.includes(')');
 
 export default function ModellingEditor() {
   const [nodes, setNodes, onNodesChange] = useNodesState<EntityNode>([]);
@@ -46,19 +53,6 @@ export default function ModellingEditor() {
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-
-  // const handleLoadPatternTemplate = (patternName: string) => {
-  //   if (!patternName) return;
-  //   const blueprint = DESIGN_PATTERN_TEMPLATES[patternName];
-  //   if (blueprint) {
-  //     setNodes(structuredClone(blueprint.nodes));
-  //     setEdges(structuredClone(blueprint.edges));
-  //     setActiveSelection(null);
-      
-  //     const structuralInfo = `// Interactive Template: Loaded ${patternName} Pattern.\n// Modify fields/methods or extend elements on the canvas workspace, then click Generate.`;
-  //     setInputJDL(structuralInfo);
-  //   }
-  // };
 
   const onSelectionChange = useCallback(({ nodes: selectedNodes, edges: selectedEdges }: { nodes: Node[]; edges: Edge[] }) => {
     if (selectedNodes.length > 0) {
@@ -101,7 +95,19 @@ export default function ModellingEditor() {
       id,
       type: 'entityNode',
       position: { x: 150 + Math.random() * 100, y: 150 + Math.random() * 100 },
-      data: { label: `NewEntity${nodes.length + 1}`, fields: [], methods: [] },
+      data: { label: `NewEntity${nodes.length + 1}`, kind: 'class', fields: [], methods: [] },
+    };
+    setNodes((nds) => nds.concat(newNode));
+    setActiveSelection({ type: 'node', id });
+  }, [nodes.length, setNodes]);
+
+  const addNewInterface = useCallback(() => {
+    const id = crypto.randomUUID();
+    const newNode: EntityNode = {
+      id,
+      type: 'entityNode',
+      position: { x: 150 + Math.random() * 100, y: 150 + Math.random() * 100 },
+      data: { label: `NewInterface${nodes.length + 1}`, kind: 'interface', abstract: false, fields: [], methods: [] },
     };
     setNodes((nds) => nds.concat(newNode));
     setActiveSelection({ type: 'node', id });
@@ -123,19 +129,37 @@ export default function ModellingEditor() {
   const generateJDLFromCanvas = useCallback(async () => {
     let jdlString = '';
     const inheritanceMap: Record<string, string> = {};
+    const implementsMap: Record<string, string[]> = {};
 
     edges.forEach((e) => {
       if (e.label === 'extends') {
         const parentNode = nodes.find((n) => n.id === e.target);
         if (parentNode) inheritanceMap[e.source] = parentNode.data.label;
+      } else if (e.label === 'implements') {
+        const interfaceNode = nodes.find((n) => n.id === e.target && n.data.kind === 'interface');
+        if (interfaceNode) {
+          implementsMap[e.source] = [...(implementsMap[e.source] || []), interfaceNode.data.label];
+        }
       }
     });
 
     nodes.forEach((n) => {
+      const methods = n.data.methods || [];
       const parentName = inheritanceMap[n.id];
       const extendsClause = parentName ? ` extends ${parentName}` : '';
-      jdlString += `entity ${n.data.label}${extendsClause} {\n`;
+      if (n.data.kind === 'interface') {
+        jdlString += `interface ${n.data.label}${extendsClause} {\n`;
+        methods.forEach((m) => { jdlString += `  ${m.definition}\n`; });
+        jdlString += `}\n\n`;
+        return;
+      }
+
+      const abstractPrefix = n.data.abstract ? 'abstract ' : '';
+      const implementsList = implementsMap[n.id] || [];
+      const implementsClause = implementsList.length > 0 ? ` implements ${implementsList.join(', ')}` : '';
+      jdlString += `${abstractPrefix}entity ${n.data.label}${extendsClause}${implementsClause} {\n`;
       n.data.fields.forEach((f) => { jdlString += `  ${f.name} ${f.type}\n`; });
+      methods.forEach((m) => { jdlString += `  ${m.definition}\n`; });
       jdlString += `}\n\n`;
     });
 
@@ -205,17 +229,27 @@ export default function ModellingEditor() {
       const parsedNodes: EntityNode[] = [];
       const parsedEdges: Edge[] = [];
 
-      const entityBlocks = inputJDL.match(/entity\s+(\w+)(?:\s+extends\s+(\w+))?\s*\{([^}]*)\}/g);
+      const entityBlocks = inputJDL.match(/(?:abstract\s+)?entity\s+\w+(?:\s+extends\s+\w+)?(?:\s+implements\s+[\w\s,]+)?\s*\{[^}]*\}|interface\s+\w+(?:\s+extends\s+[\w\s,]+)?\s*\{[^}]*\}/g);
       
       if (entityBlocks) {
         entityBlocks.forEach((block, index) => {
-          const match = block.match(/entity\s+(\w+)(?:\s+extends\s+(\w+))?\s*\{([^}]*)\}/);
+          const match = block.match(/(?:(abstract)\s+)?(entity|interface)\s+(\w+)(?:\s+extends\s+([\w\s,]+?))?(?:\s+implements\s+([\w\s,]+?))?\s*\{([^}]*)\}/);
           if (!match) return;
 
-          const [, entityName, parentName, contentBody] = match;
+          const isAbstract = !!match[1];
+          const declarationType = match[2];
+          const entityName = match[3];
+          const parentNames = (match[4] || '').split(',').map((name) => name.trim()).filter(Boolean);
+          const implementedNames = (match[5] || '').split(',').map((name) => name.trim()).filter(Boolean);
+          const contentBody = match[6];
           const fields: Field[] = [];
+          const methods: Method[] = [];
 
           contentBody.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
+            if (isMethodLine(line)) {
+              methods.push({ id: crypto.randomUUID(), definition: line });
+              return;
+            }
             const parts = line.split(/\s+/);
             if (parts.length >= 2) {
               fields.push({ id: crypto.randomUUID(), name: parts[0], type: parts[1] });
@@ -229,10 +263,10 @@ export default function ModellingEditor() {
             id: entityId,
             type: 'entityNode',
             position: { x: 100 + (index % 3) * 280, y: 150 + Math.floor(index / 3) * 320 },
-            data: { label: entityName, fields, methods: [] }
+            data: { label: entityName, fields, methods, kind: declarationType === 'interface' ? 'interface' : 'class', abstract: declarationType === 'interface' ? false : isAbstract }
           });
 
-          if (parentName) {
+          parentNames.forEach((parentName) => {
             parsedEdges.push({
               id: `edge-inherit-${crypto.randomUUID()}`,
               source: entityId,
@@ -240,7 +274,17 @@ export default function ModellingEditor() {
               type: 'default',
               ...getEdgeStyle('extends')
             });
-          }
+          });
+
+          implementedNames.forEach((interfaceName) => {
+            parsedEdges.push({
+              id: `edge-implements-${crypto.randomUUID()}`,
+              source: entityId,
+              target: interfaceName.toLowerCase() + '-id',
+              type: 'default',
+              ...getEdgeStyle('implements')
+            });
+          });
         });
       }
 
@@ -311,7 +355,7 @@ export default function ModellingEditor() {
   const currentParentNode = useMemo(() => {
     if (!selectedNode) return null;
     const parentEdge = edges.find(e => e.source === selectedNode.id && e.label === 'extends');
-    return parentEdge ? nodes.find(n => n.id === parentEdge.target) : null;
+    return parentEdge ? (nodes.find(n => n.id === parentEdge.target) ?? null) : null;
   }, [selectedNode, edges, nodes]);
 
   const handleParentChange = useCallback((nodeId: string, targetParentId: string) => {
@@ -331,56 +375,13 @@ export default function ModellingEditor() {
   return (
     <div className="editor-window">
       <div className="canvas-pane">
-        <div className="navbar-controls">
-          <div className="nav-brand-area">
-            <Link to="/" className="btn-back">← Home Hub</Link>
-            <div className="nav-titles">
-              <span className="editor-title">CodeClassroom</span>
-              <span className="editor-tag">JDL Engine v2.0</span>
-            </div>
-          </div>
-
-          <div className="toolbar-actions">
-            {/* <div className="selector-box custom-pattern-dropdown-wrapper">
-              <LayoutGrid size={13} className="pattern-decorator-icon" />
-              <select
-                defaultValue=""
-                onChange={(e) => {
-                  handleLoadPatternTemplate(e.target.value);
-                  e.target.value = "";
-                }}
-                className="select-dropdown pattern-select-menu"
-              >
-                <option value="" disabled>Examples / Patterns</option>
-                <option value="Singleton">Singleton</option>
-                <option value="Factory">Factory</option>
-                <option value="Observer">Observer</option>
-                <option value="Decorator">Decorator</option>
-                <option value="Strategy">Strategy</option>
-              </select>
-            </div> */}
-
-            <div className="selector-box">
-              <Layers size={13} style={{ color: '#475569' }} /> 
-              <span>Add Relation:</span>
-              <select value={relationshipType} onChange={(e) => setRelationshipType(e.target.value as RelationshipType)} className="select-dropdown">
-                <option value="ManyToMany">ManyToMany</option>
-                <option value="OneToMany">OneToMany</option>
-                <option value="OneToOne">OneToOne</option>
-                <option value="Inheritance">Inheritance</option>
-              </select>
-            </div>
-
-            <button onClick={addNewEntity} className="btn-action-green">
-              <Plus size={15} /> Add Entity
-            </button>
-
-            <button onClick={clearAllNodesAndEdges} className="btn-action-red">
-              <Trash2 size={14} /> Clear Canvas
-            </button>
-            <ThemeToggle />
-          </div>
-        </div>
+        <ModellingToolbar
+          relationshipType={relationshipType}
+          setRelationshipType={setRelationshipType}
+          addNewEntity={addNewEntity}
+          addNewInterface={addNewInterface}
+          clearAllNodesAndEdges={clearAllNodesAndEdges}
+        />
 
         <div style={{ flexGrow: 1, width: '100%', height: '100%', position: 'relative', backgroundColor: 'var(--bg-canvas)' }}>
           <ReactFlow 
@@ -441,167 +442,25 @@ export default function ModellingEditor() {
               </button>
             </div>
           )}
+
           {selectedNode && (
-            <div className="inspector-container">
-              <div className="inspector-group">
-                <label className="inspector-field-label">Entity Name</label>
-                <div className="inspector-input-wrapper">
-                  <Type size={12} className="input-decorator-icon" />
-                  <input
-                    type="text"
-                    value={selectedNode.data.label}
-                    onChange={(e) => updateNodeData(selectedNode.id, () => ({ label: e.target.value }))}
-                    className="inspector-text-input"
-                    placeholder="ClassName"
-                  />
-                </div>
-              </div>
-
-              <div className="inspector-group" style={{ marginTop: '0.75rem' }}>
-                <label className="inspector-field-label">Extends Parent Class</label>
-                <select
-                  value={currentParentNode ? currentParentNode.id : 'none'}
-                  onChange={(e) => handleParentChange(selectedNode.id, e.target.value)}
-                  className="inspector-select-large"
-                >
-                  <option value="none">-- None (Root Entity) --</option>
-                  {nodes
-                    .filter((n) => n.id !== selectedNode.id)
-                    .map((n) => (
-                      <option key={n.id} value={n.id}>{n.data.label}</option>
-                    ))}
-                </select>
-              </div>
-
-              <div className="inspector-group border-top-divider" style={{ marginTop: '1.25rem', paddingTop: '1rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <label className="inspector-field-label">Fields / Attributes</label>
-                  <button
-                    onClick={() => updateNodeData(selectedNode.id, (data) => {
-                      const currentFields = data.fields || [];
-                      return {
-                        fields: [...currentFields, { id: crypto.randomUUID(), name: `field${currentFields.length + 1}`, type: 'String' }]
-                      };
-                    })}
-                    className="btn-inspector-add"
-                  >
-                    + Field
-                  </button>
-                </div>
-                {selectedNode.data.fields.length === 0 && <p className="uml-empty-text">No fields mapped on this target block.</p>}
-                {selectedNode.data.fields.map((f) => (
-                  <div key={f.id} className="inspector-row-item">
-                    <input
-                      type="text"
-                      value={f.name}
-                      placeholder="attribute"
-                      onChange={(e) => updateNodeData(selectedNode.id, (data) => ({
-                        fields: data.fields.map((field) => (field.id === f.id ? { ...field, name: e.target.value } : field))
-                      }))}
-                      className="inspector-row-input"
-                    />
-                    <select
-                      value={f.type}
-                      onChange={(e) => updateNodeData(selectedNode.id, (data) => ({
-                        fields: data.fields.map((field) => (field.id === f.id ? { ...field, type: e.target.value } : field))
-                      }))}
-                      className="inspector-row-select"
-                    >
-                      <option value="String">String</option>
-                      <option value="Integer">Integer</option>
-                      <option value="Long">Long</option>
-                      <option value="BigDecimal">BigDecimal</option>
-                      <option value="LocalDate">LocalDate</option>
-                      <option value="Boolean">Boolean</option>
-                    </select>
-                    <button
-                      onClick={() => updateNodeData(selectedNode.id, (data) => ({
-                        fields: data.fields.filter((field) => field.id !== f.id)
-                      }))}
-                      className="btn-row-delete"
-                    >
-                      <Trash2 size={11} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              
-              {/* <div className="inspector-group border-top-divider" style={{ marginTop: '1.25rem', paddingTop: '1rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <label className="inspector-field-label">Operations / Methods</label>
-                  <button
-                    onClick={() => updateNodeData(selectedNode.id, (data) => {
-                      const currentMethods = data.methods || [];
-                      return {
-                        methods: [...currentMethods, { id: crypto.randomUUID(), definition: `operation${currentMethods.length + 1}()` }]
-                      };
-                    })}
-                    className="btn-inspector-add"
-                  >
-                    + Method
-                  </button>
-                </div>
-                {(!selectedNode.data.methods || selectedNode.data.methods.length === 0) && <p className="uml-empty-text">No operational logic defined.</p>}
-                {selectedNode.data.methods?.map((m) => (
-                  <div key={m.id} className="inspector-row-item">
-                    <input
-                      type="text"
-                      value={m.definition}
-                      placeholder="operation()"
-                      onChange={(e) => updateNodeData(selectedNode.id, (data) => ({
-                        methods: (data.methods || []).map((method) => (method.id === m.id ? { ...method, definition: e.target.value } : method))
-                      }))}
-                      className="inspector-row-input"
-                      style={{ width: '85%' }}
-                    />
-                    <button
-                      onClick={() => updateNodeData(selectedNode.id, (data) => ({
-                        methods: (data.methods || []).filter((method) => method.id !== m.id)
-                      }))}
-                      className="btn-row-delete"
-                    >
-                      <Trash2 size={11} />
-                    </button>
-                  </div>
-                ))}
-              </div> */}
-
-              <div className="inspector-group border-top-divider" style={{ marginTop: '1.5rem', paddingTop: '1rem' }}>
-                <button onClick={() => deleteSelectedEntity(selectedNode.id)} className="btn-inspector-delete-entity">
-                  <Trash2 size={12} /> Delete Entity
-                </button>
-              </div>
-            </div>
+            <EntityInspector
+              selectedNode={selectedNode}
+              nodes={nodes}
+              currentParentNode={currentParentNode}
+              updateNodeData={updateNodeData}
+              handleParentChange={handleParentChange}
+              deleteSelectedEntity={deleteSelectedEntity}
+            />
           )}
 
           {selectedEdge && (
-            <div className="inspector-container">
-              <div className="inspector-group">
-                <label className="inspector-field-label">Relationship Line Mapping Pattern</label>
-                <select
-                  value={selectedEdge.label === 'extends' ? 'Inheritance' : String(selectedEdge.label)}
-                  onChange={(e) => updateEdgeType(selectedEdge.id, e.target.value)}
-                  className="inspector-select-large"
-                >
-                  <option value="ManyToMany">ManyToMany</option>
-                  <option value="OneToMany">OneToMany</option>
-                  <option value="OneToOne">OneToOne</option>
-                  <option value="Inheritance">Inheritance (Extends Pointer)</option>
-                </select>
-              </div>
-
-              <div className="inspector-group" style={{ marginTop: '1rem' }}>
-                <button onClick={() => toggleEdgeDirection(selectedEdge.id)} className="btn-sidebar-action btn-slate" style={{ width: '100%', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
-                  <ArrowLeftRight size={12} /> Flip Cardinality Vector Direction
-                </button>
-              </div>
-
-              <div className="inspector-group border-top-divider" style={{ marginTop: '1.5rem', paddingTop: '1rem' }}>
-                <button onClick={() => deleteSelectedEdge(selectedEdge.id)} className="btn-inspector-delete-entity">
-                  <Trash2 size={12} /> Sever Association Path
-                </button>
-              </div>
-            </div>
+            <RelationshipInspector
+              selectedEdge={selectedEdge}
+              updateEdgeType={updateEdgeType}
+              toggleEdgeDirection={toggleEdgeDirection}
+              deleteSelectedEdge={deleteSelectedEdge}
+            />
           )}
 
           {!activeSelection && (
@@ -618,35 +477,13 @@ export default function ModellingEditor() {
           )}
         </div>
 
-        <div className="sidebar-control-belt">
-          <button onClick={loadComplexJDLScriptSample} className="btn-sidebar-action btn-slate">
-            Load Sample
-          </button>
-          <button onClick={parseJDLToCanvas} className="btn-sidebar-action btn-amber">
-            Parse CDL
-          </button>
-          <button 
-            onClick={generateJDLFromCanvas} 
-            className="btn-sidebar-action btn-green"
-            disabled={isGenerating}
-            style={{ display: 'flex', gap: '0.25rem', justifyContent: 'center', alignItems: 'center' }}
-          >
-            {isGenerating ? (
-              <>
-                <svg className="animate-spin" style={{ width: '12px', height: '12px' }} viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                </svg>
-                Generating...
-              </>
-            ) : (
-              'Generate'
-            )}
-          </button>
-          <button onClick={downloadJDLHandler} className="btn-sidebar-action btn-blue">
-            Export
-          </button>
-        </div>
+        <SidebarControlBelt
+          loadComplexJDLScriptSample={loadComplexJDLScriptSample}
+          parseJDLToCanvas={parseJDLToCanvas}
+          generateJDLFromCanvas={generateJDLFromCanvas}
+          downloadJDLHandler={downloadJDLHandler}
+          isGenerating={isGenerating}
+        />
       </div>
     </div>
   );

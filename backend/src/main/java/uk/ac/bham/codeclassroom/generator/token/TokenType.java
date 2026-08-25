@@ -6,9 +6,12 @@ package uk.ac.bham.codeclassroom.generator.token;
 public enum TokenType {
     // Keywords
     ENTITY,
+    ABSTRACT,
     RELATIONSHIP,
     EXTENDS,
     TO,
+    INTERFACE,
+    IMPLEMENTS,
 
     // Types
     PRIMITIVE_TYPE,  // String, Integer, Long, Boolean, BigDecimal, LocalDate

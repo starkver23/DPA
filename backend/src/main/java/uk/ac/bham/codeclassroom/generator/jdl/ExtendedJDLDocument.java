@@ -1,5 +1,6 @@
 package uk.ac.bham.codeclassroom.generator.jdl;
 
+import uk.ac.bham.codeclassroom.generator.ast.EntityNode;
 import uk.ac.bham.codeclassroom.generator.jhipster.JHipsterProjectConfiguration;
 
 import java.util.List;
@@ -11,13 +12,29 @@ import java.util.List;
  * @param relationships          the list of relationships
  * @param inheritanceDeclarations the list of inheritance declarations
  * @param configuration          the configuration metadata
+ * @param interfaces             the list of interface AST nodes
+ * @param originalEntities       all original entity and interface AST nodes
  */
 public record ExtendedJDLDocument(
     List<JDLEntity> entities,
     List<JDLRelationship> relationships,
     List<JDLInheritance> inheritanceDeclarations,
-    JHipsterProjectConfiguration configuration
+    JHipsterProjectConfiguration configuration,
+    List<EntityNode> interfaces,
+    List<EntityNode> originalEntities
 ) {
+    /**
+     * Backward-compatible constructor.
+     */
+    public ExtendedJDLDocument(
+        List<JDLEntity> entities,
+        List<JDLRelationship> relationships,
+        List<JDLInheritance> inheritanceDeclarations,
+        JHipsterProjectConfiguration configuration
+    ) {
+        this(entities, relationships, inheritanceDeclarations, configuration, List.of(), List.of());
+    }
+
     /**
      * Helper for Mustache serialization.
      * Returns true if there are custom inheritance declarations.

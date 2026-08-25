@@ -33,7 +33,7 @@ public class JHipsterCLIInvoker {
         if (jhipsterForkPath == null || jhipsterForkPath.isBlank()) {
             return null;
         }
-        Path path = Path.of(jhipsterForkPath.trim());
+        Path path = resolveConfiguredForkPath(jhipsterForkPath.trim());
         if (!Files.exists(path)) {
             return null;
         }
@@ -41,6 +41,20 @@ public class JHipsterCLIInvoker {
         if (Files.isDirectory(subDir)) {
             return subDir;
         }
+        return path;
+    }
+
+    private Path resolveConfiguredForkPath(String configuredPath) {
+        Path path = Path.of(configuredPath);
+        if (Files.exists(path) || path.isAbsolute()) {
+            return path;
+        }
+
+        Path parentRelativePath = Path.of("..").resolve(configuredPath).normalize();
+        if (Files.exists(parentRelativePath)) {
+            return parentRelativePath;
+        }
+
         return path;
     }
 

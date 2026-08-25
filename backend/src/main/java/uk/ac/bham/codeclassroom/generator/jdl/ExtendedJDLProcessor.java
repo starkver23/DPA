@@ -23,7 +23,9 @@ public class ExtendedJDLProcessor {
             document.entities(),
             document.relationships(),
             List.of(), // standard JDL doesn't have custom inheritance declarations
-            document.configuration()
+            document.configuration(),
+            document.interfaces(),
+            document.originalEntities()
         );
 
         return new SeparatedJDLResult(
