@@ -92,6 +92,47 @@ html,
   pointer-events: none;
 }
 
+.landing-navbar {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  width: min(100%, 320px);
+  padding: 0 1rem;
+}
+
+.navbar-about-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  background-color: var(--bg-card-glass);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -12px var(--shadow-main);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.navbar-about-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .landing-hero {
   position: relative;
   z-index: 1;
@@ -103,6 +144,12 @@ html,
   align-items: center;
   text-align: center;
   flex-grow: 1;
+}
+
+@media (max-width: 560px) {
+  .landing-navbar {
+    top: 4.75rem;
+  }
 }
 
 .academic-logo {
@@ -290,6 +337,25 @@ html,
 .footer-desc {
   font-size: 0.75rem;
   color: #64748b;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.footer-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
 }
 
 .footer-uni {

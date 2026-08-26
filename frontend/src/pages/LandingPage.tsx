@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Workflow, BookOpen, FileCode, GraduationCap, ArrowRight } from 'lucide-react';
+import { Workflow, BookOpen, FileCode, GraduationCap, ArrowRight, ExternalLink } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 
 export default function LandingPage() {
@@ -9,6 +9,18 @@ export default function LandingPage() {
       <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10 }}>
         <ThemeToggle />
       </div>
+
+      <nav className="landing-navbar" aria-label="Landing page navigation">
+        <a
+          className="navbar-about-button"
+          href="https://www.vermacodes.me"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>About</span>
+          <ExternalLink size={14} />
+        </a>
+      </nav>
 
       {/* Soft Blue Ambient Pulse Orb Overlay */}
       <div className="ambient-glow" />
@@ -83,7 +95,16 @@ export default function LandingPage() {
             <p className="footer-logo">CodeClassroom</p>
             <p className="footer-desc">Teaching and Learning Software Design Architecture</p>
           </div>
-          <p className="footer-uni">University of Birmingham • MSc Dissertation</p>
+          <div className="footer-right">
+            <a
+              className="footer-link"
+              href="https://www.vermacodes.me"
+              target="_blank"
+              rel="noreferrer"
+            >
+              About
+            </a>
+          </div>
         </div>
       </footer>
     </div>
