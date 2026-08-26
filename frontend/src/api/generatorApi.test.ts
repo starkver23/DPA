@@ -29,6 +29,38 @@ describe('generatorApi', () => {
     expect(result).toBe(mockBlob);
   });
 
+  it('should send project configuration options with full generation requests', async () => {
+    const mockBlob = new Blob(['dummy zip content'], { type: 'application/zip' });
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      blob: () => Promise.resolve(mockBlob),
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await generateProject('entity Student {}', {
+      applicationName: 'Course Planner',
+      repositoryName: 'course-planner',
+      defaultJavaPackageName: 'com.acme.courseplanner',
+      javaVersion: '21',
+      databaseType: 'postgresql',
+      authenticationType: 'jwt',
+      buildTool: 'maven',
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/api/generate', expect.objectContaining({
+      body: JSON.stringify({
+        cdl: 'entity Student {}',
+        applicationName: 'Course Planner',
+        repositoryName: 'course-planner',
+        defaultJavaPackageName: 'com.acme.courseplanner',
+        javaVersion: '21',
+        databaseType: 'postgresql',
+        authenticationType: 'jwt',
+        buildTool: 'maven',
+      }),
+    }));
+  });
+
   it('should throw an error on failed HTTP responses', async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: false,

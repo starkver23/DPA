@@ -165,23 +165,6 @@ public class SemanticValidator {
             }
         }
 
-        // Method verification for concrete classes
-        for (EntityNode entity : entities) {
-            if (entity.kind() == EntityKind.CLASS && !entity.abstractClass()) {
-                Set<String> implementedIfaces = collectImplementedInterfaces(entity, entityMap);
-                Set<String> requiredMethods = collectRequiredInterfaceMethods(implementedIfaces, entityMap);
-                Set<String> providedMethods = collectProvidedClassMethods(entity, entityMap);
-
-                for (String reqMethod : requiredMethods) {
-                    if (!providedMethods.contains(reqMethod)) {
-                        throw new SemanticException(String.format(
-                            "Concrete class '%s' implements interface(s) but does not provide required method '%s'.",
-                            entity.name(), reqMethod
-                        ));
-                    }
-                }
-            }
-        }
     }
 
     private void checkCircularInterfaceInheritance(String current, Map<String, EntityNode> entityMap, Set<String> visited) {

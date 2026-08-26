@@ -144,29 +144,29 @@ export default function EntityInspector({
             onClick={() => updateNodeData(selectedNode.id, (data) => {
               const currentMethods = data.methods || [];
               return {
-                methods: [...currentMethods, { id: crypto.randomUUID(), definition: `method${currentMethods.length + 1}() String` }]
+                methods: [...currentMethods, { id: crypto.randomUUID(), definition: `operation${currentMethods.length + 1}()` }]
               };
             })}
             className="btn-inspector-add"
           >
-            + Method
+            + Operation
           </button>
         </div>
-        {(!selectedNode.data.methods || selectedNode.data.methods.length === 0) && <p className="uml-empty-text">No methods mapped on this target block.</p>}
-        {selectedNode.data.methods?.map((m) => (
-          <div key={m.id} className="inspector-row-item">
+        {selectedNode.data.methods.length === 0 && <p className="uml-empty-text">No operations mapped on this target block.</p>}
+        {selectedNode.data.methods.map((method) => (
+          <div key={method.id} className="inspector-row-item">
             <input
               type="text"
-              value={m.definition}
-              placeholder="calculateSalary() Double"
+              value={method.definition}
+              placeholder="operation() String"
               onChange={(e) => updateNodeData(selectedNode.id, (data) => ({
-                methods: (data.methods || []).map((method) => (method.id === m.id ? { ...method, definition: e.target.value } : method))
+                methods: data.methods.map((item) => (item.id === method.id ? { ...item, definition: e.target.value } : item))
               }))}
-              className="inspector-row-input"
+              className="inspector-row-input inspector-operation-input"
             />
             <button
               onClick={() => updateNodeData(selectedNode.id, (data) => ({
-                methods: (data.methods || []).filter((method) => method.id !== m.id)
+                methods: data.methods.filter((item) => item.id !== method.id)
               }))}
               className="btn-row-delete"
             >

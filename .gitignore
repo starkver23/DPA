@@ -14,6 +14,20 @@ node_modules/
 dist/
 dist-ssr/
 build/
+target/
+backend/target/
+generated-app/
+**/target/
+out/
+
+# Generated archives and packaged binaries
+*.jar
+*.war
+*.ear
+*.zip
+*.tar
+*.tar.gz
+*.tgz
 
 # Environment variables
 .env
@@ -29,7 +43,17 @@ coverage/
 # Cache
 .cache/
 .parcel-cache/
+.vite/
+.gradle/
+.mvn/.gradle/
+.turbo/
+.pytest_cache/
 *.tsbuildinfo
+
+# Temporary files
+tmp/
+temp/
+.tmp/
 
 # Editor directories and files
 .vscode/*
@@ -43,6 +67,3 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
-
-backend/target/
-target/

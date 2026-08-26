@@ -403,7 +403,7 @@ class SemanticValidatorTest {
     }
 
     @Test
-    void testMissingRequiredInterfaceMethodThrows() {
+    void testMissingRequiredInterfaceMethodIsAllowedForGenerationStub() {
         String source = """
             interface Payable {
                 calculateSalary() Double
@@ -413,8 +413,7 @@ class SemanticValidatorTest {
             }
         """;
         CompilationUnit cu = parseCDL(source);
-        SemanticException ex = assertThrows(SemanticException.class, () -> validator.validate(cu));
-        assertTrue(ex.getMessage().contains("Concrete class 'Student' implements interface(s) but does not provide required method 'calculateSalary()'"));
+        assertDoesNotThrow(() -> validator.validate(cu));
     }
 
     @Test
@@ -428,4 +427,3 @@ class SemanticValidatorTest {
         assertTrue(ex.getMessage().contains("Duplicate implemented interface 'A' in entity 'TestEntity'"));
     }
 }
-

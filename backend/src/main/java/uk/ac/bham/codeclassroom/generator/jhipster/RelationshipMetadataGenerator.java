@@ -4,7 +4,12 @@ import uk.ac.bham.codeclassroom.generator.ast.RelationshipNode;
 import uk.ac.bham.codeclassroom.generator.ast.RelationshipType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Generator that converts CDL relationship nodes into JHipsterRelationship metadata.
@@ -25,26 +30,38 @@ public class RelationshipMetadataGenerator {
         }
 
         List<JHipsterRelationship> relationships = new ArrayList<>();
+        Map<String, Set<String>> usedPropertiesByEntity = new HashMap<>();
 
         for (RelationshipNode node : nodes) {
+            Optional<String> sourceProperty = reserveProperty(
+                usedPropertiesByEntity,
+                node.sourceEntity(),
+                node.sourceProperty()
+            );
+            Optional<String> targetProperty = reserveProperty(
+                usedPropertiesByEntity,
+                node.targetEntity(),
+                node.targetProperty()
+            );
+
             if (node.type() == RelationshipType.OneToOne) {
                 // Source side: OneToOne
                 relationships.add(new JHipsterRelationship(
                     JHipsterRelationshipType.OneToOne,
                     node.sourceEntity(),
-                    node.sourceProperty(),
+                    sourceProperty,
                     node.targetEntity(),
-                    node.targetProperty()
+                    targetProperty
                 ));
 
                 // Target side: OneToOne (bidirectional if targetProperty is present)
-                if (node.targetProperty().isPresent()) {
+                if (targetProperty.isPresent()) {
                     relationships.add(new JHipsterRelationship(
                         JHipsterRelationshipType.OneToOne,
                         node.targetEntity(),
-                        node.targetProperty(),
+                        targetProperty,
                         node.sourceEntity(),
-                        node.sourceProperty()
+                        sourceProperty
                     ));
                 }
             } else if (node.type() == RelationshipType.OneToMany) {
@@ -52,43 +69,64 @@ public class RelationshipMetadataGenerator {
                 relationships.add(new JHipsterRelationship(
                     JHipsterRelationshipType.OneToMany,
                     node.sourceEntity(),
-                    node.sourceProperty(),
+                    sourceProperty,
                     node.targetEntity(),
-                    node.targetProperty()
+                    targetProperty
                 ));
 
                 // Target side: ManyToOne (inverse of OneToMany)
                 relationships.add(new JHipsterRelationship(
                     JHipsterRelationshipType.ManyToOne,
                     node.targetEntity(),
-                    node.targetProperty(),
+                    targetProperty,
                     node.sourceEntity(),
-                    node.sourceProperty()
+                    sourceProperty
                 ));
             } else if (node.type() == RelationshipType.ManyToMany) {
                 // Source side: ManyToMany
                 relationships.add(new JHipsterRelationship(
                     JHipsterRelationshipType.ManyToMany,
                     node.sourceEntity(),
-                    node.sourceProperty(),
+                    sourceProperty,
                     node.targetEntity(),
-                    node.targetProperty()
+                    targetProperty
                 ));
 
                 // Target side: ManyToMany (bidirectional if targetProperty is present)
-                if (node.targetProperty().isPresent()) {
+                if (targetProperty.isPresent()) {
                     relationships.add(new JHipsterRelationship(
                         JHipsterRelationshipType.ManyToMany,
                         node.targetEntity(),
-                        node.targetProperty(),
+                        targetProperty,
                         node.sourceEntity(),
-                        node.sourceProperty()
+                        sourceProperty
                     ));
                 }
             }
         }
 
         return List.copyOf(relationships);
+    }
+
+    private Optional<String> reserveProperty(
+        Map<String, Set<String>> usedPropertiesByEntity,
+        String entityName,
+        Optional<String> property
+    ) {
+        if (property.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Set<String> usedProperties = usedPropertiesByEntity.computeIfAbsent(entityName, ignored -> new HashSet<>());
+        String baseName = property.get();
+        String candidate = baseName;
+        int suffix = 2;
+        while (usedProperties.contains(candidate.toLowerCase())) {
+            candidate = baseName + suffix;
+            suffix++;
+        }
+        usedProperties.add(candidate.toLowerCase());
+        return Optional.of(candidate);
     }
 
     /**

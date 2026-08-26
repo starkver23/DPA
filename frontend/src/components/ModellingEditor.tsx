@@ -1,23 +1,24 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect, type FormEvent } from 'react';
+import dagre from 'dagre';
 import {
   ReactFlow,
-  MiniMap,
   Controls,
   Background,
   useNodesState,
   useEdgesState,
-  addEdge,
   MarkerType,
   type Connection,
   type Edge,
   type Node,
+  type ReactFlowInstance,
 } from '@xyflow/react';
 import { Settings, FileText } from 'lucide-react';
 import '@xyflow/react/dist/style.css';
 
 import { type Field, type Method, type EntityNode, type RelationshipType } from '../types/modeling';
 import { EntityNodeComponent } from './EntityNodeComponent';
-import { generateProject } from '../api/generatorApi';
+import { RelationshipEdgeComponent } from './RelationshipEdgeComponent';
+import { generateJavaCode, generateProject, type ProjectGenerationOptions } from '../api/generatorApi';
 
 // Extracted UI Components
 import ModellingToolbar from './ModellingToolbar';
@@ -26,24 +27,241 @@ import RelationshipInspector from './RelationshipInspector';
 import SidebarControlBelt from './SidebarControlBelt';
 
 const nodeTypes = { entityNode: EntityNodeComponent };
+const edgeTypes = { relationship: RelationshipEdgeComponent };
+const defaultGenerationOptions: ProjectGenerationOptions = {
+  applicationName: 'Generated App',
+  repositoryName: 'generated-app',
+  defaultJavaPackageName: 'com.mycompany.codeclassroom',
+  javaVersion: '21',
+  databaseType: 'postgresql',
+  authenticationType: 'jwt',
+  buildTool: 'maven',
+};
+
+const samplePDL = `abstract entity Person {
+  name String
+  email String
+}
+
+interface Payable {
+  calculateSalary() Double
+}
+
+interface Identifiable {
+  getIdentifier() String
+}
+
+entity Employee extends Person implements Payable, Identifiable {
+  employeeId String
+  salary Double
+  calculateSalary() Double
+  getIdentifier() String
+}
+
+entity Department {
+  name String
+  code String
+}
+
+entity Project {
+  name String
+  budget Double
+}
+
+relationship OneToOne {
+  Employee{officeDepartment} to Department{primaryEmployee}
+}
+
+relationship OneToMany {
+  Department{employees} to Employee{homeDepartment}
+}
+
+relationship ManyToMany {
+  Employee{projects} to Project{employees}
+}`;
 
 // ponytail: pure helper to avoid duplicate edge styling rules across 4 locations
 const getEdgeStyle = (typeLabel: string) => {
   const isInheritance = typeLabel === 'Inheritance' || typeLabel === 'extends';
   const isImplementation = typeLabel === 'Implementation' || typeLabel === 'implements';
-  const color = isInheritance ? '#ef4444' : isImplementation ? '#059669' : '#6366f1';
+  const color = isInheritance ? '#dc2626' : isImplementation ? '#0891b2' : '#6366f1';
+  const lineStyle = isInheritance
+    ? { strokeDasharray: '8,4', strokeWidth: 2.5, stroke: color }
+    : isImplementation
+      ? { strokeDasharray: '2,5', strokeWidth: 2.5, stroke: color }
+      : { strokeWidth: 2, stroke: color };
   return {
     label: isInheritance ? 'extends' : isImplementation ? 'implements' : typeLabel,
-    style: isInheritance || isImplementation ? { strokeDasharray: '5,5', strokeWidth: 2, stroke: color } : { strokeWidth: 2, stroke: color },
+    data: {
+      label: isInheritance ? 'extends' : isImplementation ? 'implements' : typeLabel,
+      cardinality: isInheritance || isImplementation ? '' : typeLabel,
+    },
+    style: lineStyle,
     markerEnd: { type: MarkerType.ArrowClosed, color }
   };
 };
 
 const isMethodLine = (line: string) => line.includes('(') && line.includes(')');
 
+const parseFieldLine = (line: string): Field[] => {
+  const parts = line.split(/\s+/).filter(Boolean);
+  const fields: Field[] = [];
+  for (let i = 0; i < parts.length; i += 2) {
+    const name = parts[i];
+    if (!name) continue;
+    fields.push({ id: crypto.randomUUID(), name, type: parts[i + 1] || 'String' });
+  }
+  return fields;
+};
+
+const getParallelRelationshipKey = (edge: Edge) => [edge.source, edge.target].sort().join('::');
+
+const reserveRelationshipProperty = (
+  usedPropertiesByEntity: Map<string, Set<string>>,
+  entityId: string,
+  requestedProperty: string,
+) => {
+  const usedProperties = usedPropertiesByEntity.get(entityId) || new Set<string>();
+  let candidate = requestedProperty;
+  let suffix = 2;
+  while (usedProperties.has(candidate.toLowerCase())) {
+    candidate = `${requestedProperty}${suffix}`;
+    suffix += 1;
+  }
+  usedProperties.add(candidate.toLowerCase());
+  usedPropertiesByEntity.set(entityId, usedProperties);
+  return candidate;
+};
+
+const sanitizeDownloadName = (value: string) => {
+  const cleaned = value.trim().toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
+  return cleaned || 'generated-app';
+};
+
+const applyParallelEdgeLayout = (edgeList: Edge[]): Edge[] => {
+  const groups = new Map<string, Edge[]>();
+  edgeList.forEach((edge) => {
+    const key = getParallelRelationshipKey(edge);
+    groups.set(key, [...(groups.get(key) || []), edge]);
+  });
+
+  return edgeList.map((edge) => {
+    const siblings = groups.get(getParallelRelationshipKey(edge)) || [edge];
+    const parallelIndex = siblings.findIndex((candidate) => candidate.id === edge.id);
+    const labels = new Set(siblings.map((candidate) => String(candidate.label || candidate.data?.label || '')));
+    const hasMixedLabels = labels.size > 1;
+    const mixedColor = '#14b8a6';
+    return {
+      ...edge,
+      type: 'relationship',
+      style: {
+        ...(edge.style || {}),
+        stroke: hasMixedLabels ? mixedColor : edge.style?.stroke,
+      },
+      markerEnd: hasMixedLabels
+        ? { type: MarkerType.ArrowClosed, color: mixedColor }
+        : edge.markerEnd,
+      data: {
+        ...(edge.data || {}),
+        label: String(edge.label || edge.data?.label || ''),
+        parallelIndex,
+        parallelTotal: siblings.length,
+      },
+    };
+  });
+};
+
+const buildPDLFromGraph = (nodes: EntityNode[], edges: Edge[]) => {
+  let pdlString = '';
+  const inheritanceMap: Record<string, string> = {};
+  const implementsMap: Record<string, string[]> = {};
+
+  edges.forEach((e) => {
+    const label = String(e.label || e.data?.label || '');
+    if (label === 'extends') {
+      const parentNode = nodes.find((n) => n.id === e.target);
+      if (parentNode) inheritanceMap[e.source] = parentNode.data.label;
+    } else if (label === 'implements') {
+      const interfaceNode = nodes.find((n) => n.id === e.target && n.data.kind === 'interface');
+      if (interfaceNode) {
+        implementsMap[e.source] = [...(implementsMap[e.source] || []), interfaceNode.data.label];
+      }
+    }
+  });
+
+  nodes.forEach((n) => {
+    const parentName = inheritanceMap[n.id];
+    const extendsClause = parentName ? ` extends ${parentName}` : '';
+    if (n.data.kind === 'interface') {
+      pdlString += `interface ${n.data.label}${extendsClause} {\n`;
+      n.data.fields.forEach((f) => { pdlString += `  ${f.name} ${f.type}\n`; });
+      n.data.methods.forEach((m) => { pdlString += `  ${m.definition}\n`; });
+      pdlString += `}\n\n`;
+      return;
+    }
+
+    const abstractPrefix = n.data.abstract ? 'abstract ' : '';
+    const implementsList = implementsMap[n.id] || [];
+    const implementsClause = implementsList.length > 0 ? ` implements ${implementsList.join(', ')}` : '';
+    pdlString += `${abstractPrefix}entity ${n.data.label}${extendsClause}${implementsClause} {\n`;
+    n.data.fields.forEach((f) => { pdlString += `  ${f.name} ${f.type}\n`; });
+    n.data.methods.forEach((m) => { pdlString += `  ${m.definition}\n`; });
+    pdlString += `}\n\n`;
+  });
+
+  const relationshipEdges = edges.filter((e) => ['OneToOne', 'OneToMany', 'ManyToMany'].includes(String(e.label || e.data?.label || '')));
+  const pairCounts = new Map<string, number>();
+  const pairIndexes = new Map<string, number>();
+  const usedRelationshipProperties = new Map<string, Set<string>>();
+  relationshipEdges.forEach((edge) => {
+    const key = getParallelRelationshipKey(edge);
+    pairCounts.set(key, (pairCounts.get(key) || 0) + 1);
+  });
+
+  ['OneToOne', 'OneToMany', 'ManyToMany'].forEach((type) => {
+    const edgeList = relationshipEdges.filter((e) => String(e.label || e.data?.label || '') === type);
+    if (edgeList.length === 0) return;
+    pdlString += `relationship ${type} {\n`;
+    edgeList.forEach((e) => {
+      const s = nodes.find((n) => n.id === e.source);
+      const t = nodes.find((n) => n.id === e.target);
+      if (s && t) {
+        const pairKey = getParallelRelationshipKey(e);
+        const nextPairIndex = (pairIndexes.get(pairKey) || 0) + 1;
+        pairIndexes.set(pairKey, nextPairIndex);
+        const suffix = (pairCounts.get(pairKey) || 0) > 1 ? `${nextPairIndex}` : '';
+        const sourceProperty = typeof e.data?.sourceProperty === 'string' ? e.data.sourceProperty : undefined;
+        const targetProperty = typeof e.data?.targetProperty === 'string' ? e.data.targetProperty : undefined;
+        const safeSourceProperty = reserveRelationshipProperty(
+          usedRelationshipProperties,
+          s.id,
+          sourceProperty || `${t.data.label.toLowerCase()}${type === 'ManyToMany' ? 's' : ''}${suffix}`,
+        );
+        if (type === 'ManyToMany') {
+          const safeTargetProperty = reserveRelationshipProperty(
+            usedRelationshipProperties,
+            t.id,
+            targetProperty || `${s.data.label.toLowerCase()}s${suffix}`,
+          );
+          pdlString += `  ${s.data.label}{${safeSourceProperty}} to ${t.data.label}{${safeTargetProperty}}\n`;
+        } else {
+          const safeTargetProperty = targetProperty
+            ? reserveRelationshipProperty(usedRelationshipProperties, t.id, targetProperty)
+            : undefined;
+          pdlString += `  ${s.data.label}{${safeSourceProperty}} to ${t.data.label}${safeTargetProperty ? `{${safeTargetProperty}}` : ''}\n`;
+        }
+      }
+    });
+    pdlString += `}\n\n`;
+  });
+
+  return pdlString.trim();
+};
+
 export default function ModellingEditor() {
   const [nodes, setNodes, onNodesChange] = useNodesState<EntityNode>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance<EntityNode, Edge> | null>(null);
   const [relationshipType, setRelationshipType] = useState<RelationshipType>('ManyToMany');
   const [activeSelection, setActiveSelection] = useState<{ type: 'node' | 'edge'; id: string } | null>(null);
 
@@ -53,6 +271,8 @@ export default function ModellingEditor() {
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [showGenerationForm, setShowGenerationForm] = useState(false);
+  const [generationOptions, setGenerationOptions] = useState<ProjectGenerationOptions>(defaultGenerationOptions);
 
   const onSelectionChange = useCallback(({ nodes: selectedNodes, edges: selectedEdges }: { nodes: Node[]; edges: Edge[] }) => {
     if (selectedNodes.length > 0) {
@@ -69,13 +289,13 @@ export default function ModellingEditor() {
   }, [setNodes]);
 
   const updateEdgeType = useCallback((edgeId: string, typeLabel: string) => {
-    setEdges((eds) => eds.map((e) => {
+    setEdges((eds) => applyParallelEdgeLayout(eds.map((e) => {
       if (e.id !== edgeId) return e;
       return {
         ...e,
         ...getEdgeStyle(typeLabel)
       };
-    }));
+    })));
   }, [setEdges]);
 
   const deleteSelectedEntity = useCallback((id: string) => {
@@ -101,18 +321,6 @@ export default function ModellingEditor() {
     setActiveSelection({ type: 'node', id });
   }, [nodes.length, setNodes]);
 
-  const addNewInterface = useCallback(() => {
-    const id = crypto.randomUUID();
-    const newNode: EntityNode = {
-      id,
-      type: 'entityNode',
-      position: { x: 150 + Math.random() * 100, y: 150 + Math.random() * 100 },
-      data: { label: `NewInterface${nodes.length + 1}`, kind: 'interface', abstract: false, fields: [], methods: [] },
-    };
-    setNodes((nds) => nds.concat(newNode));
-    setActiveSelection({ type: 'node', id });
-  }, [nodes.length, setNodes]);
-
   const clearAllNodesAndEdges = useCallback(() => {
     if (window.confirm("Are you sure you want to completely erase the canvas layout?")) {
       setNodes([]);
@@ -122,64 +330,19 @@ export default function ModellingEditor() {
     }
   }, [setNodes, setEdges]);
 
-  const loadComplexJDLScriptSample = useCallback(() => {
-    setInputJDL(`entity Professor {\n  name String\n  email String\n}\n\nentity Department {\n  title String\n  budget BigDecimal\n}\n\nentity GraduateProject {\n  topic String\n  deadline LocalDate\n}\n\nrelationship Inheritance {\n  Department to Professor\n}\n\nrelationship OneToOne {\n  Professor to GraduateProject\n}`);
-  }, []);
+  const downloadGeneratedBlob = (blob: Blob, filename: string) => {
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = downloadUrl;
+    downloadLink.download = filename;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    window.URL.revokeObjectURL(downloadUrl);
+  };
 
-  const generateJDLFromCanvas = useCallback(async () => {
-    let jdlString = '';
-    const inheritanceMap: Record<string, string> = {};
-    const implementsMap: Record<string, string[]> = {};
-
-    edges.forEach((e) => {
-      if (e.label === 'extends') {
-        const parentNode = nodes.find((n) => n.id === e.target);
-        if (parentNode) inheritanceMap[e.source] = parentNode.data.label;
-      } else if (e.label === 'implements') {
-        const interfaceNode = nodes.find((n) => n.id === e.target && n.data.kind === 'interface');
-        if (interfaceNode) {
-          implementsMap[e.source] = [...(implementsMap[e.source] || []), interfaceNode.data.label];
-        }
-      }
-    });
-
-    nodes.forEach((n) => {
-      const methods = n.data.methods || [];
-      const parentName = inheritanceMap[n.id];
-      const extendsClause = parentName ? ` extends ${parentName}` : '';
-      if (n.data.kind === 'interface') {
-        jdlString += `interface ${n.data.label}${extendsClause} {\n`;
-        methods.forEach((m) => { jdlString += `  ${m.definition}\n`; });
-        jdlString += `}\n\n`;
-        return;
-      }
-
-      const abstractPrefix = n.data.abstract ? 'abstract ' : '';
-      const implementsList = implementsMap[n.id] || [];
-      const implementsClause = implementsList.length > 0 ? ` implements ${implementsList.join(', ')}` : '';
-      jdlString += `${abstractPrefix}entity ${n.data.label}${extendsClause}${implementsClause} {\n`;
-      n.data.fields.forEach((f) => { jdlString += `  ${f.name} ${f.type}\n`; });
-      methods.forEach((m) => { jdlString += `  ${m.definition}\n`; });
-      jdlString += `}\n\n`;
-    });
-
-    ['OneToOne', 'OneToMany', 'ManyToMany'].forEach((type) => {
-      const edgeList = edges.filter((e) => e.label === type);
-      if (edgeList.length === 0) return;
-      jdlString += `relationship ${type} {\n`;
-      edgeList.forEach((e) => {
-        const s = nodes.find((n) => n.id === e.source);
-        const t = nodes.find((n) => n.id === e.target);
-        if (s && t) {
-          jdlString += type === 'ManyToMany'
-            ? `  ${s.data.label}{${t.data.label.toLowerCase()}s} to ${t.data.label}{${s.data.label.toLowerCase()}s}\n`
-            : `  ${s.data.label} to ${t.data.label}\n`;
-        }
-      });
-      jdlString += `}\n\n`;
-    });
-
-    const finalCDL = jdlString.trim();
+  const runGeneration = useCallback(async (mode: 'java' | 'full', options?: ProjectGenerationOptions) => {
+    const finalCDL = buildPDLFromGraph(nodes, edges);
     setInputJDL(finalCDL || '// No visual structure configured.');
     setActiveSelection(null); // Forces the sidebar view to toggle directly back into the code text editor view
 
@@ -196,20 +359,15 @@ export default function ModellingEditor() {
     setNotification(null);
 
     try {
-      const blob = await generateProject(finalCDL);
-      
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const downloadLink = document.createElement('a');
-      downloadLink.href = downloadUrl;
-      downloadLink.download = 'generated-project.zip';
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-      window.URL.revokeObjectURL(downloadUrl);
+      const blob = mode === 'java' ? await generateJavaCode(finalCDL) : await generateProject(finalCDL, options);
+      const filename = mode === 'java'
+        ? 'generated-java-source.zip'
+        : `${sanitizeDownloadName(options?.repositoryName || defaultGenerationOptions.repositoryName)}.zip`;
+      downloadGeneratedBlob(blob, filename);
 
       setNotification({
         type: 'success',
-        message: 'Project generated successfully.'
+        message: mode === 'java' ? 'Java code generated successfully.' : 'Project generated successfully.'
       });
     } catch (error) {
       console.error(error);
@@ -224,12 +382,29 @@ export default function ModellingEditor() {
     }
   }, [nodes, edges]);
 
-  const parseJDLToCanvas = useCallback(() => {
+  const generateJavaCodeFromCanvas = useCallback(() => runGeneration('java'), [runGeneration]);
+  const generateFullApplicationFromCanvas = useCallback(() => setShowGenerationForm(true), []);
+  const submitFullApplicationGeneration = useCallback((event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setShowGenerationForm(false);
+    runGeneration('full', generationOptions);
+  }, [generationOptions, runGeneration]);
+  const updateGenerationOption = useCallback((key: keyof ProjectGenerationOptions, value: string) => {
+    setGenerationOptions((current) => ({ ...current, [key]: value }));
+  }, []);
+
+  const fitDiagramIntoView = useCallback(() => {
+    window.setTimeout(() => {
+      reactFlowInstance?.fitView({ padding: 0.18, duration: 300, includeHiddenNodes: false });
+    }, 0);
+  }, [reactFlowInstance]);
+
+  const parsePDLSourceToCanvas = useCallback((source: string) => {
     try {
       const parsedNodes: EntityNode[] = [];
       const parsedEdges: Edge[] = [];
 
-      const entityBlocks = inputJDL.match(/(?:abstract\s+)?entity\s+\w+(?:\s+extends\s+\w+)?(?:\s+implements\s+[\w\s,]+)?\s*\{[^}]*\}|interface\s+\w+(?:\s+extends\s+[\w\s,]+)?\s*\{[^}]*\}/g);
+      const entityBlocks = source.match(/(?:abstract\s+)?entity\s+\w+(?:\s+extends\s+\w+)?(?:\s+implements\s+[\w\s,]+)?\s*\{[^}]*\}|interface\s+\w+(?:\s+extends\s+[\w\s,]+)?\s*\{[^}]*\}/g);
       
       if (entityBlocks) {
         entityBlocks.forEach((block, index) => {
@@ -250,12 +425,7 @@ export default function ModellingEditor() {
               methods.push({ id: crypto.randomUUID(), definition: line });
               return;
             }
-            const parts = line.split(/\s+/);
-            if (parts.length >= 2) {
-              fields.push({ id: crypto.randomUUID(), name: parts[0], type: parts[1] });
-            } else if (parts.length === 1 && parts[0]) {
-              fields.push({ id: crypto.randomUUID(), name: parts[0], type: 'String' });
-            }
+            fields.push(...parseFieldLine(line));
           });
 
           const entityId = entityName.toLowerCase() + '-id';
@@ -271,7 +441,7 @@ export default function ModellingEditor() {
               id: `edge-inherit-${crypto.randomUUID()}`,
               source: entityId,
               target: parentName.toLowerCase() + '-id',
-              type: 'default',
+              type: 'relationship',
               ...getEdgeStyle('extends')
             });
           });
@@ -281,30 +451,32 @@ export default function ModellingEditor() {
               id: `edge-implements-${crypto.randomUUID()}`,
               source: entityId,
               target: interfaceName.toLowerCase() + '-id',
-              type: 'default',
+              type: 'relationship',
               ...getEdgeStyle('implements')
             });
           });
         });
       }
 
-      const relationshipBlocks = inputJDL.match(/relationship\s+(\w+)\s*\{([^}]*)\}/g);
+      const relationshipBlocks = [...source.matchAll(/relationship\s+(\w+)\s*\{([\s\S]*?)\n\s*\}/g)];
       if (relationshipBlocks) {
-        relationshipBlocks.forEach(block => {
-          const match = block.match(/relationship\s+(\w+)\s*\{([^}]*)\}/);
-          if (!match) return;
-
+        relationshipBlocks.forEach(match => {
           const [, relType, contentBody] = match;
           contentBody.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
-            const linkMatch = line.match(/(\w+)(?:\{.*\})?\s+to\s+(\w+)/);
+            const linkMatch = line.match(/(\w+)(?:\{([^}]*)\})?\s+to\s+(\w+)(?:\{([^}]*)\})?/);
             if (linkMatch) {
-              const [, sourceEnt, targetEnt] = linkMatch;
+              const [, sourceEnt, sourceProperty, targetEnt, targetProperty] = linkMatch;
               parsedEdges.push({
                 id: `edge-rel-${crypto.randomUUID()}`,
                 source: sourceEnt.toLowerCase() + '-id',
                 target: targetEnt.toLowerCase() + '-id',
-                type: 'default',
-                ...getEdgeStyle(relType)
+                type: 'relationship',
+                ...getEdgeStyle(relType),
+                data: {
+                  ...getEdgeStyle(relType).data,
+                  sourceProperty,
+                  targetProperty,
+                },
               });
             }
           });
@@ -317,12 +489,22 @@ export default function ModellingEditor() {
       }
 
       setNodes(parsedNodes);
-      setEdges(parsedEdges);
+      setEdges(applyParallelEdgeLayout(parsedEdges));
       setActiveSelection(null);
+      fitDiagramIntoView();
     } catch {
       alert("Parsing Error: Verify your JDL configuration layout syntax.");
     }
-  }, [inputJDL, setNodes, setEdges]);
+  }, [setNodes, setEdges, fitDiagramIntoView]);
+
+  const parseJDLToCanvas = useCallback(() => {
+    parsePDLSourceToCanvas(inputJDL);
+  }, [inputJDL, parsePDLSourceToCanvas]);
+
+  const loadSample = useCallback(() => {
+    setInputJDL(samplePDL);
+    parsePDLSourceToCanvas(samplePDL);
+  }, [parsePDLSourceToCanvas]);
 
   const onConnect = useCallback((params: Connection) => {
     const stylizedEdge: Edge = {
@@ -331,24 +513,51 @@ export default function ModellingEditor() {
       target: params.target,
       sourceHandle: params.sourceHandle,
       targetHandle: params.targetHandle,
-      type: 'default',
+      type: 'relationship',
       ...getEdgeStyle(relationshipType)
     };
-    setEdges((eds) => addEdge(stylizedEdge, eds));
+    setEdges((eds) => applyParallelEdgeLayout(eds.concat(stylizedEdge)));
   }, [relationshipType, setEdges]);
 
   const toggleEdgeDirection = useCallback((edgeId: string) => {
-    setEdges((eds) => eds.map((e) => (e.id === edgeId ? { ...e, source: e.target, target: e.source } : e)));
+    setEdges((eds) => applyParallelEdgeLayout(eds.map((e) => (e.id === edgeId ? { ...e, source: e.target, target: e.source } : e))));
   }, [setEdges]);
 
-  const downloadJDLHandler = useCallback(() => {
-    const element = document.createElement('a');
-    element.href = URL.createObjectURL(new Blob([inputJDL], { type: 'text/plain' }));
-    element.download = 'model.jdl';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  }, [inputJDL]);
+  const autoLayout = useCallback(() => {
+    const graph = new dagre.graphlib.Graph();
+    graph.setDefaultEdgeLabel(() => ({}));
+    graph.setGraph({ rankdir: 'LR', ranksep: 120, nodesep: 80, marginx: 40, marginy: 40 });
+
+    nodes.forEach((node) => {
+      graph.setNode(node.id, { width: 220, height: 150 });
+    });
+
+    edges.forEach((edge) => {
+      graph.setEdge(edge.source, edge.target);
+    });
+
+    dagre.layout(graph);
+
+    setNodes((currentNodes) => currentNodes.map((node) => {
+      const layoutNode = graph.node(node.id);
+      if (!layoutNode) return node;
+      return {
+        ...node,
+        position: {
+          x: layoutNode.x - 110,
+          y: layoutNode.y - 75,
+        },
+      };
+    }));
+    setEdges((currentEdges) => applyParallelEdgeLayout(currentEdges));
+    fitDiagramIntoView();
+  }, [nodes, edges, setNodes, setEdges, fitDiagramIntoView]);
+
+  useEffect(() => {
+    if (!activeSelection && nodes.length > 0) {
+      setInputJDL(buildPDLFromGraph(nodes, edges));
+    }
+  }, [nodes, edges, activeSelection]);
 
   const selectedNode = useMemo(() => activeSelection?.type === 'node' ? nodes.find(n => n.id === activeSelection.id) : null, [activeSelection, nodes]);
   const selectedEdge = useMemo(() => activeSelection?.type === 'edge' ? edges.find(e => e.id === activeSelection.id) : null, [activeSelection, edges]);
@@ -366,10 +575,10 @@ export default function ModellingEditor() {
       id: `edge-inherit-${crypto.randomUUID()}`,
       source: nodeId,
       target: targetParentId,
-      type: 'default',
+      type: 'relationship',
       ...getEdgeStyle('extends')
     };
-    setEdges(eds => eds.concat(parentEdgeSpec));
+    setEdges(eds => applyParallelEdgeLayout(eds.concat(parentEdgeSpec)));
   }, [setEdges]);
 
   return (
@@ -379,7 +588,7 @@ export default function ModellingEditor() {
           relationshipType={relationshipType}
           setRelationshipType={setRelationshipType}
           addNewEntity={addNewEntity}
-          addNewInterface={addNewInterface}
+          autoLayout={autoLayout}
           clearAllNodesAndEdges={clearAllNodesAndEdges}
         />
 
@@ -390,14 +599,15 @@ export default function ModellingEditor() {
             onNodesChange={onNodesChange} 
             onEdgesChange={onEdgesChange} 
             onConnect={onConnect} 
+            onInit={setReactFlowInstance}
             nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
             onSelectionChange={onSelectionChange}
             selectNodesOnDrag={false}
             fitView
           >
             <Background color="var(--border-main)" gap={20} size={1} />
             <Controls />
-            <MiniMap nodeColor="#1e1b4b" maskColor="var(--shadow-small)" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-main)' }} />
           </ReactFlow>
         </div>
       </div>
@@ -478,13 +688,124 @@ export default function ModellingEditor() {
         </div>
 
         <SidebarControlBelt
-          loadComplexJDLScriptSample={loadComplexJDLScriptSample}
+          loadSample={loadSample}
           parseJDLToCanvas={parseJDLToCanvas}
-          generateJDLFromCanvas={generateJDLFromCanvas}
-          downloadJDLHandler={downloadJDLHandler}
+          generateJavaCodeFromCanvas={generateJavaCodeFromCanvas}
+          generateFullApplicationFromCanvas={generateFullApplicationFromCanvas}
           isGenerating={isGenerating}
         />
       </div>
+
+      {showGenerationForm && (
+        <div className="generation-modal-backdrop" role="presentation">
+          <form className="generation-modal" onSubmit={submitFullApplicationGeneration}>
+            <div className="generation-modal-header">
+              <div>
+                <p className="generation-modal-eyebrow">Application generation</p>
+                <h2>Project configuration</h2>
+              </div>
+              <button
+                type="button"
+                className="generation-modal-close"
+                onClick={() => setShowGenerationForm(false)}
+                aria-label="Close generation form"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="generation-form-grid">
+              <label className="generation-form-field">
+                <span>Application name</span>
+                <input
+                  value={generationOptions.applicationName}
+                  onChange={(event) => updateGenerationOption('applicationName', event.target.value)}
+                  placeholder="Generated App"
+                />
+              </label>
+
+              <label className="generation-form-field">
+                <span>Repository name</span>
+                <input
+                  value={generationOptions.repositoryName}
+                  onChange={(event) => updateGenerationOption('repositoryName', event.target.value)}
+                  placeholder="generated-app"
+                />
+              </label>
+
+              <label className="generation-form-field generation-form-wide">
+                <span>Default Java package name</span>
+                <input
+                  value={generationOptions.defaultJavaPackageName}
+                  onChange={(event) => updateGenerationOption('defaultJavaPackageName', event.target.value)}
+                  placeholder="com.mycompany.codeclassroom"
+                />
+              </label>
+            </div>
+
+            <div className="generation-form-section">
+              <h3>Server side options</h3>
+              <div className="generation-form-grid">
+                <label className="generation-form-field">
+                  <span>Java version</span>
+                  <select
+                    value={generationOptions.javaVersion}
+                    onChange={(event) => updateGenerationOption('javaVersion', event.target.value)}
+                  >
+                    <option value="17">17</option>
+                    <option value="21">21</option>
+                  </select>
+                </label>
+
+                <label className="generation-form-field">
+                  <span>Database</span>
+                  <select
+                    value={generationOptions.databaseType}
+                    onChange={(event) => updateGenerationOption('databaseType', event.target.value)}
+                  >
+                    <option value="postgresql">PostgreSQL</option>
+                    <option value="mysql">MySQL</option>
+                    <option value="mariadb">MariaDB</option>
+                    <option value="h2Disk">H2 disk</option>
+                  </select>
+                </label>
+
+                <label className="generation-form-field">
+                  <span>Authentication</span>
+                  <select
+                    value={generationOptions.authenticationType}
+                    onChange={(event) => updateGenerationOption('authenticationType', event.target.value)}
+                  >
+                    <option value="jwt">JWT</option>
+                    <option value="session">Session</option>
+                    <option value="oauth2">OAuth 2</option>
+                  </select>
+                </label>
+
+                <label className="generation-form-field">
+                  <span>Build tool</span>
+                  <select
+                    value={generationOptions.buildTool}
+                    onChange={(event) => updateGenerationOption('buildTool', event.target.value)}
+                  >
+                    <option value="maven">Maven</option>
+                    <option value="gradle">Gradle</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div className="generation-modal-actions">
+              <button type="button" className="btn-generation-secondary" onClick={() => setShowGenerationForm(false)}>
+                Cancel
+              </button>
+              <button type="submit" className="btn-generation-primary" disabled={isGenerating}>
+                Generate Application
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

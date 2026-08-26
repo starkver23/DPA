@@ -295,6 +295,7 @@ class JHipsterPostProcessorTest {
         String payableContent = Files.readString(domainPath.resolve("Payable.java"));
         assertTrue(payableContent.contains("public interface Payable"));
         assertTrue(payableContent.contains("Double calculateSalary();"));
+        assertFalse(payableContent.contains("import java.util.List;"));
         assertFalse(payableContent.contains("@Entity"));
 
         String studentContent = Files.readString(domainPath.resolve("Student.java"));

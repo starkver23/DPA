@@ -127,6 +127,9 @@ class GenerationServiceTest {
             assertNotNull(zipFile.getEntry("generated-app/src/main/docker"), "Should contain Docker configuration folder");
             assertNotNull(zipFile.getEntry("generated-app/src/main/resources/config/liquibase"), "Should contain Liquibase database folder");
             assertNotNull(zipFile.getEntry("generated-app/src/main/java/com/mycompany/codeclassroom/domain/Student.java"), "Should contain Student.java");
+            assertTrue(zipFile.stream()
+                .noneMatch(entry -> entry.getName().startsWith("generated-app/src/main/java/uk/ac/bham/codeclassroom/")),
+                "Generated app should not contain the old uk/ac/bham package folder");
         } finally {
             // Cleanup ZIP and its temporary parent folder
             Files.deleteIfExists(zipPath);
@@ -138,6 +141,83 @@ class GenerationServiceTest {
                     Files.deleteIfExists(grandParent);
                 }
             }
+        }
+    }
+
+    @Test
+    void testJavaSourceZipContainsOnlyModelJavaFiles() throws IOException {
+        String cdl = """
+                abstract entity Person {
+                    name String
+                }
+
+                interface Payable {
+                    calculateSalary() Double
+                }
+
+                entity Student extends Person implements Payable {
+                    studentNumber String
+                    calculateSalary() Double
+                }
+
+                entity Course {
+                    title String
+                }
+
+                relationship ManyToMany {
+                    Student{courses} to Course{students}
+                }
+                """;
+
+        Path zipPath = service.generateJavaSourceZip(cdl);
+        assertNotNull(zipPath);
+        assertTrue(Files.exists(zipPath));
+
+        try (ZipFile zipFile = new ZipFile(zipPath.toFile())) {
+            assertNotNull(zipFile.getEntry("main/java/com/mycompany/codeclassroom/model/Person.java"));
+            assertNotNull(zipFile.getEntry("main/java/com/mycompany/codeclassroom/model/Payable.java"));
+            assertNotNull(zipFile.getEntry("main/java/com/mycompany/codeclassroom/model/Student.java"));
+            assertNotNull(zipFile.getEntry("main/java/com/mycompany/codeclassroom/model/Course.java"));
+            assertNull(zipFile.getEntry("main/java/uk/ac/bham/codeclassroom/model/Student.java"));
+            assertNull(zipFile.getEntry("pom.xml"));
+
+            String studentSource = new String(zipFile.getInputStream(
+                zipFile.getEntry("main/java/com/mycompany/codeclassroom/model/Student.java")
+            ).readAllBytes());
+            assertTrue(studentSource.contains("package com.mycompany.codeclassroom.model;"));
+            assertTrue(studentSource.contains("class Student extends Person implements Payable"));
+            assertTrue(studentSource.contains("private java.util.List<Course> courses;"));
+        } finally {
+            Files.deleteIfExists(zipPath);
+        }
+    }
+
+    @Test
+    void testJavaSourceZipAddsMissingInterfaceMethodStubs() throws IOException {
+        String cdl = """
+                interface Payable {
+                    calculateSalary() Double
+                }
+
+                entity Teacher implements Payable {
+                    staffId String
+                }
+                """;
+
+        Path zipPath = service.generateJavaSourceZip(cdl);
+        assertNotNull(zipPath);
+        assertTrue(Files.exists(zipPath));
+
+        try (ZipFile zipFile = new ZipFile(zipPath.toFile())) {
+            String teacherSource = new String(zipFile.getInputStream(
+                zipFile.getEntry("main/java/com/mycompany/codeclassroom/model/Teacher.java")
+            ).readAllBytes());
+            assertTrue(teacherSource.contains("package com.mycompany.codeclassroom.model;"));
+            assertTrue(teacherSource.contains("class Teacher implements Payable"));
+            assertTrue(teacherSource.contains("@Override"));
+            assertTrue(teacherSource.contains("public Double calculateSalary()"));
+        } finally {
+            Files.deleteIfExists(zipPath);
         }
     }
 

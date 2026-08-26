@@ -251,6 +251,45 @@ class JHipsterAdapterTest {
     }
 
     @Test
+    void testAdaptRenamesDuplicateRelationshipPropertiesOnSameEntity() {
+        String source = """
+            entity Teacher {}
+            entity Department {}
+
+            relationship ManyToMany {
+                Teacher{departments} to Department{teachers}
+            }
+
+            relationship OneToMany {
+                Department{teachers} to Teacher{department}
+            }
+        """;
+        CompilationUnit cu = parseCDL(source);
+        JHipsterProject configProject = adapter.adapt(
+            cu,
+            JHipsterProjectConfiguration.createDefault("DuplicateRelationshipApp")
+        );
+
+        List<JHipsterRelationship> departmentRelationships = configProject.entities().stream()
+            .filter(e -> e.entityName().equals("Department"))
+            .findFirst()
+            .orElseThrow()
+            .relationships();
+
+        List<String> departmentPropertyNames = departmentRelationships.stream()
+            .flatMap(r -> r.sourceProperty().stream())
+            .toList();
+
+        assertTrue(departmentPropertyNames.contains("teachers"));
+        assertTrue(departmentPropertyNames.contains("teachers2"));
+        assertEquals(
+            departmentPropertyNames.size(),
+            departmentPropertyNames.stream().distinct().count(),
+            "Relationship property names on the same entity should stay unique"
+        );
+    }
+
+    @Test
     void testAdaptInvalidInputs() {
         JHipsterProjectConfiguration config = JHipsterProjectConfiguration.createDefault("App");
         assertThrows(IllegalArgumentException.class, () -> adapter.adapt(null, config));

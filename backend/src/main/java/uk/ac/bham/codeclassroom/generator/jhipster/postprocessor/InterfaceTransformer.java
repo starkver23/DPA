@@ -9,8 +9,10 @@ import uk.ac.bham.codeclassroom.generator.ast.TypeReference;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -166,10 +168,13 @@ public class InterfaceTransformer {
     private String generateInterfaceContent(String basePkg, EntityNode iface) {
         StringBuilder sb = new StringBuilder();
         sb.append("package ").append(basePkg).append(".domain;\n\n");
-        sb.append("import java.util.List;\n");
-        sb.append("import java.util.Set;\n");
-        sb.append("import java.util.Map;\n");
-        sb.append("import java.util.Collection;\n\n");
+        Set<String> imports = collectImports(iface);
+        for (String importName : imports) {
+            sb.append("import ").append(importName).append(";\n");
+        }
+        if (!imports.isEmpty()) {
+            sb.append("\n");
+        }
 
         sb.append("public interface ").append(iface.name());
         if (!iface.extendsInterfaces().isEmpty()) {
@@ -183,6 +188,27 @@ public class InterfaceTransformer {
 
         sb.append("}\n");
         return sb.toString();
+    }
+
+    private Set<String> collectImports(EntityNode iface) {
+        Set<String> imports = new LinkedHashSet<>();
+        for (MethodNode method : iface.methods()) {
+            method.returnType().ifPresent(type -> collectTypeImport(type, imports));
+            for (ParameterNode parameter : method.parameters()) {
+                collectTypeImport(parameter.type(), imports);
+            }
+        }
+        return imports;
+    }
+
+    private void collectTypeImport(TypeReference type, Set<String> imports) {
+        switch (type.baseType()) {
+            case "List", "Set", "Map", "Collection" -> imports.add("java.util." + type.baseType());
+            case "BigDecimal" -> imports.add("java.math.BigDecimal");
+            case "LocalDate" -> imports.add("java.time.LocalDate");
+            default -> { }
+        }
+        type.genericType().ifPresent(genericType -> collectTypeImport(genericType, imports));
     }
 
     private String formatMethodSignature(MethodNode method) {

@@ -29,11 +29,11 @@ export const EntityNodeComponent = memo(({ data, selected }: NodeProps<EntityNod
         ))}
       </div>
 
-      <div className="uml-compartment-body uml-border-top">
-        {(!data.methods || data.methods.length === 0) && <p className="uml-empty-text">No operations defined</p>}
-        {data.methods?.map((method) => (
+      <div className="uml-compartment-body uml-operations-body">
+        {data.methods.length === 0 && <p className="uml-empty-text">No operations defined</p>}
+        {data.methods.map((method) => (
           <div key={method.id} className="uml-static-row">
-            <span className="uml-static-method">{method.definition}</span>
+            <span className="uml-static-field">{method.definition}</span>
           </div>
         ))}
       </div>

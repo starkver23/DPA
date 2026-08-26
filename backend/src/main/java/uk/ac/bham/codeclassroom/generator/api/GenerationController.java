@@ -41,13 +41,25 @@ public class GenerationController {
     @PostMapping(value = "/api/generate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/zip")
     public ResponseEntity<Resource> generate(@Valid @RequestBody GenerationRequest request) {
          System.out.println("========== GENERATE ENDPOINT HIT ==========");
-        Path zipFile = generationService.generateStandaloneProject(request.cdl());
+        Path zipFile = generationService.generateStandaloneProject(request.cdl(), ProjectGenerationOptions.fromRequest(request));
 
         Resource resource = new DeleteOnCloseFileSystemResource(zipFile);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("application/zip"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"generated-project.zip\"")
+                .body(resource);
+    }
+
+    @PostMapping(value = "/api/generate/java", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/zip")
+    public ResponseEntity<Resource> generateJavaCode(@Valid @RequestBody GenerationRequest request) {
+        Path zipFile = generationService.generateJavaSourceZip(request.cdl());
+
+        Resource resource = new DeleteOnCloseFileSystemResource(zipFile);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/zip"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"generated-java-source.zip\"")
                 .body(resource);
     }
 

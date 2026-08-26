@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class CodeGenerationEngine {
 
     private final TemplateRenderer renderer = new TemplateRenderer();
+    private static final String DEFAULT_SOURCE_ROOT = "src/main/java/com/mycompany/codeclassroom";
 
     /**
      * Translates a resolved inheritance model into an in-memory GeneratedProject.
@@ -59,7 +60,7 @@ public class CodeGenerationEngine {
             String entityContent = renderer.render("templates/Entity.mustache", context);
             generatedFiles.add(new GeneratedFile(
                     resolved.entityName() + ".java",
-                    "src/main/java/uk/ac/bham/codeclassroom/model/" + resolved.entityName() + ".java",
+                    DEFAULT_SOURCE_ROOT + "/model/" + resolved.entityName() + ".java",
                     entityContent
             ));
 
@@ -67,7 +68,7 @@ public class CodeGenerationEngine {
             String repositoryContent = renderer.render("templates/Repository.mustache", context);
             generatedFiles.add(new GeneratedFile(
                     resolved.entityName() + "Repository.java",
-                    "src/main/java/uk/ac/bham/codeclassroom/repository/" + resolved.entityName() + "Repository.java",
+                    DEFAULT_SOURCE_ROOT + "/repository/" + resolved.entityName() + "Repository.java",
                     repositoryContent
             ));
 
@@ -75,7 +76,7 @@ public class CodeGenerationEngine {
             String serviceContent = renderer.render("templates/Service.mustache", context);
             generatedFiles.add(new GeneratedFile(
                     resolved.entityName() + "Service.java",
-                    "src/main/java/uk/ac/bham/codeclassroom/service/" + resolved.entityName() + "Service.java",
+                    DEFAULT_SOURCE_ROOT + "/service/" + resolved.entityName() + "Service.java",
                     serviceContent
             ));
 
@@ -83,7 +84,7 @@ public class CodeGenerationEngine {
             String serviceImplContent = renderer.render("templates/ServiceImpl.mustache", context);
             generatedFiles.add(new GeneratedFile(
                     resolved.entityName() + "ServiceImpl.java",
-                    "src/main/java/uk/ac/bham/codeclassroom/service/impl/" + resolved.entityName() + "ServiceImpl.java",
+                    DEFAULT_SOURCE_ROOT + "/service/impl/" + resolved.entityName() + "ServiceImpl.java",
                     serviceImplContent
             ));
 
@@ -91,7 +92,7 @@ public class CodeGenerationEngine {
             String controllerContent = renderer.render("templates/Controller.mustache", context);
             generatedFiles.add(new GeneratedFile(
                     resolved.entityName() + "Controller.java",
-                    "src/main/java/uk/ac/bham/codeclassroom/controller/" + resolved.entityName() + "Controller.java",
+                    DEFAULT_SOURCE_ROOT + "/controller/" + resolved.entityName() + "Controller.java",
                     controllerContent
             ));
 
@@ -99,7 +100,7 @@ public class CodeGenerationEngine {
             String dtoContent = renderer.render("templates/DTO.mustache", context);
             generatedFiles.add(new GeneratedFile(
                     resolved.entityName() + "DTO.java",
-                    "src/main/java/uk/ac/bham/codeclassroom/dto/" + resolved.entityName() + "DTO.java",
+                    DEFAULT_SOURCE_ROOT + "/dto/" + resolved.entityName() + "DTO.java",
                     dtoContent
             ));
 
@@ -107,7 +108,7 @@ public class CodeGenerationEngine {
             String mapperContent = renderer.render("templates/Mapper.mustache", context);
             generatedFiles.add(new GeneratedFile(
                     resolved.entityName() + "Mapper.java",
-                    "src/main/java/uk/ac/bham/codeclassroom/mapper/" + resolved.entityName() + "Mapper.java",
+                    DEFAULT_SOURCE_ROOT + "/mapper/" + resolved.entityName() + "Mapper.java",
                     mapperContent
             ));
         }

@@ -1,28 +1,35 @@
 interface SidebarControlBeltProps {
-  loadComplexJDLScriptSample: () => void;
+  loadSample: () => void;
   parseJDLToCanvas: () => void;
-  generateJDLFromCanvas: () => void;
-  downloadJDLHandler: () => void;
+  generateJavaCodeFromCanvas: () => void;
+  generateFullApplicationFromCanvas: () => void;
   isGenerating: boolean;
 }
 
 export default function SidebarControlBelt({
-  loadComplexJDLScriptSample,
+  loadSample,
   parseJDLToCanvas,
-  generateJDLFromCanvas,
-  downloadJDLHandler,
+  generateJavaCodeFromCanvas,
+  generateFullApplicationFromCanvas,
   isGenerating,
 }: SidebarControlBeltProps) {
   return (
     <div className="sidebar-control-belt">
-      <button onClick={loadComplexJDLScriptSample} className="btn-sidebar-action btn-slate">
+      <button onClick={loadSample} className="btn-sidebar-action btn-slate">
         Load Sample
       </button>
       <button onClick={parseJDLToCanvas} className="btn-sidebar-action btn-amber">
-        Parse CDL
+        Parse PDL
       </button>
       <button 
-        onClick={generateJDLFromCanvas} 
+        onClick={generateJavaCodeFromCanvas} 
+        className="btn-sidebar-action btn-blue"
+        disabled={isGenerating}
+      >
+        Generate Java Code
+      </button>
+      <button 
+        onClick={generateFullApplicationFromCanvas} 
         className="btn-sidebar-action btn-green"
         disabled={isGenerating}
         style={{ display: 'flex', gap: '0.25rem', justifyContent: 'center', alignItems: 'center' }}
@@ -36,11 +43,8 @@ export default function SidebarControlBelt({
             Generating...
           </>
         ) : (
-          'Generate'
+          'Generate Full Application'
         )}
-      </button>
-      <button onClick={downloadJDLHandler} className="btn-sidebar-action btn-blue">
-        Export
       </button>
     </div>
   );

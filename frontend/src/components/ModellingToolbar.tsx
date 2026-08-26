@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Layers, Plus, Trash2 } from 'lucide-react';
+import { LayoutTemplate, Layers, Plus, Trash2 } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { type RelationshipType } from '../types/modeling';
 
@@ -7,7 +7,7 @@ interface ModellingToolbarProps {
   relationshipType: RelationshipType;
   setRelationshipType: (type: RelationshipType) => void;
   addNewEntity: () => void;
-  addNewInterface: () => void;
+  autoLayout: () => void;
   clearAllNodesAndEdges: () => void;
 }
 
@@ -15,16 +15,15 @@ export default function ModellingToolbar({
   relationshipType,
   setRelationshipType,
   addNewEntity,
-  addNewInterface,
+  autoLayout,
   clearAllNodesAndEdges,
 }: ModellingToolbarProps) {
   return (
     <div className="navbar-controls">
       <div className="nav-brand-area">
-        <Link to="/" className="btn-back">← Home Hub</Link>
+        <Link to="/" className="btn-back" aria-label="Go back home">←</Link>
         <div className="nav-titles">
-          <span className="editor-title">CodeClassroom</span>
-          <span className="editor-tag">JDL Engine v2.0</span>
+          <span className="editor-tag">JDL Engine v3.0</span>
         </div>
       </div>
 
@@ -49,8 +48,8 @@ export default function ModellingToolbar({
           <Plus size={15} /> Add Entity
         </button>
 
-        <button onClick={addNewInterface} className="btn-action-green">
-          <Plus size={15} /> Add Interface
+        <button onClick={autoLayout} className="btn-action-green">
+          <LayoutTemplate size={15} /> Auto Layout
         </button>
 
         <button onClick={clearAllNodesAndEdges} className="btn-action-red">

@@ -11,6 +11,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import uk.ac.bham.codeclassroom.generator.api.GenerationController;
 import uk.ac.bham.codeclassroom.generator.api.GenerationService;
+import uk.ac.bham.codeclassroom.generator.api.ProjectGenerationOptions;
 import uk.ac.bham.codeclassroom.generator.exception.ParserException;
 import uk.ac.bham.codeclassroom.generator.inheritance.InheritanceResolutionException;
 import uk.ac.bham.codeclassroom.generator.project.ProjectBuilderException;
@@ -51,7 +52,7 @@ class GenerationControllerTest {
 
     @Test
     void testValidCDLReturnsHttp200AndZipFile() throws Exception {
-        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString()))
+        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString(), Mockito.any()))
                 .thenReturn(tempFile);
 
         String validRequestJson = """
@@ -67,6 +68,63 @@ class GenerationControllerTest {
                 .andExpect(content().contentType("application/zip"))
                 .andExpect(header().string("Content-Disposition", "attachment; filename=\"generated-project.zip\""))
                 .andExpect(content().string("dummy zip contents"));
+    }
+
+    @Test
+    void testValidCDLReturnsJavaZipWithConfiguredDownloadName() throws Exception {
+        Mockito.when(generationService.generateJavaSourceZip(Mockito.anyString()))
+                .thenReturn(tempFile);
+
+        String validRequestJson = """
+                {
+                    "cdl": "entity Student { name String }"
+                }
+                """;
+
+        mockMvc.perform(post("/api/generate/java")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validRequestJson))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/zip"))
+                .andExpect(header().string("Content-Disposition", "attachment; filename=\"generated-java-source.zip\""))
+                .andExpect(content().string("dummy zip contents"));
+    }
+
+    @Test
+    void testGenerationRequestPassesProjectConfigurationToService() throws Exception {
+        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString(), Mockito.any()))
+                .thenReturn(tempFile);
+
+        String requestJson = """
+                {
+                    "cdl": "entity Student { name String }",
+                    "applicationName": "Course Planner",
+                    "repositoryName": "course-planner",
+                    "defaultJavaPackageName": "com.acme.courseplanner",
+                    "javaVersion": "21",
+                    "databaseType": "postgresql",
+                    "authenticationType": "jwt",
+                    "buildTool": "maven"
+                }
+                """;
+
+        mockMvc.perform(post("/api/generate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isOk());
+
+        Mockito.verify(generationService).generateStandaloneProject(
+                Mockito.eq("entity Student { name String }"),
+                Mockito.argThat((ProjectGenerationOptions options) ->
+                        options.applicationName().equals("Course Planner") &&
+                        options.repositoryName().equals("course-planner") &&
+                        options.defaultJavaPackageName().equals("com.acme.courseplanner") &&
+                        options.javaVersion().equals("21") &&
+                        options.databaseType().equals("postgresql") &&
+                        options.authenticationType().equals("jwt") &&
+                        options.buildTool().equals("maven")
+                )
+        );
     }
 
     @Test
@@ -100,7 +158,7 @@ class GenerationControllerTest {
     @Test
     void testParserErrorReturnsHttp400() throws Exception {
         Token dummyToken = new Token(TokenType.IDENTIFIER, "Student", 1, 1);
-        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString()))
+        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString(), Mockito.any()))
                 .thenThrow(new ParserException("Parser syntax error", dummyToken));
 
         String requestJson = """
@@ -119,7 +177,7 @@ class GenerationControllerTest {
 
     @Test
     void testSemanticErrorReturnsHttp400() throws Exception {
-        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString()))
+        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString(), Mockito.any()))
                 .thenThrow(new SemanticException("Duplicate entity found"));
 
         String requestJson = """
@@ -138,7 +196,7 @@ class GenerationControllerTest {
 
     @Test
     void testInheritanceResolutionErrorReturnsHttp400() throws Exception {
-        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString()))
+        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString(), Mockito.any()))
                 .thenThrow(new InheritanceResolutionException("Circular inheritance"));
 
         String requestJson = """
@@ -157,7 +215,7 @@ class GenerationControllerTest {
 
     @Test
     void testProjectBuilderErrorReturnsHttp500() throws Exception {
-        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString()))
+        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString(), Mockito.any()))
                 .thenThrow(new ProjectBuilderException("Directory cannot be created"));
 
         String requestJson = """
@@ -177,7 +235,7 @@ class GenerationControllerTest {
 
     @Test
     void testZipGenerationErrorReturnsHttp500() throws Exception {
-        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString()))
+        Mockito.when(generationService.generateStandaloneProject(Mockito.anyString(), Mockito.any()))
                 .thenThrow(new ZipGenerationException("ZIP packaging failed"));
 
         String requestJson = """

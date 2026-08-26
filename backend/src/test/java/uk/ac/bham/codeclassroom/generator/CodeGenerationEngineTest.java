@@ -66,8 +66,8 @@ class CodeGenerationEngineTest {
         assertTrue(project.findByFilename("StudentMapper.java").isPresent());
 
         // Verify relative paths are generated correctly
-        assertTrue(project.findByPath("src/main/java/uk/ac/bham/codeclassroom/model/Person.java").isPresent());
-        assertTrue(project.findByPath("src/main/java/uk/ac/bham/codeclassroom/repository/PersonRepository.java").isPresent());
+        assertTrue(project.findByPath("src/main/java/com/mycompany/codeclassroom/model/Person.java").isPresent());
+        assertTrue(project.findByPath("src/main/java/com/mycompany/codeclassroom/repository/PersonRepository.java").isPresent());
 
         // Verify root entity formatting, containing @Inheritance(strategy = InheritanceType.JOINED)
         GeneratedFile personEntity = project.findByFilename("Person.java").orElseThrow();
